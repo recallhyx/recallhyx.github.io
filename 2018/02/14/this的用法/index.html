@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-112417276-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>this的用法 | Recall Hyx | Your star</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#FFC107">
+    
+    
+    <meta name="keywords" content="javascript">
+    <meta name="description" content="this介绍this 是 JavaScript 的关键字之一，用法灵活，也是很多 web 前端面试题会出的，不过总结起来就一句话：this指的是，调用函数的那个对象 this 取值的四种情况构造函数的调用所谓构造函数，就是通过这个函数生成一个新对象（object）。这时，this就指这个新对象。123456var name = &quot;hyx&quot;;function Name()&amp;#123;    this">
+<meta name="keywords" content="javascript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="this的用法">
+<meta property="og:url" content="https://recallhyx.github.io/2018/02/14/this的用法/index.html">
+<meta property="og:site_name" content="Recall Hyx">
+<meta property="og:description" content="this介绍this 是 JavaScript 的关键字之一，用法灵活，也是很多 web 前端面试题会出的，不过总结起来就一句话：this指的是，调用函数的那个对象 this 取值的四种情况构造函数的调用所谓构造函数，就是通过这个函数生成一个新对象（object）。这时，this就指这个新对象。123456var name = &quot;hyx&quot;;function Name()&amp;#123;    this">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-02-14T13:26:59.592Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="this的用法">
+<meta name="twitter:description" content="this介绍this 是 JavaScript 的关键字之一，用法灵活，也是很多 web 前端面试题会出的，不过总结起来就一句话：this指的是，调用函数的那个对象 this 取值的四种情况构造函数的调用所谓构造函数，就是通过这个函数生成一个新对象（object）。这时，this就指这个新对象。123456var name = &quot;hyx&quot;;function Name()&amp;#123;    this">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Recall HYX</h5>
+          <a href="mailto:quce.hu@qq.com" title="quce.hu@qq.com" class="mail">quce.hu@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                文章
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/recallhyx" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">this的用法</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">this的用法</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-02-14T13:25:45.000Z" itemprop="datePublished" class="page-time">
+  2018-02-14
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/前端/">前端</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#this介绍"><span class="post-toc-number">1.</span> <span class="post-toc-text">this介绍</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#this-取值的四种情况"><span class="post-toc-number">2.</span> <span class="post-toc-text">this 取值的四种情况</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#构造函数的调用"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">构造函数的调用</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#普通函数的调用"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">普通函数的调用</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#call-和-apply-的调用"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">call 和 apply 的调用</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#作为对象方法的调用"><span class="post-toc-number">2.4.</span> <span class="post-toc-text">作为对象方法的调用</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#总结"><span class="post-toc-number">2.5.</span> <span class="post-toc-text">总结</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-this的用法"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">this的用法</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-02-14 21:25:45" datetime="2018-02-14T13:25:45.000Z"  itemprop="datePublished">2018-02-14</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/前端/">前端</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="this介绍"><a href="#this介绍" class="headerlink" title="this介绍"></a>this介绍</h2><p><code>this</code> 是 JavaScript 的关键字之一，用法灵活，也是很多 web 前端面试题会出的，不过总结起来就一句话：<strong>this指的是，调用函数的那个对象</strong></p>
+<h2 id="this-取值的四种情况"><a href="#this-取值的四种情况" class="headerlink" title="this 取值的四种情况"></a>this 取值的四种情况</h2><h3 id="构造函数的调用"><a href="#构造函数的调用" class="headerlink" title="构造函数的调用"></a>构造函数的调用</h3><p>所谓构造函数，就是通过这个函数生成一个新对象（<code>object</code>）。这时，<code>this</code>就指这个新对象。<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> name = <span class="string">"hyx"</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Name</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.name = <span class="string">"Recall"</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> person = <span class="keyword">new</span> Name();</span><br><span class="line">person.name;<span class="comment">// "Recall"</span></span><br></pre></td></tr></table></figure></p>
+<p>可以看到，<code>this</code> 指向新对象 <code>person</code> 而不是全局变量 <code>window</code> 这与我们的总结是一致的<br>如果不是使用 <code>new Name()</code>的方法而是直接调用，即 <code>Name()</code>，结果会不一样，因为这不是构造函数调用</p>
+<h3 id="普通函数的调用"><a href="#普通函数的调用" class="headerlink" title="普通函数的调用"></a>普通函数的调用</h3><p>这是函数的最通常用法，属于全局性调用，因此<code>this</code>就代表全局对象 <code>window</code>。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> name = <span class="string">"hyx"</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Name</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.name = <span class="string">"Recall"</span>;</span><br><span class="line">&#125;</span><br><span class="line">Name();</span><br><span class="line"><span class="built_in">console</span>.log(name); <span class="comment">// Recall</span></span><br></pre></td></tr></table></figure></p>
+<p>上面就是直接调用，可以看到全局变量 <code>name</code> 被改变了（从<code>hyx</code>-&gt;<code>Recall</code>），说明<code>this</code>指向的是全局变量 <code>window·</code></p>
+<h3 id="call-和-apply-的调用"><a href="#call-和-apply-的调用" class="headerlink" title="call 和 apply 的调用"></a>call 和 apply 的调用</h3><p>当一个函数被 <code>call</code> 和 <code>apply</code> 调用时，<code>this</code> 的值就取传入的对象的值。<code>call</code> 和 <code>apply</code> 的用法类似，只不过传入参数不一样。<br><code>fun.call(thisObj[, arg1[, arg2[, ...]]])</code><br><code>call()</code>可以接收任意个数的参数，其中第一个必须是一个 <code>this</code> 对象，其余依次是所有的参数。如果没有提供 <code>thisObj</code> 参数，那么全局对象被用作 <code>thisObj</code>。</p>
+<p><code>fun.apply(thisObj, [argsArray])</code><br><code>apply()</code> 方法接受两个参数第一个是函数运行的作用域，另外一个是一个参数数组(arguments)。<br>如果没有提供 <code>thisObj</code> 和 <code>argsArray</code> 任何一个参数，那么全局对象将被用作 <code>thisObj</code>， 并且无法被传递任何参数。<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">　　<span class="keyword">var</span> x = <span class="number">10</span>;</span><br><span class="line">　　<span class="function"><span class="keyword">function</span> <span class="title">test</span><span class="params">()</span></span>&#123;</span><br><span class="line">　　　　alert(<span class="keyword">this</span>.x);</span><br><span class="line">　　&#125;</span><br><span class="line">　　<span class="keyword">var</span> o=&#123;&#125;;</span><br><span class="line">　　o.x = <span class="number">1</span>;</span><br><span class="line">　　o.m = test;</span><br><span class="line">　　o.m.apply(); <span class="comment">//10</span></span><br></pre></td></tr></table></figure></p>
+<p>这段代码，对象 <code>o</code> 有两个属性，<code>x</code> 和 <code>m</code>，其中，<code>x</code> 的值为 <code>1</code>，<code>m</code> 的值为函数 <code>test</code>，<code>o.m.apply()</code> 不传任何参数，则默认<code>this</code> 为全局对象 <code>window</code>，所以 <code>x</code> 的值就是代码第一行声明赋值的 <code>10</code><br>如果把最后一行代码修改为<br><figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">o.m.apply<span class="comment">(o)</span>; <span class="comment">//1</span></span><br></pre></td></tr></table></figure></p>
+<p>运行结果就变成了<code>1</code>，证明了这时 <code>this</code> 代表的是对象 <code>o</code>。</p>
+<h3 id="作为对象方法的调用"><a href="#作为对象方法的调用" class="headerlink" title="作为对象方法的调用"></a>作为对象方法的调用</h3><p>这才是重中之重，如果函数作为对象的一个属性时，并且作为对象的一个属性被调用时，函数中的 <code>this</code> 指向该对象。我们先看个例子<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> name = <span class="string">'hyx'</span>;</span><br><span class="line"><span class="keyword">var</span> person = &#123;</span><br><span class="line">  name : <span class="string">'Recall'</span>,</span><br><span class="line">  fn : <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>);</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.name);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">person.fn()</span><br><span class="line"><span class="comment">//&#123;name: "Recall", fn: ƒ&#125;</span></span><br><span class="line"><span class="comment">//Recall</span></span><br></pre></td></tr></table></figure></p>
+<p>上述代码中，是 <code>person</code> 调用的 <code>fn</code> 方法，所以 <code>this</code> 指向 <code>person</code><br>注意：以下两种情况，<code>this</code> 指向全局对象 <code>window</code><br>第一种，函数不作为对象的属性而被调用<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> name = <span class="string">'hyx'</span>;</span><br><span class="line"><span class="keyword">var</span> person = &#123;</span><br><span class="line">  name : <span class="string">'Recall'</span>,</span><br><span class="line">  fn : <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>);</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.name);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> fn = person.fn;</span><br><span class="line">fn();</span><br><span class="line"><span class="comment">// window &#123;...&#125;</span></span><br><span class="line"><span class="comment">// hyx</span></span><br></pre></td></tr></table></figure></p>
+<p>第二种，在一个对象的函数内再声明的这个函数<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> name = <span class="string">'hyx'</span>;</span><br><span class="line"><span class="keyword">var</span> person = &#123;</span><br><span class="line">  name : <span class="string">'Recall'</span>,</span><br><span class="line">  fn : <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">     <span class="function"><span class="keyword">function</span> <span class="title">fn2</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">         <span class="built_in">console</span>.log(<span class="keyword">this</span>);</span><br><span class="line">         <span class="built_in">console</span>.log(<span class="keyword">this</span>.name);</span><br><span class="line">    &#125;</span><br><span class="line">    fn2();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">person.fn();</span><br><span class="line"><span class="comment">// window &#123;...&#125;</span></span><br><span class="line"><span class="comment">// hyx</span></span><br></pre></td></tr></table></figure></p>
+<p>正常来说，按照我们的总结，即 <strong>this指的是，调用函数的那个对象</strong>，来说，<code>this.name</code> 应该输出 <code>Recall</code> ，但却输出的是 <code>hyx</code> ，而且我们可以看到 <code>this</code> 的值是全局对象 <code>window</code>。这是语言设计上的一个错误。倘若语言设计正确，那么当内部函数被调用时，<code>this</code> 应该仍然绑定到外部函数的 <code>this</code> 变量。<br>这个设计错误的后果是方法不能利用内部函数来帮助它工作。<br>ECMAScript6 的箭头函数（注意只是箭头函数）基本纠正了这个设计上的错误（注意只是基本上，但不是彻底地纠正了错误）<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> name = <span class="string">'hyx'</span>;</span><br><span class="line"><span class="keyword">var</span> person = &#123;</span><br><span class="line">  name : <span class="string">'Recall'</span>,</span><br><span class="line">  fn : <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">      fn2 = <span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">         <span class="built_in">console</span>.log(<span class="keyword">this</span>);</span><br><span class="line">         <span class="built_in">console</span>.log(<span class="keyword">this</span>.name);</span><br><span class="line">    &#125;</span><br><span class="line">    fn2();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">person.fn();</span><br><span class="line"><span class="comment">// &#123;name: "Recall", fn: ƒ&#125;</span></span><br><span class="line"><span class="comment">// hyx</span></span><br></pre></td></tr></table></figure></p>
+<p>我们可以看一下箭头函数转换成 ES5 是怎样做的<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> name = <span class="string">'hyx'</span>;</span><br><span class="line"><span class="keyword">var</span> person = &#123;</span><br><span class="line">  name : <span class="string">'Recall'</span>,</span><br><span class="line">  fn : <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">      <span class="keyword">var</span> _this = <span class="keyword">this</span>;</span><br><span class="line">      fn2 = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">         <span class="built_in">console</span>.log(_this);</span><br><span class="line">         <span class="built_in">console</span>.log(_this.name);</span><br><span class="line">    &#125;</span><br><span class="line">    fn2();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">person.fn();</span><br><span class="line"><span class="comment">// &#123;name: "Recall", fn: ƒ&#125;</span></span><br><span class="line"><span class="comment">// Recall</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p><code>this</code> 的用法是我刷面试题的时候遇到的，一开始挺头疼的，不知道什么时候指向全局对象，什么时候指向调用对象，加上 JavaScript 设计上的缺陷就更头晕了，所以花了一个下午专门做了笔记，希望能有效果。<br><strong>注意：全局对象，在浏览器是 window ，在 node 是 Global </strong></p>
+<blockquote>
+<p>参考<br><a href="http://www.cnblogs.com/wangfupeng1988/p/3988422.html" target="_blank" rel="noopener">深入理解javascript原型和闭包（10）——this</a><br><a href="http://www.cnblogs.com/libin-1/p/5814792.html" target="_blank" rel="noopener">JavaScript this 总结（含 ES6）</a><br><a href="http://www.ruanyifeng.com/blog/2010/04/using_this_keyword_in_javascript.html" target="_blank" rel="noopener">Javascript的this用法</a></p>
+</blockquote>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <footer>
+        <a href="https://recallhyx.github.io">
+            <img src="/img/avatar.jpg" alt="Recall HYX">
+            Recall HYX
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://recallhyx.github.io/2018/02/14/this的用法/&title=《this的用法》 — Recall Hyx&pic=https://recallhyx.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://recallhyx.github.io/2018/02/14/this的用法/&title=《this的用法》 — Recall Hyx&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://recallhyx.github.io/2018/02/14/this的用法/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《this的用法》 — Recall Hyx&url=https://recallhyx.github.io/2018/02/14/this的用法/&via=https://recallhyx.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://recallhyx.github.io/2018/02/14/this的用法/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/02/07/ES6（3）/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">JavaScript ES6一些有用的语法特性(Symbol、Set 和 Map)</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+<section class="comments" id="comments">
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_shortname = 'recallhyx';
+    lazyScripts.push('//' + disqus_shortname + '.disqus.com/embed.js')
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Recall HYX &copy; 2017 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://recallhyx.github.io/2018/02/14/this的用法/&title=《this的用法》 — Recall Hyx&pic=https://recallhyx.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://recallhyx.github.io/2018/02/14/this的用法/&title=《this的用法》 — Recall Hyx&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://recallhyx.github.io/2018/02/14/this的用法/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《this的用法》 — Recall Hyx&url=https://recallhyx.github.io/2018/02/14/this的用法/&via=https://recallhyx.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://recallhyx.github.io/2018/02/14/this的用法/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACI0lEQVR42u3awU4rMQwFUP7/p4vECgk63Bt3nl6Tk1VVDYMPC2PH/viIz+PrPPsm+fz9m+vnf/7Uyw4GBsbbMh6X59kz+TufkVrYHzFgYGAcwLhOste8JNXe9wwGBgZGW+QliXWt0MTAwMCYM3JMWxpiYGBg5E1seynWUpPm+QW9OAYGxhsy2sHAv/x843wDAwPjTRiP8uTpcq3FXYwKAwNja0Z+6Z/nujZlt0m2qHAxMDC2YEwuv5KU2raj+XrHL/83MDAwNmWsJdxJcmxTbbGghoGBcSRjbcS42IKWb6urVAwMjI0Yk6uxSSiTPxMGBsYJjMkCRF3AjUcCxd0hBgbGFoy27FtrYu97EgMD42RGi8nTaz5zLEpDDAyMAxjtSsSkmGtXMaIIMTAwDmC0l2v54LNtbvMRAgYGxjmMvCxrQ1lbIxv9dgwMjE0ZeQJtQ89HAu0YAAMD4zRGkvjaxdMkpeaAPBFjYGDszWhXvvKw7li8iAafGBgYGzEWrfmVfTkWXWRjYGAcw5g0pe3AoC0l67UwDAyMjRh1c1gOJq/f054oEWNgYGzHeJSnXeHKQxmtcWBgYGzNaJPdWnBr31y3yhgYGKcx2nWHvClNxgltwo0msRgYGJsyJm1t8p5k/DlK/RgYGBjxmLMNem10+rQ0xMDAwBj8ygk+igcDA+MAxqSJzZvbyRrr7ddtGBgY/zGjbR3bZbLXpuxFAAYGxrsyPgHwGGWrl4uCcAAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
