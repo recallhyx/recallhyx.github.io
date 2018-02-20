@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-112417276-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>CSS 都有哪些选择器？ | Recall Hyx | Your star</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#FFC107">
+    
+    
+    <meta name="keywords" content="css">
+    <meta name="description" content="什么是选择器CSS有一套用于描述其语言的术语。123div &amp;#123;  color: red;&amp;#125; 在CSS的术语中，上面这段代码被称为一条规则（rule）。这条规则以选择器 div 开始，它选择要在DOM中哪些元素上使用这条规则。 选择器介绍标签选择器（类型选择器）123div &amp;#123;  color: red;&amp;#125; 上述代码就是标签选择器，选择所有div标签。因为div">
+<meta name="keywords" content="css">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CSS 都有哪些选择器？">
+<meta property="og:url" content="https://recallhyx.github.io/2018/02/20/CSS选择器/index.html">
+<meta property="og:site_name" content="Recall Hyx">
+<meta property="og:description" content="什么是选择器CSS有一套用于描述其语言的术语。123div &amp;#123;  color: red;&amp;#125; 在CSS的术语中，上面这段代码被称为一条规则（rule）。这条规则以选择器 div 开始，它选择要在DOM中哪些元素上使用这条规则。 选择器介绍标签选择器（类型选择器）123div &amp;#123;  color: red;&amp;#125; 上述代码就是标签选择器，选择所有div标签。因为div">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5834506-fd4540c9874b6931.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5834506-c002d14b7c33a9f0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5834506-6e8d6eb089f740c0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5834506-5053c8d0166f6219.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5834506-4523178f869bf09c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5834506-dd78e1cd6e4475c8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-02-20T04:13:36.547Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CSS 都有哪些选择器？">
+<meta name="twitter:description" content="什么是选择器CSS有一套用于描述其语言的术语。123div &amp;#123;  color: red;&amp;#125; 在CSS的术语中，上面这段代码被称为一条规则（rule）。这条规则以选择器 div 开始，它选择要在DOM中哪些元素上使用这条规则。 选择器介绍标签选择器（类型选择器）123div &amp;#123;  color: red;&amp;#125; 上述代码就是标签选择器，选择所有div标签。因为div">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/5834506-fd4540c9874b6931.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Recall HYX</h5>
+          <a href="mailto:quce.hu@qq.com" title="quce.hu@qq.com" class="mail">quce.hu@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                文章
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/recallhyx" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">CSS 都有哪些选择器？</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">CSS 都有哪些选择器？</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-02-20T03:55:46.000Z" itemprop="datePublished" class="page-time">
+  2018-02-20
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/前端/">前端</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#什么是选择器"><span class="post-toc-number">1.</span> <span class="post-toc-text">什么是选择器</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#选择器介绍"><span class="post-toc-number">2.</span> <span class="post-toc-text">选择器介绍</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#标签选择器（类型选择器）"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">标签选择器（类型选择器）</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#类选择器"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">类选择器</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#id选择器"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">id选择器</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#伪类选择器和伪元素选择器（伪对象选择器）"><span class="post-toc-number">2.4.</span> <span class="post-toc-text">伪类选择器和伪元素选择器（伪对象选择器）</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#伪类选择器列表："><span class="post-toc-number">2.4.1.</span> <span class="post-toc-text">伪类选择器列表：</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#伪元素选择器列表："><span class="post-toc-number">2.4.2.</span> <span class="post-toc-text">伪元素选择器列表：</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#关系选择器"><span class="post-toc-number">2.5.</span> <span class="post-toc-text">关系选择器</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#属性选择器"><span class="post-toc-number">2.6.</span> <span class="post-toc-text">属性选择器</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#选择器优先级算法"><span class="post-toc-number">3.</span> <span class="post-toc-text">选择器优先级算法</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-CSS选择器"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">CSS 都有哪些选择器？</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-02-20 11:55:46" datetime="2018-02-20T03:55:46.000Z"  itemprop="datePublished">2018-02-20</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/前端/">前端</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="什么是选择器"><a href="#什么是选择器" class="headerlink" title="什么是选择器"></a>什么是选择器</h2><p>CSS有一套用于描述其语言的术语。<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">div</span> &#123;</span><br><span class="line">  <span class="attribute">color</span>: red;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在CSS的术语中，上面这段代码被称为一条规则（<code>rule</code>）。这条规则以选择器 <code>div</code> 开始，它选择要在DOM中哪些元素上使用这条规则。</p>
+<h2 id="选择器介绍"><a href="#选择器介绍" class="headerlink" title="选择器介绍"></a>选择器介绍</h2><h3 id="标签选择器（类型选择器）"><a href="#标签选择器（类型选择器）" class="headerlink" title="标签选择器（类型选择器）"></a>标签选择器（类型选择器）</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">div</span> &#123;</span><br><span class="line">  <span class="attribute">color</span>: red;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上述代码就是标签选择器，选择所有<code>div</code>标签。因为<code>div</code>是一个标签，在CSS规范中称为类型选择器。</p>
+<h3 id="类选择器"><a href="#类选择器" class="headerlink" title="类选择器"></a>类选择器</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.name</span> &#123;</span><br><span class="line">  <span class="attribute">color</span>: red;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>通过 <code>.</code> 来指定一个类<br>上述代码就是选择所有标签内有<code>class=&quot;name&quot;</code>的标签，注意，如果被选择的标签内还有子标签，且没有被其他选择器选中，则样式会保持默认。<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"zh-cmn-Hans"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span>类型选择器<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="css"><span class="selector-class">.title</span> &#123;</span></span><br><span class="line"><span class="undefined">    font-size: 30px;</span></span><br><span class="line"><span class="undefined">&#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">"title"</span>&gt;</span>标题<span class="tag">&lt;<span class="name">p</span>&gt;</span>正文内容<span class="tag">&lt;/<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>多类选择符的使用<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>效果如下<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/5834506-fd4540c9874b6931.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure><br>接下来我们把 <code>title</code>的 <code>font-size</code>改为<code>20px</code>，然后加上<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.content</span> &#123;</span><br><span class="line">    <span class="attribute">font-size</span>: <span class="number">30px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>再在<code>&lt;p&gt;正文内容&lt;/p&gt;</code>内加上类<code>content</code>，即下面代码<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"zh-cmn-Hans"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span>类型选择器<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="css"><span class="selector-class">.title</span> &#123;</span></span><br><span class="line"><span class="undefined">    font-size: 20px;</span></span><br><span class="line"><span class="undefined">&#125;</span></span><br><span class="line"><span class="css"><span class="selector-class">.content</span> &#123;</span></span><br><span class="line"><span class="undefined">    font-size: 30px;</span></span><br><span class="line"><span class="undefined">&#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">"title"</span>&gt;</span>标题<span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">"content"</span>&gt;</span>正文内容<span class="tag">&lt;/<span class="name">p</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>多类选择符的使用<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>效果如下<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/5834506-c002d14b7c33a9f0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure><br>可以看到，嵌套在子标签里面的类优先匹配了<code>content</code>规则<br>我们再改一下<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.content</span><span class="selector-class">.note</span> &#123;</span><br><span class="line">    <span class="attribute">font-size</span>: <span class="number">30px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">"content note"</span>&gt;</span>多类选择符的使用<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/5834506-6e8d6eb089f740c0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>这时，两个规则同时作用在<code>多类选择符的使用</code>上，即匹配同时具有<code>content</code>和<code>note</code>的元素，如果元素只有其中一个类，那这个规则不会匹配到这个元素，这就是多类选择器<br>如果不同的类选择器作用在同一个元素上，则样式会叠加<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"zh-cmn-Hans"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span>类型选择器<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="css"><span class="selector-class">.title</span> &#123;</span></span><br><span class="line"><span class="undefined">    font-size: 20px;</span></span><br><span class="line"><span class="undefined">&#125;</span></span><br><span class="line"><span class="css"><span class="selector-class">.content</span> &#123;</span></span><br><span class="line"><span class="undefined">    color: red;</span></span><br><span class="line"><span class="undefined">&#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">"title"</span>&gt;</span>标题<span class="tag">&lt;<span class="name">p</span> &gt;</span>正文内容<span class="tag">&lt;/<span class="name">p</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">"title content"</span>&gt;</span>多类选择符的使用<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/5834506-5053c8d0166f6219.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>其中，<code>多类选择符的使用</code>同时具有<code>title</code>和<code>content</code>的样式。<br>注意，如果定义了的规则，CSS改变的是同一个样式，则后定义的规则会覆盖前面的规则。<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"zh-cmn-Hans"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span>类型选择器<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="css"><span class="selector-class">.title</span> &#123;</span></span><br><span class="line"><span class="undefined">    color: green;</span></span><br><span class="line"><span class="undefined">&#125;</span></span><br><span class="line"><span class="css"><span class="selector-class">.content</span> &#123;</span></span><br><span class="line"><span class="undefined">    color: red;</span></span><br><span class="line"><span class="undefined">&#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">"title"</span>&gt;</span>标题<span class="tag">&lt;<span class="name">p</span> &gt;</span>正文内容<span class="tag">&lt;/<span class="name">p</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">"title content"</span>&gt;</span>多类选择符的使用<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/5834506-4523178f869bf09c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>这里，虽然<code>多类选择符的使用</code>这个p标签同时有<code>title</code>和<code>content</code>两个规则，但是由于<code>content</code>是在之后定义的，所以<code>content</code>生效。</p>
+<h3 id="id选择器"><a href="#id选择器" class="headerlink" title="id选择器"></a>id选择器</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#name</span>&#123;</span><br><span class="line">  <span class="attribute">color</span>: red;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>通过<code>#</code>来指定一个id</p>
+<blockquote>
+<p>通过设置元素的 <code>id</code> 属性为该元素制定ID。ID名由开发者指定。每个ID在文档中必须是唯一的。</p>
+</blockquote>
+<p>上述只是规范，因为你可以设置多个一样的id，而且浏览器不报错，但是，你只能通过<code>getElementById()</code>的方法获得第一个符合id的元素，而不能获得全部符合id的元素，这是不推荐的。<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"zh-cmn-Hans"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span>id选择器<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="css"><span class="selector-id">#subtitle</span> &#123;</span></span><br><span class="line"><span class="undefined">    color: red;</span></span><br><span class="line"><span class="undefined">&#125;</span></span><br><span class="line"><span class="css"><span class="selector-id">#content</span> &#123;</span></span><br><span class="line"><span class="undefined">    color: blue;</span></span><br><span class="line"><span class="undefined">&#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h1</span> <span class="attr">id</span>=<span class="string">"subtitle"</span>&gt;</span>标题<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">"content"</span>&gt;</span>正文内容<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/5834506-dd78e1cd6e4475c8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>注意，id选择器不能在同个元素上定义多个，比如<code>id=&quot;a b&quot;</code>就是错误的写法。</p>
+<h3 id="伪类选择器和伪元素选择器（伪对象选择器）"><a href="#伪类选择器和伪元素选择器（伪对象选择器）" class="headerlink" title="伪类选择器和伪元素选择器（伪对象选择器）"></a>伪类选择器和伪元素选择器（伪对象选择器）</h3><p>CSS伪类（<code>pseudo-class</code>）是加在选择器后面的用来指定元素状态的关键字。比如，<code>:hover</code>。CSS伪类适用于用户使用指示设备虚指一个元素（没有激活它）的情况。这个样式会被任何与链接相关的伪类重写，像<code>:link</code>, <code>:visited</code>, 和 <code>:active</code>等。为了确保生效，<code>:hover</code>规则需要放在<code>:link</code>和<code>:visited</code>规则之后，但是在<code>:active</code>规则之前，按照LVHA的循顺序声明<code>:link</code>－<code>:visited</code>－<code>:hover</code>－<code>:active</code>。”) 会在鼠标悬停在选中元素上时应用相应的样式。</p>
+<h4 id="伪类选择器列表："><a href="#伪类选择器列表：" class="headerlink" title="伪类选择器列表："></a>伪类选择器列表：</h4><table>
+<thead>
+<tr>
+<th>选择器</th>
+<th>版本</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="http://css.doyoe.com/selectors/pseudo-classes/link.htm" target="_blank" rel="noopener">E:link</a></td>
+<td>CSS1</td>
+<td>设置超链接a在未被访问前的样式。</td>
+</tr>
+<tr>
+<td><a href="http://css.doyoe.com/selectors/pseudo-classes/visited.htm" target="_blank" rel="noopener">E:visited</a></td>
+<td>CSS1</td>
+<td>设置超链接a在其链接地址已被访问过时的样式。</td>
+</tr>
+<tr>
+<td><a href="http://css.doyoe.com/selectors/pseudo-classes/hover.htm" target="_blank" rel="noopener">E:hover</a></td>
+<td>CSS1/2</td>
+<td>设置元素在其鼠标悬停时的样式。</td>
+</tr>
+<tr>
+<td><a href="http://css.doyoe.com/selectors/pseudo-classes/active.htm" target="_blank" rel="noopener">E:active</a></td>
+<td>CSS1/2</td>
+<td>设置元素在被用户激活（在鼠标点击与释放之间发生的事件）时的样式。</td>
+</tr>
+<tr>
+<td><a href="http://css.doyoe.com/selectors/pseudo-classes/focus.htm" target="_blank" rel="noopener">E:focus</a></td>
+<td>CSS1/2</td>
+<td>设置元素在成为输入焦点（该元素的onfocus事件发生）时的样式。</td>
+</tr>
+<tr>
+<td><a href="http://css.doyoe.com/selectors/pseudo-classes/lang(fr" target="_blank" rel="noopener">E:lang(fr)</a>.htm)</td>
+<td>CSS2</td>
+<td>匹配使用特殊语言的E元素。</td>
+</tr>
+<tr>
+<td><a href="http://css.doyoe.com/selectors/pseudo-classes/not(s" target="_blank" rel="noopener">E:not(s)</a>.htm)</td>
+<td>CSS3</td>
+<td>匹配不含有s选择符的元素E。</td>
+</tr>
+<tr>
+<td><a href="http://css.doyoe.com/selectors/pseudo-classes/root.htm" target="_blank" rel="noopener">E:root</a></td>
+<td>CSS3</td>
+<td>匹配E元素在文档的根元素。</td>
+</tr>
+<tr>
+<td><a href="http://css.doyoe.com/selectors/pseudo-classes/first-child.htm" target="_blank" rel="noopener">E:first-child</a></td>
+<td>CSS2</td>
+<td>匹配父元素的第一个子元素E。</td>
+</tr>
+<tr>
+<td><a href="http://css.doyoe.com/selectors/pseudo-classes/last-child.htm" target="_blank" rel="noopener">E:last-child</a></td>
+<td>CSS3</td>
+<td>匹配父元素的最后一个子元素E。</td>
+</tr>
+<tr>
+<td><a href="http://css.doyoe.com/selectors/pseudo-classes/only-child.htm" target="_blank" rel="noopener">E:only-child</a></td>
+<td>CSS3</td>
+<td>匹配父元素仅有的一个子元素E。</td>
+</tr>
+<tr>
+<td><a href="http://css.doyoe.com/selectors/pseudo-classes/nth-child(n" target="_blank" rel="noopener">E:nth-child(n)</a>.htm)</td>
+<td>CSS3</td>
+<td>匹配父元素的第n个子元素E。</td>
+</tr>
+<tr>
+<td><a href="http://css.doyoe.com/selectors/pseudo-classes/nth-last-child(n" target="_blank" rel="noopener">E:nth-last-child(n)</a>.htm)</td>
+<td>CSS3</td>
+<td>匹配父元素的倒数第n个子元素E。</td>
+</tr>
+<tr>
+<td><a href="http://css.doyoe.com/selectors/pseudo-classes/first-of-type.htm" target="_blank" rel="noopener">E:first-of-type</a></td>
+<td>CSS3</td>
+<td>匹配同类型中的第一个同级兄弟元素E。</td>
+</tr>
+<tr>
+<td><a href="http://css.doyoe.com/selectors/pseudo-classes/last-of-type.htm" target="_blank" rel="noopener">E:last-of-type</a></td>
+<td>CSS3</td>
+<td>匹配同类型中的最后一个同级兄弟元素E。</td>
+</tr>
+<tr>
+<td><a href="http://css.doyoe.com/selectors/pseudo-classes/only-of-type.htm" target="_blank" rel="noopener">E:only-of-type</a></td>
+<td>CSS3</td>
+<td>匹配同类型中的唯一的一个同级兄弟元素E。</td>
+</tr>
+<tr>
+<td><a href="http://css.doyoe.com/selectors/pseudo-classes/nth-of-type(n" target="_blank" rel="noopener">E:nth-of-type(n)</a>.htm)</td>
+<td>CSS3</td>
+<td>匹配同类型中的第n个同级兄弟元素E。</td>
+</tr>
+<tr>
+<td><a href="http://css.doyoe.com/selectors/pseudo-classes/nth-last-of-type(n" target="_blank" rel="noopener">E:nth-last-of-type(n)</a>.htm)</td>
+<td>CSS3</td>
+<td>匹配同类型中的倒数第n个同级兄弟元素E。</td>
+</tr>
+<tr>
+<td><a href="http://css.doyoe.com/selectors/pseudo-classes/empty.htm" target="_blank" rel="noopener">E:empty</a></td>
+<td>CSS3</td>
+<td>匹配没有任何子元素（包括text节点）的元素E。</td>
+</tr>
+<tr>
+<td><a href="http://css.doyoe.com/selectors/pseudo-classes/checked.htm" target="_blank" rel="noopener">E:checked</a></td>
+<td>CSS3</td>
+<td>匹配用户界面上处于选中状态的元素E。(用于input type为radio与checkbox时)</td>
+</tr>
+<tr>
+<td><a href="http://css.doyoe.com/selectors/pseudo-classes/enabled.htm" target="_blank" rel="noopener">E:enabled</a></td>
+<td>CSS3</td>
+<td>匹配用户界面上处于可用状态的元素E。</td>
+</tr>
+<tr>
+<td><a href="http://css.doyoe.com/selectors/pseudo-classes/disabled.htm" target="_blank" rel="noopener">E:disabled</a></td>
+<td>CSS3</td>
+<td>匹配用户界面上处于禁用状态的元素E。</td>
+</tr>
+<tr>
+<td><a href="http://css.doyoe.com/selectors/pseudo-classes/target.htm" target="_blank" rel="noopener">E:target</a></td>
+<td>CSS3</td>
+<td>匹配相关URL指向的E元素。</td>
+</tr>
+<tr>
+<td><a href="http://css.doyoe.com/selectors/pseudo-classes/@page-first.htm" target="_blank" rel="noopener">@page:first</a></td>
+<td>CSS2</td>
+<td>设置页面容器第一页使用的样式。仅用于<a href="http://css.doyoe.com/rules/@page.htm" target="_blank" rel="noopener">@page</a>规则</td>
+</tr>
+<tr>
+<td><a href="http://css.doyoe.com/selectors/pseudo-classes/@page-left.htm" target="_blank" rel="noopener">@page:left</a></td>
+<td>CSS2</td>
+<td>设置页面容器位于装订线左边的所有页面使用的样式。仅用于<a href="http://css.doyoe.com/rules/@page.htm" target="_blank" rel="noopener">@page</a>规则</td>
+</tr>
+<tr>
+<td><a href="http://css.doyoe.com/selectors/pseudo-classes/@page-right.htm" target="_blank" rel="noopener">@page:right</a></td>
+<td>CSS2</td>
+<td>设置页面容器位于装订线右边的所有页面使用的样式。仅用于<a href="http://css.doyoe.com/rules/@page.htm" target="_blank" rel="noopener">@page</a>规则</td>
+</tr>
+</tbody>
+</table>
+<h4 id="伪元素选择器列表："><a href="#伪元素选择器列表：" class="headerlink" title="伪元素选择器列表："></a>伪元素选择器列表：</h4><table>
+<thead>
+<tr>
+<th>选择符</th>
+<th>版本</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="http://css.doyoe.com/selectors/pseudo-element/first-letter.htm" target="_blank" rel="noopener">E:first-letter/E::first-letter</a></td>
+<td>CSS1/3</td>
+<td>设置对象内的第一个字符的样式。</td>
+</tr>
+<tr>
+<td><a href="http://css.doyoe.com/selectors/pseudo-element/first-line.htm" target="_blank" rel="noopener">E:first-line/E::first-line</a></td>
+<td>CSS1/3</td>
+<td>设置对象内的第一行的样式。</td>
+</tr>
+<tr>
+<td><a href="http://css.doyoe.com/selectors/pseudo-element/before.htm" target="_blank" rel="noopener">E:before/E::before</a></td>
+<td>CSS2/3</td>
+<td>设置在对象前（依据对象树的逻辑结构）发生的内容。用来和content属性一起使用</td>
+</tr>
+<tr>
+<td><a href="http://css.doyoe.com/selectors/pseudo-element/after.htm" target="_blank" rel="noopener">E:after/E::after</a></td>
+<td>CSS2/3</td>
+<td>设置在对象后（依据对象树的逻辑结构）发生的内容。用来和content属性一起使用</td>
+</tr>
+<tr>
+<td><a href="http://css.doyoe.com/selectors/pseudo-element/placeholder.htm" target="_blank" rel="noopener">E::placeholder</a></td>
+<td>CSS3</td>
+<td>设置对象文字占位符的样式。</td>
+</tr>
+<tr>
+<td><a href="http://css.doyoe.com/selectors/pseudo-element/selection.htm" target="_blank" rel="noopener">E::selection</a></td>
+<td>CSS3</td>
+<td>设置对象被选择时的颜色。</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>CSS3将伪元素选择器(Pseudo-Element Selectors)前面的单个冒号(:)修改为双冒号(::)用以区别伪类选择器(Pseudo-Classes Selectors)，但以前的写法仍然有效。</li>
+</ul>
+<p>伪类和伪元素（<code>pseudo-elements</code>）不仅可以让你为符合某种文档树结构的元素指定样式，还可以为符合某些外部条件的元素指定样式：浏览历史(比如是否访问过 (<code>:visited</code>)， 内容状态(如 <code>:checked</code> CSS 伪类选择器表示任何处于选中状态的<code>radio</code>(<input type="radio">), <code>checkbox</code> (<input type="checkbox">) 或(<code>&quot;select&quot;</code>) 元素中的<code>option</code> HTML元素(<code>&quot;option&quot;</code>)) 。用户通过点击元素或选择其他的值，可以改变该元素的 <code>:checked</code> 状态，并<code>:checked</code>属性赋给一个新的对象(例如其他的<code>option</code>值)。”) ), 鼠标位置 (如<code>:hover</code>).</p>
+<h3 id="关系选择器"><a href="#关系选择器" class="headerlink" title="关系选择器"></a>关系选择器</h3><table>
+<thead>
+<tr>
+<th>选择器</th>
+<th>名称</th>
+<th>版本</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="http://css.doyoe.com/selectors/relationship/ef.htm" target="_blank" rel="noopener">E F</a></td>
+<td>包含选择器(Descendant combinator)</td>
+<td>CSS1</td>
+<td>选择所有被E元素包含的F元素。</td>
+</tr>
+<tr>
+<td><a href="http://css.doyoe.com/selectors/relationship/e-child-f.htm" target="_blank" rel="noopener">E&gt;F</a></td>
+<td>子选择器(Child combinator)</td>
+<td>CSS2</td>
+<td>选择所有作为E元素的子元素F。</td>
+</tr>
+<tr>
+<td><a href="http://css.doyoe.com/selectors/relationship/e-adjacent-f.htm" target="_blank" rel="noopener">E+F</a></td>
+<td>相邻选择器(Adjacent sibling combinator)</td>
+<td>CSS2</td>
+<td>选择紧贴在E元素之后F元素。</td>
+</tr>
+<tr>
+<td><a href="http://css.doyoe.com/selectors/relationship/e-brother-f.htm" target="_blank" rel="noopener">E~F</a></td>
+<td>兄弟选择器(General sibling combinator)</td>
+<td>CSS3</td>
+<td>选择E元素所有兄弟元素F。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="属性选择器"><a href="#属性选择器" class="headerlink" title="属性选择器"></a>属性选择器</h3><table>
+<thead>
+<tr>
+<th>选择器</th>
+<th>版本</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="http://css.doyoe.com/selectors/attribute/att.htm" target="_blank" rel="noopener">E[att]</a></td>
+<td>CSS2</td>
+<td>选择具有att属性的E元素。</td>
+</tr>
+<tr>
+<td><a href="http://css.doyoe.com/selectors/attribute/att2.htm" target="_blank" rel="noopener">E[att=”val”]</a></td>
+<td>CSS2</td>
+<td>选择具有att属性且属性值等于val的E元素。</td>
+</tr>
+<tr>
+<td><a href="http://css.doyoe.com/selectors/attribute/att3.htm" target="_blank" rel="noopener">E[att~=”val”]</a></td>
+<td>CSS2</td>
+<td>选择具有att属性且属性值为一用空格分隔的字词列表，其中一个等于val的E元素。</td>
+</tr>
+<tr>
+<td><a href="http://css.doyoe.com/selectors/attribute/att4.htm" target="_blank" rel="noopener">E[att^=”val”]</a></td>
+<td>CSS3</td>
+<td>选择具有att属性且属性值为以val开头的字符串的E元素。</td>
+</tr>
+<tr>
+<td><a href="http://css.doyoe.com/selectors/attribute/att5.htm" target="_blank" rel="noopener">E[att$=”val”]</a></td>
+<td>CSS3</td>
+<td>选择具有att属性且属性值为以val结尾的字符串的E元素。</td>
+</tr>
+<tr>
+<td><a href="http://css.doyoe.com/selectors/attribute/att6.htm" target="_blank" rel="noopener">E[att*=”val”]</a></td>
+<td>CSS3</td>
+<td>选择具有att属性且属性值为包含val的字符串的E元素。</td>
+</tr>
+<tr>
+<td><a href="http://css.doyoe.com/selectors/attribute/att7.htm" target="_blank" rel="noopener">E[att&#124;=”val”]</a></td>
+<td>CSS2</td>
+<td>选择具有att属性且属性值为以val开头并用连接符”-“分隔的字符串的E元素，如果属性值仅为val，也将被选择。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="选择器优先级算法"><a href="#选择器优先级算法" class="headerlink" title="选择器优先级算法"></a>选择器优先级算法</h2><p>如果多于一个规则指定了相同的属性值都应用到一个元素上，CSS规定拥有更高确定度的选择器优先级更高。ID选择器比类选择器更具确定度, 而类选择器比标签选择器更具确定度。<br>下面是利用权重的方式来计算优先级：</p>
+<blockquote>
+<p>最高优先级是 (直接在标签中的设置样式，假设级别为1000)<div style="color:Red;"></div> 　　<br>次优先级是（ID选择器 ,假设级别为100） #myDiv{color:Red;} 　　<br>其次优先级是（类选择器，假设级别为10） .divClass{color:Red;} 　　<br>最后优先级是 （标签选择器，假设级别是 1） div{color:Red;}<br>全局选择器(*), 以及组合选择器(+, &gt; ~),和:not选择器对权重没有影响。（但是，在 :not() 内部声明的选择器是会影响优先级）。</p>
+</blockquote>
+<p>还有一种优先级算法：</p>
+<blockquote>
+<p>1.优先级就近原则，同权重情况下样式定义最近者为准;<br>2.载入样式以最后载入的定位为准;<br>3.!important &gt;  id &gt; class &gt; tag<br>4.important 比 内联优先级高，但内联比 id 要高</p>
+</blockquote>
+<p>使用 <code>!important</code> 是一个坏习惯，应该尽量避免，因为这破坏了样式表中的固有的级联规则 使得调试找bug变得更加困难了。当两条相互冲突的带有 <code>!important</code> 规则的声明被应用到相同的元素上时，拥有更大优先级的声明将会被采用。</p>
+<p>一些经验法则：</p>
+<ul>
+<li><strong>一定</strong>要优化考虑使用样式规则的优先级来解决问题而不是 <code>!important</code></li>
+<li><strong>只有</strong>在需要覆盖全站或外部 css（例如引用的 ExtJs 或者 YUI ）的特定页面中使用 <code>!important</code></li>
+<li><strong>永远不要</strong>在全站范围的 css 上使用 <code>!important</code></li>
+<li><strong>永远不要</strong>在你的插件中使用 <code>!important</code></li>
+</ul>
+<blockquote>
+<p>参考:<br><a href="https://developer.mozilla.org/zh-CN/docs/Web/Guide/CSS/Getting_started/Selectors" target="_blank" rel="noopener">MDN web docs</a><br><a href="http://css.doyoe.com/" target="_blank" rel="noopener">css参考手册</a></p>
+</blockquote>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <footer>
+        <a href="https://recallhyx.github.io">
+            <img src="/img/avatar.jpg" alt="Recall HYX">
+            Recall HYX
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/css/">css</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://recallhyx.github.io/2018/02/20/CSS选择器/&title=《CSS 都有哪些选择器？》 — Recall Hyx&pic=https://recallhyx.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://recallhyx.github.io/2018/02/20/CSS选择器/&title=《CSS 都有哪些选择器？》 — Recall Hyx&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://recallhyx.github.io/2018/02/20/CSS选择器/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《CSS 都有哪些选择器？》 — Recall Hyx&url=https://recallhyx.github.io/2018/02/20/CSS选择器/&via=https://recallhyx.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://recallhyx.github.io/2018/02/20/CSS选择器/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/02/14/this的用法/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">JavaScript this的用法</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+<section class="comments" id="comments">
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_shortname = 'recallhyx';
+    lazyScripts.push('//' + disqus_shortname + '.disqus.com/embed.js')
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Recall HYX &copy; 2017 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://recallhyx.github.io/2018/02/20/CSS选择器/&title=《CSS 都有哪些选择器？》 — Recall Hyx&pic=https://recallhyx.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://recallhyx.github.io/2018/02/20/CSS选择器/&title=《CSS 都有哪些选择器？》 — Recall Hyx&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://recallhyx.github.io/2018/02/20/CSS选择器/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《CSS 都有哪些选择器？》 — Recall Hyx&url=https://recallhyx.github.io/2018/02/20/CSS选择器/&via=https://recallhyx.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://recallhyx.github.io/2018/02/20/CSS选择器/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACKElEQVR42u3aQZKDMAwF0dz/0sx2Npj+EkmVrWY1xRDjx0IlS/p88HX9uzr318+QX7UuGTJkbMu4ltfdM3zl9Qp3d/jeZMiQMYdBNkH+u35Z+iuyNxkyZMjgjPU6KGiC98qQIUNGulwaLnkaKkOGDBlvLU3CLv8cPzqLy5AhY0NGrXD2m7+/0t+QIUPGVowrvHjC91YjE+1KhgwZRzPSdK0TLtMmQTz8IUOGjGGMTthdr8CPrKQgiL6TDBkyjmA8BDI8QlEbsKiV6h6SThkyZBzK4KMStZJccBzth1oZMmQcxEjbgSRZJFvspIMPPVgZMmQcx+BHUJ4+dkr/5Pm41ypDhozNGbVxq067kTcYgg8nQ4aMAYw0ONZaCN8byJAhQ8bZjH5ZjaeVta3HtTUZMmQcx6g1AzqFNv45gidlyJAxgMFDIX9xp+gWtxNkyJAxjNFvAHBePA9ytzcZMmQMYPA+YL80loZXdF+GDBlHM2qbqJXeyCGZl+dkyJAxjUGOsrx5WUvyOmU+GTJkTGPwzXF8v3mJ1pEhQ8YAxlthsTYwwffwEHBlyJBxHOMKL54aki2SIyuiypAh42hGrWVISmy8AMdXS1NMGTJknMQgQZYH3E5ToZV6ypAhYwAjHfNKE8f+GNnDyjJkyJCBwyV/fdp4QCdyGTJkyAiPqWnRrbO+DBkyJjDS4yg/XqaBmzcbZMiQMYfBEzs+MME/RG3Uo9jUlCFDxn6MPzYKslBJZbWYAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
