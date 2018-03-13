@@ -43,7 +43,7 @@ ga('send', 'pageview');
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5834506-36db4a35d86e9a12.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5834506-30fe78fa51f0edbf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5834506-deb134bb102fc8d1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-03-11T09:45:42.796Z">
+<meta property="og:updated_time" content="2018-03-13T03:18:17.929Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Vue-loader入门">
 <meta name="twitter:description" content="Vue-loader 介绍Vue-loader是一个集成了 webpack 的loader，也就是说，webpack的配置官方已经给你配好了，可以省去配置的步骤，省时省力。 Vue-loader 使用安装Vue-loader 可以通过官方的 vue-cli 脚手架来使用首先，安装 vuenpm install vue 全局安装webpacknpm install --global webpack">
@@ -208,6 +208,7 @@ ga('send', 'pageview');
             </figure><br>建议安装 vue-router</p>
 <blockquote>
 <p><strong>什么是vue-router？</strong><br>vue-router是Vue.js官方的路由插件，它和vue.js是深度集成的，适合用于构建单页面应用。vue的单页面应用是基于路由和组件的，路由用于设定访问路径，并将路径和组件映射起来。传统的页面应用，是用一些超链接来实现页面切换和跳转的。在vue-router单页面应用中，则是路径之间的切换，也就是组件的切换。</p>
+</blockquote>
 <h3 id="目录结构"><a href="#目录结构" class="headerlink" title="目录结构"></a>目录结构</h3><figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
@@ -215,7 +216,6 @@ ga('send', 'pageview');
                 </div>
                 <div class="image-caption"></div>
             </figure>
-</blockquote>
 <p>|–build  //webpack相关代码文件夹<br>|  |–build.js //生产环境结构代码<br>|  |–check-version.js //检查node、npm、等版本<br>|  |–dev-client.js  //热加载相关代码<br>|  |–dev-server.js  //本地服务器<br>|  |–utils.js  //构建工具<br>|  |–webpack.base.conf.js //webpack基本配置<br>|  |–webpack.dev.conf.js //webpack开发环境配置<br>|  |–webpack.prod.conf.js  //webpack生产环境配置<br>|–config  //项目开发环境配置<br>|  |–dev.env.js  //开发环境变量<br>|  |–index.js  //项目基本配置（proxyTable:{ //配置请求代理}）<br>|  |–dev.env.js  //开发环境变量<br>|  |–prod.env.js  //生产环境变量<br>|–dist  //执行npm run build，生成打包发布的目录<br>|–node_modules  //初始化 npm install，生成的依赖包目录（注意，不要提交到svn！）<br>|–src  //项目源代码目录<br>|  |–components  //组件目录<br>|  |–assets  //Vue默认logo目录<br>|  |–router  //路由目录<br>|  |–APP.vue  //默认组件，入口文件<br>|  |–main.js  //程序入口文件，引用、加载各种组件<br>|–static  //静态文件目录，比如：CSS、图片、等等静态文件<br>|–index.html  //入口文件</p>
 <h3 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h3><p>使用<code>npm install</code>之后，就在项目目录下使用命令<code>npm run dev</code>就能启动<br>然后打开浏览器，输入<code>localhost:8080</code>，如果出现以下图片，就算启动成功了<br><figure class="image-bubble">
                 <div class="img-lightbox">
