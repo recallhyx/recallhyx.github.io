@@ -234,7 +234,7 @@ ga('send', 'pageview');
 <p>有一个事件循环，但是任务队列可以有多个。<br>整个 script 代码，放在了 <code>macro-task queue</code> 中，<code>setTimeout</code> 也放入<code>macro-task queue</code>。<br>但是，<code>promise.then</code> 放到了另一个任务队列 <code>micro-task queue</code>中。<br>这两个任务队列执行顺序如下，取1个<code>macro-task queue</code> 中的 <code>task</code>，执行之。<br>然后把所有 <code>micro-task queue</code> 顺序执行完，再取 <code>macro-task queue</code> 中的下一个任务。</p>
 <h2 id="解释"><a href="#解释" class="headerlink" title="解释"></a>解释</h2><p>代码一开始执行时，所有这些代码在<code>macro-task queue</code> 中，取出来执行之。<br>后面遇到了 <code>setTimeout</code> ，又加入到<code>macro-task queue</code> 中，然后，遇到了 <code>Promise</code>新建后立即执行输出<code>2</code>, 然后，遇到了 <code>promise.then</code>，放入到了另一个队列<code>micro-task queue</code>，然后代码继续执行，输出 <code>4</code> 。<br>等整个 <code>execution context stack</code> 执行完后，下一步该取的是<code>micro-task queue</code> 中的任务了。<br>取出 <code>promise.then</code>，执行，输出<code>3</code>，<code>micro-task queue</code>为空，下一步取出 <code>marco-task queue</code> 中的 <code>setTimeout</code>，执行，输出 <code>1</code><br>所以最终的结果是 <code>2 4 3 1</code>。</p>
 <p>推荐一个视频<a href="https://2014.jsconf.eu/speakers/philip-roberts-what-the-heck-is-the-event-loop-anyway.html" target="_blank" rel="noopener">what-the-heck-is-the-event-loop-anyway</a></p>
-<p>要翻墙的。</p>
+<p>里面讲的很详细，从同步讲到异步，还有图文讲解，英文的，要翻墙的。</p>
 <blockquote>
 <p>参考：<br><a href="https://www.zhihu.com/question/36972010" target="_blank" rel="noopener">Promise的队列与setTimeout的队列有何关联？</a><br><a href="https://segmentfault.com/q/1010000009811652" target="_blank" rel="noopener">promise和setTimeout执行顺序的疑惑</a><br><a href="https://www.tuicool.com/articles/MnY7N3a" target="_blank" rel="noopener">从Promise来看JavaScript中的Event Loop、Tasks和Microtasks</a></p>
 </blockquote>
