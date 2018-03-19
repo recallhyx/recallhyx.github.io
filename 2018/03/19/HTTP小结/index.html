@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-112417276-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>HTTP小结 | Recall Hyx | Your star</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#FFC107">
+    
+    
+    <meta name="keywords" content="http">
+    <meta name="description" content="前言主要是对比HTTP1.0，HTTP1.1 ，HTTPS，SPDY，HTTP2.0，还有对HTTP缓存的一些记录 HTTP1.0，HTTP1.1 ，HTTPS，SPDY，HTTP2.0HTTP1.0 与 HTTP1.1 区别HTTP1.0最早在网页中使用是在 1996 年，那个时候只是使用一些较为简单的网页上和网络请求上，而HTTP1.1则在 1999 年才开始广泛应用于现在的各大浏览器网络请求">
+<meta name="keywords" content="http">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTTP小结">
+<meta property="og:url" content="https://recallhyx.github.io/2018/03/19/HTTP小结/index.html">
+<meta property="og:site_name" content="Recall Hyx">
+<meta property="og:description" content="前言主要是对比HTTP1.0，HTTP1.1 ，HTTPS，SPDY，HTTP2.0，还有对HTTP缓存的一些记录 HTTP1.0，HTTP1.1 ，HTTPS，SPDY，HTTP2.0HTTP1.0 与 HTTP1.1 区别HTTP1.0最早在网页中使用是在 1996 年，那个时候只是使用一些较为简单的网页上和网络请求上，而HTTP1.1则在 1999 年才开始广泛应用于现在的各大浏览器网络请求">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://misc.linkedkeeper.com/misc/img/blog/201611/linkedkeeper0_e09e93a0-5e7f-47db-b332-9c8ce3e0a405.jpg">
+<meta property="og:image" content="https://elliotsomething.github.io/images/post-SSL-01.png">
+<meta property="og:image" content="http://7jpo3s.com1.z0.glb.clouddn.com/http-6.png">
+<meta property="og:image" content="https://www.centos.bz/wp-content/uploads/2017/09/6-21.png">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5834506-bb5edb1a50339232.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5834506-581c7c490ab43e7e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5834506-d3f4888458525488.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5834506-3862ce8c2cc24ce4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5834506-b1c6af665b522367.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5834506-5ae63e577ad67f1e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5834506-b417d5f9d1f5c4a3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5834506-d950395719e0986b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5834506-eccf6a522590fddf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5834506-438b1abf929b82d2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5834506-968f175b73b0a47e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5834506-bcfb5caf5031f69a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5834506-8c404ac67a27e4f6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5834506-8d74c29f4e792e10.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-03-19T13:29:22.638Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="HTTP小结">
+<meta name="twitter:description" content="前言主要是对比HTTP1.0，HTTP1.1 ，HTTPS，SPDY，HTTP2.0，还有对HTTP缓存的一些记录 HTTP1.0，HTTP1.1 ，HTTPS，SPDY，HTTP2.0HTTP1.0 与 HTTP1.1 区别HTTP1.0最早在网页中使用是在 1996 年，那个时候只是使用一些较为简单的网页上和网络请求上，而HTTP1.1则在 1999 年才开始广泛应用于现在的各大浏览器网络请求">
+<meta name="twitter:image" content="http://misc.linkedkeeper.com/misc/img/blog/201611/linkedkeeper0_e09e93a0-5e7f-47db-b332-9c8ce3e0a405.jpg">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Recall HYX</h5>
+          <a href="mailto:quce.hu@qq.com" title="quce.hu@qq.com" class="mail">quce.hu@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                文章
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/recallhyx" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">HTTP小结</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">HTTP小结</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-03-19T13:23:04.000Z" itemprop="datePublished" class="page-time">
+  2018-03-19
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/HTTP/">HTTP</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#前言"><span class="post-toc-number">1.</span> <span class="post-toc-text">前言</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#HTTP1-0，HTTP1-1-，HTTPS，SPDY，HTTP2-0"><span class="post-toc-number">2.</span> <span class="post-toc-text">HTTP1.0，HTTP1.1 ，HTTPS，SPDY，HTTP2.0</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#HTTP1-0-与-HTTP1-1-区别"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">HTTP1.0 与 HTTP1.1 区别</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#HTTP-与-HTTPS-的一些区别"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">HTTP 与 HTTPS 的一些区别</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#HTTPS-9次握手"><span class="post-toc-number">2.2.1.</span> <span class="post-toc-text">HTTPS 9次握手</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#SPDY-与-HTTP2-0-的联系"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">SPDY 与 HTTP2.0 的联系</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#HTTP2-0-新特性"><span class="post-toc-number">2.3.1.</span> <span class="post-toc-text">HTTP2.0 新特性</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#完整图"><span class="post-toc-number">2.4.</span> <span class="post-toc-text">完整图</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#HTTP缓存"><span class="post-toc-number">3.</span> <span class="post-toc-text">HTTP缓存</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#缓存头"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">缓存头</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#HTTP1-0-用到的缓存头"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">HTTP1.0 用到的缓存头</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Pragma"><span class="post-toc-number">3.2.1.</span> <span class="post-toc-text">Pragma</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Expires"><span class="post-toc-number">3.2.2.</span> <span class="post-toc-text">Expires</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Cache-Control"><span class="post-toc-number">3.3.</span> <span class="post-toc-text">Cache-Control</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Last-modified"><span class="post-toc-number">3.4.</span> <span class="post-toc-text">Last-modified</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#ETag"><span class="post-toc-number">3.5.</span> <span class="post-toc-text">ETag</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#缓存头部对比"><span class="post-toc-number">3.6.</span> <span class="post-toc-text">缓存头部对比</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#用户刷新-访问行为"><span class="post-toc-number">3.7.</span> <span class="post-toc-text">用户刷新/访问行为</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#在URI输入栏中输入然后回车"><span class="post-toc-number">3.7.1.</span> <span class="post-toc-text">在URI输入栏中输入然后回车</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#F5-点击工具栏中的刷新按钮-右键菜单重新加载"><span class="post-toc-number">3.7.2.</span> <span class="post-toc-text">F5/点击工具栏中的刷新按钮/右键菜单重新加载</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Ctrl-F5"><span class="post-toc-number">3.7.3.</span> <span class="post-toc-text">Ctrl+F5</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#总结"><span class="post-toc-number">3.8.</span> <span class="post-toc-text">总结</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-HTTP小结"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">HTTP小结</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-03-19 21:23:04" datetime="2018-03-19T13:23:04.000Z"  itemprop="datePublished">2018-03-19</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/HTTP/">HTTP</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>主要是对比HTTP1.0，HTTP1.1 ，HTTPS，SPDY，HTTP2.0，还有对HTTP缓存的一些记录</p>
+<h1 id="HTTP1-0，HTTP1-1-，HTTPS，SPDY，HTTP2-0"><a href="#HTTP1-0，HTTP1-1-，HTTPS，SPDY，HTTP2-0" class="headerlink" title="HTTP1.0，HTTP1.1 ，HTTPS，SPDY，HTTP2.0"></a>HTTP1.0，HTTP1.1 ，HTTPS，SPDY，HTTP2.0</h1><h2 id="HTTP1-0-与-HTTP1-1-区别"><a href="#HTTP1-0-与-HTTP1-1-区别" class="headerlink" title="HTTP1.0 与 HTTP1.1 区别"></a>HTTP1.0 与 HTTP1.1 区别</h2><p>HTTP1.0最早在网页中使用是在 1996 年，那个时候只是使用一些较为简单的网页上和网络请求上，而HTTP1.1则在 1999 年才开始广泛应用于现在的各大浏览器网络请求中，同时 HTTP1.1 也是当前使用最为广泛的HTTP协议。 主要区别主要体现在：</p>
+<ol>
+<li><p>缓存处理，在HTTP1.0中主要使用header里的 If-Modified-Since , Expires 来做为缓存判断的标准，HTTP1.1 则引入了更多的缓存控制策略例如 Entity tag，If-Unmodified-Since ,  If-Match ,  If-None-Match 等更多可供选择的缓存头来控制缓存策略。</p>
+</li>
+<li><p>带宽优化及网络连接的使用，HTTP1.0中，存在一些浪费带宽的现象，例如客户端只是需要某个对象的一部分，而服务器却将整个对象送过来了，并且不支持断点续传功能，HTTP1.1则在请求头引入了 range 头域，它允许只请求资源的某个部分，即返回码是 206（Partial Content），这样就方便了开发者自由的选择以便于充分利用带宽和连接。</p>
+</li>
+<li><p>错误通知的管理，在HTTP1.1中新增了 24 个错误状态响应码，如 409（Conflict）表示请求的资源与资源的当前状态发生冲突；410（Gone）表示服务器上的某个资源被永久性的删除。</p>
+</li>
+<li><p>Host头处理，在 HTTP1.0 中认为每台服务器都绑定一个唯一的IP地址，因此，请求消息中的URL并没有传递主机名（hostname）。但随着虚拟主机技术的发展，在一台物理服务器上可以存在多个虚拟主机（Multi-homed Web Servers），并且它们共享一个IP地址。HTTP1.1 的请求消息和响应消息都应支持Host头域，且请求消息中如果没有Host头域会报告一个错误（400 Bad Request）。</p>
+</li>
+<li><p>长连接，HTTP 1.1支持长连接（PersistentConnection）和请求的流水线（Pipelining）处理，在一个TCP连接上可以传送多个HTTP请求和响应，减少了建立和关闭连接的消耗和延迟，在HTTP1.1中默认开启 Connection： keep-alive，一定程度上弥补了HTTP1.0每次请求都要创建连接的缺点。</p>
+</li>
+</ol>
+<h2 id="HTTP-与-HTTPS-的一些区别"><a href="#HTTP-与-HTTPS-的一些区别" class="headerlink" title="HTTP 与 HTTPS 的一些区别"></a>HTTP 与 HTTPS 的一些区别</h2><ol>
+<li><p>HTTPS 协议需要到 CA 申请证书，一般免费证书很少，需要交费。</p>
+</li>
+<li><p>HTTP 协议运行在 TCP 之上，所有传输的内容都是明文，HTTPS 运行在 SSL/TLS 之上，SSL/TLS 运行在 TCP 之上，所有传输的内容都经过加密的。</p>
+</li>
+<li><p>HTTP 和 HTTPS 使用的是完全不同的连接方式，用的端口也不一样，前者是80，后者是443。</p>
+</li>
+<li><p>HTTPS 可以有效的防止运营商劫持，解决了防劫持的一个大问题。</p>
+</li>
+<li><p>HTTP是 3 次握手建立连接，HTTPS的话则是 9 次握手</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://misc.linkedkeeper.com/misc/img/blog/201611/linkedkeeper0_e09e93a0-5e7f-47db-b332-9c8ce3e0a405.jpg" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+</li>
+</ol>
+<h3 id="HTTPS-9次握手"><a href="#HTTPS-9次握手" class="headerlink" title="HTTPS 9次握手"></a>HTTPS 9次握手</h3><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://elliotsomething.github.io/images/post-SSL-01.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>(1) 客户端通过 <code>Client Hello</code> 消息将它支持的SSL版本、加密算法、密钥交换算法、MAC算法等信息发送给SSL服务器。</p>
+<p>(2) 服务器确定本次通信采用的版本和加密套件，并通过 <code>Server Hello</code> 消息通知给客户端。如果服务器允许客户端在以后的通信中重用本次会话，则服务器会为本次会话分配会话ID，并通过 <code>Server Hello</code> 消息发送给SSL客户端。</p>
+<p>(3) 服务器将携带自己公钥信息的数字证书通过 <code>Certificate</code> 消息发送给客户端。</p>
+<p>(4) 服务器发送 <code>Server Hello Done</code> 消息，通知客户端版本和加密套件协商结束，开始进行密钥交换。</p>
+<p>(5) 客户端验证服务器的证书合法后，利用证书中的公钥加密客户端随机生成的premaster secret，并通过 <code>Client Key Exchange</code> 消息发送给SSL服务器。</p>
+<p>(6) 客户端发送 <code>Change Cipher Spec</code> 消息，通知服务器后续报文将采用协商好的密钥和加密套件进行加密和MAC计算。</p>
+<p>(7) 客户端计算已交互的握手消息（除Change Cipher Spec消息外所有已交互的消息）的Hash值，利用协商好的密钥和加密套件处理Hash值（计算并添加MAC值、加密等），并通过 <code>Finished</code> 消息发送给服务器。服务器利用同样的方法计算已交互的握手消息的Hash值，并与 <code>Finished</code> 消息的解密结果比较，如果二者相同，且MAC值验证成功，则证明密钥和加密套件协商成功。</p>
+<p>(8) 同样地，SSL服务器发送 <code>Change Cipher Spec</code> 消息，通知客户端后续报文将采用协商好的密钥和加密套件进行加密和MAC计算。</p>
+<p>(9) 服务器计算已交互的握手消息的Hash值，利用协商好的密钥和加密套件处理Hash值（计算并添加MAC值、加密等），并通过 <code>Finished</code> 消息发送给客户端。客户端利用同样的方法计算已交互的握手消息的Hash值，并与 <code>Finished</code> 消息的解密结果比较，如果二者相同，且MAC值验证成功，则证明密钥和加密套件协商成功。</p>
+<p>(10) 客户端接收到服务器发送的 <code>Finished</code> 消息后，如果解密成功，则可以判断服务器是数字证书的拥有者，即服务器身份验证成功，因为只有拥有私钥的服务器才能从Client Key Exchange消息中解密得到 premaster secret，从而间接地实现了客户端对服务器的身份验证。</p>
+<h2 id="SPDY-与-HTTP2-0-的联系"><a href="#SPDY-与-HTTP2-0-的联系" class="headerlink" title="SPDY 与 HTTP2.0 的联系"></a>SPDY 与 HTTP2.0 的联系</h2><p>SPDY（发音如英语：speedy）可以说是综合了 HTTPS 和 HTTP 两者有点于一体的传输协议，主要解决：</p>
+<ol>
+<li><p>降低延迟，针对 HTTP 高延迟的问题，SPDY 优雅的采取了多路复用（multiplexing）。多路复用通过多个请求stream共享一个 tcp 连接的方式，解决了HOL blocking 的问题，降低了延迟同时提高了带宽的利用率。</p>
+</li>
+<li><p>请求优先级（request prioritization）。多路复用带来一个新的问题是，在连接共享的基础之上有可能会导致关键请求被阻塞。SPDY 允许给每个 request 设置优先级，这样重要的请求就会优先得到响应。比如浏览器加载首页，首页的 html 内容应该优先展示，之后才是各种静态资源文件，脚本文件等加载，这样可以保证用户能第一时间看到网页内容。</p>
+</li>
+<li><p>header 压缩。前面提到 HTTP1.x 的 header 很多时候都是重复多余的。选择合适的压缩算法可以减小包的大小和数量。</p>
+</li>
+<li><p>基于 HTTPS 的加密协议传输，大大提高了传输数据的可靠性。</p>
+</li>
+<li><p>服务端推送（server push），采用了 SPDY 的网页，例如我的网页有一个<code>sytle.css</code> 的请求，在客户端收到 <code>sytle.css</code> 数据的同时，服务端会将 <code>sytle.js</code> 的文件推送给客户端，当客户端再次尝试获取 <code>sytle.js</code> 时就可以直接从缓存中获取到，不用再发请求了。</p>
+</li>
+</ol>
+<p>SPDY 位于 HTTP 之下，TCP 和 SSL 之上，这样可以轻松兼容老版本的 HTTP 协议（将HTTP1.x的内容封装成一种新的frame格式），同时可以使用已有的 SSL 功能。</p>
+<p>后来 SPDY 未能单独成为正式标准，不过 SPDY 开发组的成员全程参与了HTTP/2的制定过程。HTTP/2 协议完成之后，Google认为 SPDY 可以功成身退了，于是最终Google Chrome 淘汰对 SPDY 的支持，全面改为采用 HTTP/2 。</p>
+<p>HTTP2.0 可以说是 SPDY 的升级版（原本也是基于SPDY设计的），但是，HTTP2.0 跟 SPDY 仍有不同的地方，主要是以下两点：</p>
+<ol>
+<li><p>HTTP2.0 支持明文 HTTP 传输，而 SPDY 强制使用 HTTPS</p>
+</li>
+<li><p>HTTP2.0 消息头的压缩算法采用 HPACK，而非 SPDY 采用的 DEFLATE</p>
+</li>
+</ol>
+<h3 id="HTTP2-0-新特性"><a href="#HTTP2-0-新特性" class="headerlink" title="HTTP2.0 新特性"></a>HTTP2.0 新特性</h3><ol>
+<li><p>新的二进制格式（Binary Format），HTTP1.x 的解析是基于文本。基于文本协议的格式解析存在天然缺陷，文本的表现形式有多样性，要做到健壮性考虑的场景必然很多，二进制则不同，只认0和1的组合。基于这种考虑 HTTP2.0 的协议解析决定采用二进制格式，实现方便且健壮。</p>
+</li>
+<li><p>多路复用（MultiPlexing），即连接共享，即每一个request都是是用作连接共享机制的。一个 request 对应一个 id ，这样一个连接上可以有多个 request，每个连接的request 可以随机的混杂在一起，接收方可以根据 request 的 id 将 request 再归属到各自不同的服务端请求里面。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://7jpo3s.com1.z0.glb.clouddn.com/http-6.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure></li>
+<li><p>header 压缩，如上文中所言，对前面提到过 HTTP1.x 的header带有大量信息，而且每次都要重复发送，HTTP2.0 使用 encoder 来减少需要传输的 header 大小，通讯双方各自 cache 一份 header fields 表，既避免了重复 header 的传输，又减小了需要传输的大小。</p>
+</li>
+<li><p>服务端推送（server push），同SPDY一样，HTTP2.0 也具有server push功能。</p>
+</li>
+</ol>
+<h2 id="完整图"><a href="#完整图" class="headerlink" title="完整图"></a>完整图</h2><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://www.centos.bz/wp-content/uploads/2017/09/6-21.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<h1 id="HTTP缓存"><a href="#HTTP缓存" class="headerlink" title="HTTP缓存"></a>HTTP缓存</h1><p>HTTP 头信息控制缓存大致分为两种：强缓存和协商缓存。强缓存如果命中缓存不需要和服务器端发生交互，而协商缓存不管是否命中都要和服务器端发生交互，强制缓存的优先级高于协商缓存。<br>我们在上面说到，HTTP1.1 引入了更多的缓存控制策略，接下来我们详细讲一下这些缓存头。</p>
+<h2 id="缓存头"><a href="#缓存头" class="headerlink" title="缓存头"></a>缓存头</h2><ol>
+<li>通用首部字段<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://upload-images.jianshu.io/upload_images/5834506-bb5edb1a50339232.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure></li>
+<li>请求首部字段<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://upload-images.jianshu.io/upload_images/5834506-581c7c490ab43e7e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure></li>
+<li>响应首部字段<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://upload-images.jianshu.io/upload_images/5834506-d3f4888458525488.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure></li>
+<li>实体首部字段<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://upload-images.jianshu.io/upload_images/5834506-3862ce8c2cc24ce4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+</li>
+</ol>
+<h2 id="HTTP1-0-用到的缓存头"><a href="#HTTP1-0-用到的缓存头" class="headerlink" title="HTTP1.0 用到的缓存头"></a>HTTP1.0 用到的缓存头</h2><h3 id="Pragma"><a href="#Pragma" class="headerlink" title="Pragma"></a>Pragma</h3><p>当该字段值为 <code>no-cache</code> 的时候（事实上现在RFC中也仅标明该可选值），会知会客户端不要对该资源读缓存，即每次都得向服务器发一次请求才行。<br>Pragma 属于通用首部字段，在客户端上使用时，常规要求我们往 html 上加上这段meta 元标签<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;meta <span class="attribute">http-equiv</span>=<span class="string">"Pragma"</span> <span class="attribute">content</span>=<span class="string">"no-cache"</span>&gt;</span><br></pre></td></tr></table></figure></p>
+<h3 id="Expires"><a href="#Expires" class="headerlink" title="Expires"></a>Expires</h3><p>有了 Pragma 来禁用缓存，自然也需要有个东西来启用缓存和定义缓存时间，对http1.0 而言，Expires 就是做这件事的首部字段。 Expires 的值对应一个GMT（格林尼治时间），比如Mon, 22 Jul 2002 11:12:01 GMT来告诉浏览器资源缓存过期时间，如果还没过该时间点则不发请求。<br>Expires 指缓存过期的时间，超过了这个时间点就代表资源过期。有一个问题是由于使用具体时间，如果时间表示出错或者没有转换到正确的时区都可能造成缓存生命周期出错。并且 Expires 是 HTTP/1.0 的标准，现在更倾向于用 HTTP/1.1 中定义的 Cache-Control。两个同时存在时也是 Cache-Control 的优先级更高。<br>响应报文中 Expires 所定义的缓存时间是相对服务器上的时间而言的，如果客户端上的时间跟服务器上的时间不一致（特别是用户修改了自己电脑的系统时间），那缓存时间可能就没啥意义了。</p>
+<h2 id="Cache-Control"><a href="#Cache-Control" class="headerlink" title="Cache-Control"></a>Cache-Control</h2><p>针对上述的“ Expires 时间是相对服务器而言，无法保证和客户端时间统一”的问题，http1.1 新增了 Cache-Control 来定义缓存过期时间。注意：若报文中同时出现了 Expires 和 Cache-Control，则以 Cache-Control 为准。<br>也就是说优先级从高到低分别是 Pragma -&gt; Cache-Control -&gt; Expires 。<br>Cache-Control 也是一个通用首部字段，这意味着它能分别在请求报文和响应报文中使用。在RFC中规范了 Cache-Control 的格式为：<code>&quot;Cache-Control&quot; &quot;:&quot; cache-directive</code><br>其中，作为请求首部时，<code>cache-directive</code> 的可选值有：<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://upload-images.jianshu.io/upload_images/5834506-b1c6af665b522367.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure><br>作为响应首部时，<code>cache-directive</code> 的可选值有：<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://upload-images.jianshu.io/upload_images/5834506-5ae63e577ad67f1e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure><br>Cache-Control 允许自由组合可选值，例如：<code>Cache-Control: max-age=3600, must-revalidate</code> 它意味着该资源是从原服务器上取得的，且其缓存（新鲜度）的有效时间为一小时，在后续一小时内，用户重新访问该资源则无须发送请求。 当然这种组合的方式也会有些限制，比如 <code>no-cache</code> 就不能和 <code>max-age</code>、<code>min-fresh</code>、<code>max-stale</code> 一起搭配使用。</p>
+<p>以上，<code>Expires</code> 和 <code>Cache-Control</code> 都是属于强缓存，接下来介绍协商缓存</p>
+<h2 id="Last-modified"><a href="#Last-modified" class="headerlink" title="Last-modified"></a>Last-modified</h2><p>服务器将资源传递给客户端时，会将资源最后更改的时间以“Last-Modified: GMT”的形式加在实体首部上一起返回给客户端。<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">Last-Modified</span>: <span class="selector-tag">Fri</span>, 22 <span class="selector-tag">Jul</span> 2016 01<span class="selector-pseudo">:47</span><span class="selector-pseudo">:00</span> <span class="selector-tag">GMT</span></span><br></pre></td></tr></table></figure></p>
+<p>客户端会为资源标记上该信息，下次再次请求时，会把该信息附带在请求报文中一并带给服务器去做检查，若传递的时间值与服务器上该资源最终修改时间是一致的，则说明该资源没有被修改过，直接返回 304 状态码，内容为空，这样就节省了传输数据量 。如果两个时间不一致，则服务器会发回该资源并返回 200 状态码，和第一次请求时类似。这样保证不向客户端重复发出资源，也保证当服务器有变化时，客户端能够得到最新的资源。一个 304 响应比一个静态资源通常小得多，这样就节省了网络带宽。</p>
+<p>至于传递标记起来的最终修改时间的请求报文首部字段一共有两个：</p>
+<ol>
+<li><p>If-Modified-Since: Last-Modified-value<br>该请求首部告诉服务器如果客户端传来的最后修改时间与服务器上的一致，则直接回送304 和响应报头即可。<br>当前各浏览器均是使用的该请求首部来向服务器传递保存的 Last-Modified 值。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://upload-images.jianshu.io/upload_images/5834506-b417d5f9d1f5c4a3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+</li>
+<li><p>If-Unmodified-Since: Last-Modified-value<br>该值告诉服务器，若 Last-Modified 没有匹配上（资源在服务端的最后更新时间改变了），则应当返回412(Precondition Failed) 状态码给客户端。 Last-Modified 存在一定问题，如果在服务器上，一个资源被修改了，但其实际内容根本没发生改变，会因为 Last-Modified 时间匹配不上而返回了整个实体给客户端（即使客户端缓存里有个一模一样的资源）。</p>
+</li>
+</ol>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://upload-images.jianshu.io/upload_images/5834506-d950395719e0986b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>注意：如果响应头中有 Last-modified 而没有 Expire 或 Cache-Control 时，浏览器会有自己的算法来推算出一个时间缓存该文件多久，不同浏览器得出的时间不一样，所以 Last-modified 要记得配合 Expires/Cache-Control 使用。</p>
+<h2 id="ETag"><a href="#ETag" class="headerlink" title="ETag"></a>ETag</h2><p>为了解决上述Last-Modified可能存在的不准确的问题，Http1.1还推出了 ETag 实体首部字段。 服务器会通过某种算法，给资源计算得出一个唯一标志符（比如md5标志），在把资源响应给客户端的时候，会在实体首部加上“ETag: 唯一标识符”一起返回给客户端。例如：<code>Etag: &quot;5d8c72a5edda8d6a:3239&quot;</code><br>客户端会保留该 ETag 字段，并在下一次请求时将其一并带过去给服务器。服务器只需要比较客户端传来的ETag跟自己服务器上该资源的ETag是否一致，就能很好地判断资源相对客户端而言是否被修改过了。<br>如果服务器发现ETag匹配不上，那么直接以常规GET 200回包形式将新的资源（当然也包括了新的ETag）发给客户端；如果ETag是一致的，则直接返回304知会客户端直接使用本地缓存即可。</p>
+<p>那么客户端是如何把标记在资源上的 ETag 传回给服务器的呢？请求报文中有两个首部字段可以带上 ETag 值：</p>
+<ol>
+<li>If-None-Match: ETag-value<br>告诉服务端如果 ETag 没匹配上需要重发资源数据，否则直接回送304 和响应报头即可。 当前各浏览器均是使用的该请求首部来向服务器传递保存的 ETag 值。<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://upload-images.jianshu.io/upload_images/5834506-eccf6a522590fddf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure></li>
+<li>If-Match: ETag-value<br>告诉服务器如果没有匹配到 ETag，或者收到了“*”值而当前并没有该资源实体，则应当返回412(Precondition Failed) 状态码给客户端。否则服务器直接忽略该字段。<br>需要注意的是，如果资源是走分布式服务器（比如 CDN）存储的情况，需要这些服务器上计算 ETag 唯一值的算法保持一致，才不会导致明明同一个文件，在服务器A和服务器B上生成的 ETag 却不一样。</li>
+</ol>
+<h2 id="缓存头部对比"><a href="#缓存头部对比" class="headerlink" title="缓存头部对比"></a>缓存头部对比</h2><table>
+<thead>
+<tr>
+<th>头部</th>
+<th>优势和特点</th>
+<th>劣势和问题</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Expires</td>
+<td>1、HTTP 1.0 产物，可以在HTTP 1.0和1.1中使用，简单易用。2、以时刻标识失效时间。</td>
+<td>1、时间是由服务器发送的(UTC)，如果服务器时间和客户端时间存在不一致，可能会出现问题。2、存在版本问题，到期之前的修改客户端是不可知的。</td>
+</tr>
+<tr>
+<td>Cache-Control</td>
+<td>1、HTTP 1.1 产物，以时间间隔标识失效时间，解决了Expires服务器和客户端相对时间的问题。2、比Expires多了很多选项设置。</td>
+<td>1、HTTP 1.1 才有的内容，不适用于HTTP 1.0 。2、存在版本问题，到期之前的修改客户端是不可知的。</td>
+</tr>
+<tr>
+<td>Last-Modified</td>
+<td>1、不存在版本问题，每次请求都会去服务器进行校验。服务器对比最后修改时间如果相同则返回304，不同返回200以及资源内容。</td>
+<td>1、只要资源修改，无论内容是否发生实质性的变化，都会将该资源返回客户端。例如周期性重写，这种情况下该资源包含的数据实际上一样的。2、以时刻作为标识，无法识别一秒内进行多次修改的情况。3、某些服务器不能精确的得到文件的最后修改时间。</td>
+</tr>
+<tr>
+<td>ETag</td>
+<td>1、可以更加精确的判断资源是否被修改，可以识别一秒内多次修改的情况。2、不存在版本问题，每次请求都回去服务器进行校验。</td>
+<td>1、计算ETag值需要性能损耗。2、分布式服务器存储的情况下，计算ETag的算法如果不一样，会导致浏览器从一台服务器上获得页面内容后到另外一台服务器上进行验证时发现ETag不匹配的情况。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="用户刷新-访问行为"><a href="#用户刷新-访问行为" class="headerlink" title="用户刷新/访问行为"></a>用户刷新/访问行为</h2><p>我们可以把刷新/访问界面的手段分成三类：</p>
+<ul>
+<li>在URI输入栏中输入然后回车/通过书签访问</li>
+<li>F5/点击工具栏中的刷新按钮/右键菜单重新加载</li>
+<li>Ctrl+F5</li>
+</ul>
+<p>在浏览器中，有时候你会发现通过不同的手段访问/刷新界面页面的呈现速度是不一样的，那么它们到底有什么区别呢?<br>以下对这三种访问情况进行实践与讨论。<br>准备工作：<br>为了模拟第一次访问某网站，清除相关缓存内容。首次访问网页，查看请求与响应信息可以看到请求头部没有任何关于 http 缓存相关的信息。而返回的 HTTPresponse 包含了以下头部信息。<br><figure class="highlight tap"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Cache-Control: max-age=31104000</span><br><span class="line">Expires: Thu,<span class="number"> 20 </span>Jul<span class="number"> 2017 </span>02:18:41 GMT</span><br><span class="line">Last-Modified: Fri,<span class="number"> 15 </span>Jul<span class="number"> 2016 </span>04:11:51 GMT</span><br></pre></td></tr></table></figure></p>
+<p>浏览器会对该文件进行缓存，直到该文件过期、用户清空cache或者用户强制刷新资源时间。</p>
+<h3 id="在URI输入栏中输入然后回车"><a href="#在URI输入栏中输入然后回车" class="headerlink" title="在URI输入栏中输入然后回车"></a>在URI输入栏中输入然后回车</h3><p>我们可以看到返回响应码是 200 OK (from cache)，浏览器发现该资源已经缓存了而且没有过期（通过Expires头部或者Cache-Control头部），没有跟服务器确认，而是直接使用了浏览器缓存的内容。其中响应内容和之前的响应内容一模一样，例如其中的Date时间是上一次响应的时间。<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://upload-images.jianshu.io/upload_images/5834506-438b1abf929b82d2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure><br>所以我们也能看到该资源的Size为 <code>from cache</code><br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://upload-images.jianshu.io/upload_images/5834506-968f175b73b0a47e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure></p>
+<h3 id="F5-点击工具栏中的刷新按钮-右键菜单重新加载"><a href="#F5-点击工具栏中的刷新按钮-右键菜单重新加载" class="headerlink" title="F5/点击工具栏中的刷新按钮/右键菜单重新加载"></a>F5/点击工具栏中的刷新按钮/右键菜单重新加载</h3><p>F5的作用和直接在 URI 输入栏中输入然后回车是不一样的，F5会让浏览器无论如何都发一个 HTTP Request 给Server，即使先前的响应中有Expires头部。所以，当我在当前 网页中按F5的时候，浏览器会发送一个HTTP Request给Server，但是包含这样的Headers:<br><figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Cache</span><span class="params">-Control</span>: <span class="keyword">max</span><span class="params">-age</span>=<span class="number">0</span></span><br><span class="line"><span class="keyword">If</span><span class="params">-Modified</span><span class="params">-Since</span>: Fri, <span class="number">15</span> Jul <span class="number">2016</span> <span class="number">04</span>:<span class="number">11</span>:<span class="number">51</span> GMT</span><br></pre></td></tr></table></figure></p>
+<p>其中Cache-Control是Chrome强制加上的，而If-Modified-Since是因为获取该资源的时候包含了Last-Modified头部，浏览器会使用If-Modified-Since头部信息重新发送该时间以确认资源是否需要重新发送。 实际上Server没有修改这个index.css文件，所以返回了一个304(Not Modified)，这样的响应信息很小，所消耗的route-trip不多，网页很快就刷新了。<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://upload-images.jianshu.io/upload_images/5834506-bcfb5caf5031f69a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure><br>上面的例子中没有ETag，如果Response中包含ETag，F5引发的 Http Request 中也是会包含 If-None-Match 的。</p>
+<h3 id="Ctrl-F5"><a href="#Ctrl-F5" class="headerlink" title="Ctrl+F5"></a>Ctrl+F5</h3><p>那么Ctrl+F5呢？ Ctrl+F5 也叫强制刷新，要的是彻底的从Server拿一份新的资源过来，所以不光要发送 HTTP request 给Server，而且这个请求里面连 If-Modified-Since/If-None-Match 都没有，这样就逼着 Server 不能返回304，而是把整个资源原原本本地返回一份，这样，Ctrl+F5 引发的传输时间变长了，自然网页 Refresh 的也慢一些。我们可以看到该操作返回了200，并刷新了相关的缓存控制时间。<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://upload-images.jianshu.io/upload_images/5834506-8c404ac67a27e4f6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure><br>实际上，为了保证拿到的是从Server上最新的，Ctrl+F5不只是去掉了If-Modified-Since/If-None-Match，还需要添加一些HTTP Headers。按照HTTP/1.1协议，Cache不光只是存在Browser终端，从Browser到Server之间的中间节点(比如Proxy)也可能扮演Cache的作用，为了防止获得的只是这些中间节点的Cache，需要告诉他们，别用自己的Cache敷衍我，往Upstream的节点要一个最新的copy吧。<br>在Chrome 51 中会包含两个头部信息， 作用就是让中间的Cache对这个请求失效，这样返回的绝对是新鲜的资源。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Cache</span>-Control: <span class="keyword">no</span>-<span class="keyword">cache</span></span><br><span class="line"><span class="keyword">Pragma</span>: <span class="keyword">no</span>-<span class="keyword">cache</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://upload-images.jianshu.io/upload_images/5834506-8d74c29f4e792e10.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<blockquote>
+<p>参考：<br><a href="https://juejin.im/entry/5981c5df518825359a2b9476" target="_blank" rel="noopener">HTTP1.0、HTTP1.1 和 HTTP2.0 的区别</a><br><a href="http://www.linkedkeeper.com/detail/blog.action?bid=152" target="_blank" rel="noopener">HTTP,HTTP2.0,SPDY,HTTPS你应该知道的一些事</a><br><a href="https://www.centos.bz/2017/09/http%E7%9A%84%E5%8F%98%E8%BF%81%EF%BC%88http1-0-http2-0%EF%BC%8Chttps%EF%BC%89/" target="_blank" rel="noopener">http的变迁（http1.0-http2.0，https）</a><br><a href="https://zh.wikipedia.org/wiki/SPDY" target="_blank" rel="noopener">SPDY</a><br><a href="https://zhuanlan.zhihu.com/p/29750583" target="_blank" rel="noopener">HTTP 缓存机制一二三</a><br><a href="http://imweb.io/topic/5795dcb6fb312541492eda8c" target="_blank" rel="noopener">HTTP缓存控制小结</a><br><a href="http://www.cnblogs.com/vajoy/p/5341664.html" target="_blank" rel="noopener">浅谈浏览器http的缓存机制</a></p>
+</blockquote>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <footer>
+        <a href="https://recallhyx.github.io">
+            <img src="/img/avatar.jpg" alt="Recall HYX">
+            Recall HYX
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/http/">http</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://recallhyx.github.io/2018/03/19/HTTP小结/&title=《HTTP小结》 — Recall Hyx&pic=https://recallhyx.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://recallhyx.github.io/2018/03/19/HTTP小结/&title=《HTTP小结》 — Recall Hyx&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://recallhyx.github.io/2018/03/19/HTTP小结/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《HTTP小结》 — Recall Hyx&url=https://recallhyx.github.io/2018/03/19/HTTP小结/&via=https://recallhyx.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://recallhyx.github.io/2018/03/19/HTTP小结/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/03/18/前端三大框架数据流动和原理/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">前端三大框架数据流动和原理</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+<section class="comments" id="comments">
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_shortname = 'recallhyx';
+    lazyScripts.push('//' + disqus_shortname + '.disqus.com/embed.js')
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Recall HYX &copy; 2017 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://recallhyx.github.io/2018/03/19/HTTP小结/&title=《HTTP小结》 — Recall Hyx&pic=https://recallhyx.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://recallhyx.github.io/2018/03/19/HTTP小结/&title=《HTTP小结》 — Recall Hyx&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://recallhyx.github.io/2018/03/19/HTTP小结/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《HTTP小结》 — Recall Hyx&url=https://recallhyx.github.io/2018/03/19/HTTP小结/&via=https://recallhyx.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://recallhyx.github.io/2018/03/19/HTTP小结/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACKElEQVR42u3aQXLCMAwF0N7/0um2m5gvKXQm9vOKgQT8shCSrJ+feF1/1t2n+fV39+Z3NRcGBsZrGddy3V1zB0i2uN76+q5bKgYGxgGMZBPr8Lrebm+LeYjHwMDASALr+nuqMAwMDIw5o5rkrYNs9fFhYGCcyaimaHmLbRK4v1KLY2BgvJCRd93///VXzjcwMDBexbiKq3oAWX2ntzAwMPZm5AFukjLmR5W9/WBgYOzNyEvKZHgrCaPVhl0Ew8DAOIxRaMQPDimTtLJwPQYGxtaMchY5aMM9Nv7V6xRiYGC8lpEnf8km8lbdvBjGwMA4jZG3yapDYPOHFYV+DAyMAxi9A8ve/EP1GCAqjzEwMA5gPBWIe+Eyb5wVuoYYGBgbMartsCSNy0crnhrawMDA2JsxaYRVS9Y8oSxPU2BgYBzAmI9c5AVwfsxZznAxMDA2ZSRBLUc+dU0+5IGBgXEOIz+M7CVzV3ElD/FDLY6BgbEdoxqbq8eTvXGK3mAHBgbGroxeUvhUQy2hRoMaGBgYBzOqI1yTQYregSgGBsY5jGronLB7Ges6EGNgYOzKmDTCqklk0pJrhnsMDIytGZOQmv9YXqAmvNGfBAYGxmsZvSBbLWKrw2f5yAUGBsY5jDx1m7T15/8AH2pxDAwMjDjhS74tCaZ5mMbAwMDoDVVUG3OjR4aBgXEAIyliHxjeGiedD7TbMDAwXsjIA+h88CIvcfPjAQwMjK0Zvx0uA/HMoScbAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
