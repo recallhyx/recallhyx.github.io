@@ -29,19 +29,19 @@ ga('send', 'pageview');
     
     
     <meta name="keywords" content="漏洞">
-    <meta name="description" content="CSRF（Cross-site request forgery）与xss经常混淆，可以从信任的角度来区分XSS：利用用户对站点的信任CSRF：利用站点对已经身份认证的信任结合社会工程学在身份认证会话过程中实现攻击  修改帐号密码、个人信息（电话、收货地址） 发送伪造的业务请求（网银、购物、投票） 关注他人社交帐号、推送博文 在用户非自愿、不知情的情况下提交请求  漏洞利用条件：  被害用户已经完成">
+    <meta name="description" content="CSRF（Cross-site request forgery）与xss经常混淆，可以从信任的角度来区分XSS：利用用户对站点的信任CSRF：利用站点对已经身份认证的信任结合社会工程学在身份认证会话过程中实现攻击  修改帐号密码、个人信息（电话、收货地址） 发送伪造的业务请求（网银、购物、投票） 关注他人社交帐号、推送博文 在用户非自愿、不知情的情况下提交请求  CSRF 典型的场景：攻击通过在授">
 <meta name="keywords" content="漏洞">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CSRF和WebShell">
 <meta property="og:url" content="https://recallhyx.github.io/2018/02/05/CSRF和WebShell/index.html">
 <meta property="og:site_name" content="Recall Hyx">
-<meta property="og:description" content="CSRF（Cross-site request forgery）与xss经常混淆，可以从信任的角度来区分XSS：利用用户对站点的信任CSRF：利用站点对已经身份认证的信任结合社会工程学在身份认证会话过程中实现攻击  修改帐号密码、个人信息（电话、收货地址） 发送伪造的业务请求（网银、购物、投票） 关注他人社交帐号、推送博文 在用户非自愿、不知情的情况下提交请求  漏洞利用条件：  被害用户已经完成">
+<meta property="og:description" content="CSRF（Cross-site request forgery）与xss经常混淆，可以从信任的角度来区分XSS：利用用户对站点的信任CSRF：利用站点对已经身份认证的信任结合社会工程学在身份认证会话过程中实现攻击  修改帐号密码、个人信息（电话、收货地址） 发送伪造的业务请求（网银、购物、投票） 关注他人社交帐号、推送博文 在用户非自愿、不知情的情况下提交请求  CSRF 典型的场景：攻击通过在授">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5834506-097ede2ada1536cd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-02-05T08:08:51.141Z">
+<meta property="og:updated_time" content="2018-03-20T13:05:31.576Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CSRF和WebShell">
-<meta name="twitter:description" content="CSRF（Cross-site request forgery）与xss经常混淆，可以从信任的角度来区分XSS：利用用户对站点的信任CSRF：利用站点对已经身份认证的信任结合社会工程学在身份认证会话过程中实现攻击  修改帐号密码、个人信息（电话、收货地址） 发送伪造的业务请求（网银、购物、投票） 关注他人社交帐号、推送博文 在用户非自愿、不知情的情况下提交请求  漏洞利用条件：  被害用户已经完成">
+<meta name="twitter:description" content="CSRF（Cross-site request forgery）与xss经常混淆，可以从信任的角度来区分XSS：利用用户对站点的信任CSRF：利用站点对已经身份认证的信任结合社会工程学在身份认证会话过程中实现攻击  修改帐号密码、个人信息（电话、收货地址） 发送伪造的业务请求（网银、购物、投票） 关注他人社交帐号、推送博文 在用户非自愿、不知情的情况下提交请求  CSRF 典型的场景：攻击通过在授">
 <meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/5834506-097ede2ada1536cd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
     
     <link rel="shortcut icon" href="/img/favicon.ico">
@@ -197,6 +197,7 @@ ga('send', 'pageview');
 <li>关注他人社交帐号、推送博文</li>
 <li>在用户非自愿、不知情的情况下提交请求</li>
 </ul>
+<p>CSRF 典型的场景：<br>攻击通过在授权用户访问的页面中包含链接或者脚本的方式工作。例如：一个网站用户Bob可能正在浏览聊天论坛，而同时另一个用户Alice也在此论坛中，并且后者刚刚发布了一个具有Bob银行链接的图片消息。设想一下，Alice编写了一个在Bob的银行站点上进行取款的form提交的链接，并将此链接作为图片src。如果Bob的银行在cookie中保存他的授权信息，并且此cookie没有过期，那么当Bob的浏览器尝试装载图片时将提交这个取款form和他的cookie，这样在没经Bob同意的情况下便授权了这次事务。</p>
 <p>漏洞利用条件：</p>
 <ul>
 <li>被害用户已经完成身份认证</li>

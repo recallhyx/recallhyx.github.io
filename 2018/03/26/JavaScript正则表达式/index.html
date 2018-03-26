@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-112417276-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>JavaScript正则表达式 | Recall Hyx | Your star</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#FFC107">
+    
+    
+    <meta name="keywords" content="javascript">
+    <meta name="description" content="这里是对正则表达式的思考，源自一个题目：  完成一个 extractStr 函数，可以把一个字符串中所有的 : 到 . 的子串解析出来并且存放到一个数组当中，例如：extractStr(&amp;#39;My name is:Jerry. My age is:12.&amp;#39;) // =&amp;gt; [&amp;#39;Jerry&amp;#39;, &amp;#39;12&amp;#39;]注意，: 和 . 之间不包含 : 和 .。也即是">
+<meta name="keywords" content="javascript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript正则表达式">
+<meta property="og:url" content="https://recallhyx.github.io/2018/03/26/JavaScript正则表达式/index.html">
+<meta property="og:site_name" content="Recall Hyx">
+<meta property="og:description" content="这里是对正则表达式的思考，源自一个题目：  完成一个 extractStr 函数，可以把一个字符串中所有的 : 到 . 的子串解析出来并且存放到一个数组当中，例如：extractStr(&amp;#39;My name is:Jerry. My age is:12.&amp;#39;) // =&amp;gt; [&amp;#39;Jerry&amp;#39;, &amp;#39;12&amp;#39;]注意，: 和 . 之间不包含 : 和 .。也即是">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-03-26T06:56:02.295Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JavaScript正则表达式">
+<meta name="twitter:description" content="这里是对正则表达式的思考，源自一个题目：  完成一个 extractStr 函数，可以把一个字符串中所有的 : 到 . 的子串解析出来并且存放到一个数组当中，例如：extractStr(&amp;#39;My name is:Jerry. My age is:12.&amp;#39;) // =&amp;gt; [&amp;#39;Jerry&amp;#39;, &amp;#39;12&amp;#39;]注意，: 和 . 之间不包含 : 和 .。也即是">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Recall HYX</h5>
+          <a href="mailto:quce.hu@qq.com" title="quce.hu@qq.com" class="mail">quce.hu@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                文章
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/recallhyx" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">JavaScript正则表达式</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">JavaScript正则表达式</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-03-26T06:54:02.000Z" itemprop="datePublished" class="page-time">
+  2018-03-26
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/前端/">前端</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+
+<article id="post-JavaScript正则表达式"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">JavaScript正则表达式</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-03-26 14:54:02" datetime="2018-03-26T06:54:02.000Z"  itemprop="datePublished">2018-03-26</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/前端/">前端</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>这里是对正则表达式的思考，源自一个题目：</p>
+<blockquote>
+<p>完成一个 extractStr 函数，可以把一个字符串中所有的 : 到 . 的子串解析出来并且存放到一个数组当中，例如：<br><code>extractStr(&#39;My name is:Jerry. My age is:12.&#39;) // =&gt; [&#39;Jerry&#39;, &#39;12&#39;]</code><br>注意，: 和 . 之间不包含 : 和 .。也即是说，如果 ::abc..，则返回 [‘abc’]。</p>
+</blockquote>
+<p>他给出的答案是<br><figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">const extractStr = <span class="function"><span class="params">(str)</span> =&gt;</span> &#123;</span><br><span class="line">  const ret = str.match(<span class="regexp">/:([^:\.])*?\./g</span>) || []</span><br><span class="line">  <span class="keyword">return</span> ret.map(<span class="function"><span class="params">(subStr)</span> =&gt;</span> subStr.replace(<span class="regexp">/[:\.]/g</span>, <span class="string">''</span>)) </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>首先正则表达式匹配到的结果是[‘:Jerry.’,’:12.’]，然后再对数组进行操作，去掉 <code>:</code> 和 <code>.</code>。<br>这样做不就多了一步了嘛，其实我们完全可以用正则来一步解决<br><figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> extractStr = (<span class="built_in">str</span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> reg = /(?&lt;=:)(\w*)(?=\.)/g;</span><br><span class="line">  <span class="keyword">const</span> ret = <span class="built_in">str</span>.<span class="built_in">match</span>(reg) || []</span><br><span class="line">  <span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br><span class="line">var <span class="built_in">str</span> = <span class="string">'My name is:Jerry. My age is:12.'</span></span><br><span class="line">extractStr(<span class="built_in">str</span>);</span><br></pre></td></tr></table></figure></p>
+<p>这样一步，就能得到我们的结果<code>[&#39;Jerry&#39;,&#39;12&#39;]</code>，而且有多余的 <code>:</code> 或者 <code>.</code> 也可以匹配到正确的结果。接下来解释一下这个正则表达式。<br><code>/(?&lt;=:)(\w*)(?=\.)/g;</code><br>我们先看大部分正则都有的部分<code>(\w*)</code>，<code>\w*</code>就是匹配任意字符串0个或多个，<code>()</code>的意思则是捕获，即记住这个捕获的内容。所以合起来就是匹配任意字符串0个或多个并且记住匹配项。<br>然后是正则表达式 <code>/.../g</code> 后面的’g’，这是正则表达式标志：</p>
+<table>
+<thead>
+<tr>
+<th>标志</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>g</td>
+<td>全局搜索。</td>
+</tr>
+<tr>
+<td>i</td>
+<td>不区分大小写搜索。</td>
+</tr>
+<tr>
+<td>m</td>
+<td>多行搜索。</td>
+</tr>
+<tr>
+<td>y</td>
+<td>执行“粘性”搜索,匹配从目标字符串的当前位置开始，可以使用y标志。</td>
+</tr>
+</tbody>
+</table>
+<p>使用 <code>g</code> 之后，不会因为匹配到一个匹配项就停下，而是继续搜索。<br>接下来就是两个不常见的 <code>(?&lt;=:)</code>和 <code>(?=\.)</code><br>首先解释一下名字 <code>(?&lt;=:)</code> 的意思是反向肯定查找，而<code>(?=\.)</code>的意思就是正向肯定查找。我们分两部分，<code>(?&lt;=:)(\w*)</code> 和 <code>(\w*)(?=\.)</code>。这样就清楚了，正向肯定查找会匹配到 <code>Jerry</code> 仅仅当它后面跟着 <code>.</code>，且不会把 <code>.</code> 当做匹配的内容。反向肯定查找会匹配到 <code>Jerry</code> 仅仅当它前面跟着<code>:</code>，且不会把 <code>:</code>  当做匹配的内容。两个结合起来就是，正则表达式会匹配到任意字符串仅仅当它的前面跟着 <code>:</code>，且仅仅当它后面跟着 <code>.</code></p>
+<p>注意：因为 <code>.</code> 在正则表达式里面代表除换行符之外的任何单个字符，所以需要转义才能匹配到 <code>.</code>，即 <code>\.</code></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <footer>
+        <a href="https://recallhyx.github.io">
+            <img src="/img/avatar.jpg" alt="Recall HYX">
+            Recall HYX
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://recallhyx.github.io/2018/03/26/JavaScript正则表达式/&title=《JavaScript正则表达式》 — Recall Hyx&pic=https://recallhyx.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://recallhyx.github.io/2018/03/26/JavaScript正则表达式/&title=《JavaScript正则表达式》 — Recall Hyx&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://recallhyx.github.io/2018/03/26/JavaScript正则表达式/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JavaScript正则表达式》 — Recall Hyx&url=https://recallhyx.github.io/2018/03/26/JavaScript正则表达式/&via=https://recallhyx.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://recallhyx.github.io/2018/03/26/JavaScript正则表达式/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/03/19/HTTP小结/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">HTTP小结</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+<section class="comments" id="comments">
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_shortname = 'recallhyx';
+    lazyScripts.push('//' + disqus_shortname + '.disqus.com/embed.js')
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Recall HYX &copy; 2017 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://recallhyx.github.io/2018/03/26/JavaScript正则表达式/&title=《JavaScript正则表达式》 — Recall Hyx&pic=https://recallhyx.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://recallhyx.github.io/2018/03/26/JavaScript正则表达式/&title=《JavaScript正则表达式》 — Recall Hyx&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://recallhyx.github.io/2018/03/26/JavaScript正则表达式/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JavaScript正则表达式》 — Recall Hyx&url=https://recallhyx.github.io/2018/03/26/JavaScript正则表达式/&via=https://recallhyx.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://recallhyx.github.io/2018/03/26/JavaScript正则表达式/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACuElEQVR42u3aQXLjMAwEQP//09nrbm0szwBiokPr5LJkis0DCQN4veLr66/r+pv952T8my88PDy8xdT/v969LJnu9a+un8/nc/0uPDw8vHO8dztqzkju5kfO7JDAw8PDez6vfTL51WZkPDw8vGfy8qA5D6DbJcDDw8N7Ai/5898eEpuUbrtAN+Ra8PDw8GJeXkV6zucj9T08PDy8dVV9E/jmxbM8oK9ni4eHh3eAl2+4mynm4ye7ej1PPDw8vFt5syJ9i9kcP+2T/3zGw8PDO8ZLNt9i0Pj5trTWHkt4eHh453j5dt9u35tFzFsNojQEHh4e3jHeJrXaht1tajhPZODh4eH9DC/f4tvmqk0jwqr1Cg8PD+8wL//bnwS+d4XLeSHtm7t4eHh4B3j5Fp9v+nlM2xbe8jE/dEbg4eHhrXl3NUvl23peKssD62Lp8fDw8Na8th1qxmiD+BuarvDw8PCO8WYJ1ld5tSnatnlrOAk8PDy8NW+TPJ2laPMwOj828PDw8M7xZo1TbUCcL9/+YPimdQAPDw/vVl6ejGgPhtmBMWuxihIQeHh4eMd4s2/aKbYJjrYUh4eHh3eO1xbm85D6a3TNErVvDzA8PDy8Y7zZELPUalu4alsZvklD4OHh4d3Ky5MIw6FHyY7N0hRlMDw8PLw1L6+2t6QkEN88/yHdjIeHh3eMN2t4mqVrTywKHh4e3m/xrrOgbUtBMtF7S19RrhoPDw9vwZsVqGYTmqUtVnfx8PDwDvBmhaic0dah8sasTVENDw8Pb8/bFLpmKYwkQbxJMReBNR4eHt6ClwfBSfCaF6vyVMgwYYGHh4f3AN51KJyHy20gnqeY8fDw8J7Ga4tYm+B4FvTj4eHh/QyvDXxnzVj522dz+9AZgYeHh3cTr/3Dn7wybzKYNSUcqe/h4eHhff7VH7bRnHGwKaAiAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
