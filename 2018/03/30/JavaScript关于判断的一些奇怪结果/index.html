@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-112417276-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>JavaScript关于判断的一些奇怪结果 | Recall Hyx | Your star</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#FFC107">
+    
+    
+    <meta name="keywords" content="javascript">
+    <meta name="description" content="前言JavaScript 的 == 和 === 两种判断相等的方法行为不一致，很让人头晕，而且还有 typeof 和 instanceof所以记录一下，解决这个问题 == 、 === 和 Object.is()==双等号 == ，也叫 宽松相等，相等操作符比较两个值是否相等，在比较前将两个被比较的值转换为相同类型。在转换后（等式的一边或两边都可能被转换），最终的比较方式等同于全等操作符 === 的">
+<meta name="keywords" content="javascript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript关于判断的一些奇怪结果">
+<meta property="og:url" content="https://recallhyx.github.io/2018/03/30/JavaScript关于判断的一些奇怪结果/index.html">
+<meta property="og:site_name" content="Recall Hyx">
+<meta property="og:description" content="前言JavaScript 的 == 和 === 两种判断相等的方法行为不一致，很让人头晕，而且还有 typeof 和 instanceof所以记录一下，解决这个问题 == 、 === 和 Object.is()==双等号 == ，也叫 宽松相等，相等操作符比较两个值是否相等，在比较前将两个被比较的值转换为相同类型。在转换后（等式的一边或两边都可能被转换），最终的比较方式等同于全等操作符 === 的">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5834506-7bf7a148c550b241.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-03-30T10:41:01.746Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JavaScript关于判断的一些奇怪结果">
+<meta name="twitter:description" content="前言JavaScript 的 == 和 === 两种判断相等的方法行为不一致，很让人头晕，而且还有 typeof 和 instanceof所以记录一下，解决这个问题 == 、 === 和 Object.is()==双等号 == ，也叫 宽松相等，相等操作符比较两个值是否相等，在比较前将两个被比较的值转换为相同类型。在转换后（等式的一边或两边都可能被转换），最终的比较方式等同于全等操作符 === 的">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/5834506-7bf7a148c550b241.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Recall HYX</h5>
+          <a href="mailto:quce.hu@qq.com" title="quce.hu@qq.com" class="mail">quce.hu@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                文章
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/recallhyx" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">JavaScript关于判断的一些奇怪结果</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">JavaScript关于判断的一些奇怪结果</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-03-30T10:36:37.000Z" itemprop="datePublished" class="page-time">
+  2018-03-30
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/前端/">前端</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#前言"><span class="post-toc-number">1.</span> <span class="post-toc-text">前言</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#、-和-Object-is"><span class="post-toc-number">2.</span> <span class="post-toc-text">== 、 === 和 Object.is()</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">==</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#经典例子"><span class="post-toc-number">2.1.1.</span> <span class="post-toc-text">经典例子</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#内部原理"><span class="post-toc-number">2.1.2.</span> <span class="post-toc-text">内部原理</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#-1"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">===</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#经典例子-1"><span class="post-toc-number">2.2.1.</span> <span class="post-toc-text">经典例子</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Object-is"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">Object.is()</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#全部比较"><span class="post-toc-number">2.4.</span> <span class="post-toc-text">全部比较</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#typeof-和-instanceof"><span class="post-toc-number">3.</span> <span class="post-toc-text">typeof 和 instanceof</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#typeof"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">typeof</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#经典例子-2"><span class="post-toc-number">3.1.1.</span> <span class="post-toc-text">经典例子</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#typeof-null"><span class="post-toc-number">3.1.2.</span> <span class="post-toc-text">typeof null</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#new-操作符"><span class="post-toc-number">3.1.3.</span> <span class="post-toc-text">new 操作符</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#instanceof"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">instanceof</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#神奇的例子"><span class="post-toc-number">3.2.1.</span> <span class="post-toc-text">神奇的例子</span></a></li></ol></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-JavaScript关于判断的一些奇怪结果"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">JavaScript关于判断的一些奇怪结果</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-03-30 18:36:37" datetime="2018-03-30T10:36:37.000Z"  itemprop="datePublished">2018-03-30</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/前端/">前端</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>JavaScript 的 <code>==</code> 和 <code>===</code> 两种判断相等的方法行为不一致，很让人头晕，而且还有 <code>typeof</code> 和 <code>instanceof</code>所以记录一下，解决这个问题</p>
+<h1 id="、-和-Object-is"><a href="#、-和-Object-is" class="headerlink" title="== 、 === 和 Object.is()"></a>== 、 === 和 Object.is()</h1><h2 id=""><a href="#" class="headerlink" title="=="></a>==</h2><p>双等号 <code>==</code> ，也叫 宽松相等，相等操作符比较两个值是否相等，在比较前将两个被比较的值转换为相同类型。在转换后（等式的一边或两边都可能被转换），最终的比较方式等同于全等操作符 <code>===</code> 的比较方式。 相等操作符满足交换律。</p>
+<h3 id="经典例子"><a href="#经典例子" class="headerlink" title="经典例子"></a>经典例子</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> num = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">var</span> obj = <span class="keyword">new</span> <span class="built_in">String</span>(<span class="string">'0'</span>);</span><br><span class="line"><span class="keyword">var</span> str = <span class="string">"0"</span>;</span><br><span class="line"><span class="keyword">var</span> b = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(num == obj); <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(num == str); <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(obj == str); <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="literal">null</span> == <span class="literal">undefined</span>); <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">0</span> == <span class="literal">false</span>);<span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">''</span> == <span class="literal">false</span>);<span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">''</span> == <span class="number">0</span>);<span class="comment">// true</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="literal">null</span> == <span class="number">0</span>);<span class="comment">// false;</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="literal">undefined</span> == <span class="number">0</span>);<span class="comment">// false;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">1</span> == <span class="literal">true</span>);<span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">2</span> == <span class="literal">true</span>);<span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+<h3 id="内部原理"><a href="#内部原理" class="headerlink" title="内部原理"></a>内部原理</h3><p>标准的相等性操作符（== 与 !=）使用了<a href="https://link.zhihu.com/?target=http%3A//www.ecma-international.org/ecma-262/5.1/%23sec-11.9.3" target="_blank" rel="noopener">Abstract Equality Comparison Algorithm</a>来比较操作符两侧的操作对象（x == y），该算法流程要点提取如下：</p>
+<ul>
+<li>如果 x 或 y 中有一个为 <code>NaN</code>，则返回 <code>false</code>；</li>
+<li>如果 x 与 y 皆为 <code>null</code> 或 <code>undefined</code> 中的一种类型，则返回 <code>true</code>（<code>null == undefined // true</code>）；否则返回 <code>false</code>（<code>null == 0 // false</code>）；</li>
+<li>如果 x,y 类型不一致，且 x,y 为 <code>String</code>、<code>Number</code>、<code>Boolean</code> 中的某一类型，则将 x,y 使用 <code>toNumber</code> 函数转化为 <code>Number</code> 类型再进行比较；</li>
+<li>如果 x，y 中有一个为 <code>Object</code>，则首先使用 <code>ToPrimitive</code> 函数将其转化为原始类型，再进行比较。</li>
+</ul>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">ToPrimitive(obj,preferredType)</span><br><span class="line"></span><br><span class="line">JS引擎内部转换为原始值ToPrimitive(obj,preferredType)函数接受两个参数，</span><br><span class="line">第一个obj为被转换的对象，</span><br><span class="line">第二个preferredType为希望转换成的类型（默认为空，接受的值为Number或String）</span><br><span class="line">在执行ToPrimitive(obj,preferredType)时如果第二个参数为空并且obj为Date的事例时，</span><br><span class="line">此时preferredType会被设置为String，其他情况下preferredType都会被设置为Number如果preferredType为Number，</span><br><span class="line">ToPrimitive执行过程如下：</span><br><span class="line"></span><br><span class="line"><span class="number">1.</span> 如果obj为原始值，直接返回；</span><br><span class="line"><span class="number">2.</span> 否则调用 obj.valueOf()，如果执行结果是原始值，返回之；</span><br><span class="line"><span class="number">3.</span> 否则调用 obj.toString()，如果执行结果是原始值，返回之；</span><br><span class="line"><span class="number">4.</span> 否则抛异常。</span><br><span class="line"></span><br><span class="line">如果preferredType为String，将上面的第<span class="number">2</span>步和第<span class="number">3</span>步调换，即：</span><br><span class="line"><span class="number">1.</span> 如果obj为原始值，直接返回；</span><br><span class="line"><span class="number">2.</span> 否则调用 obj.toString()，如果执行结果是原始值，返回之；</span><br><span class="line"><span class="number">3.</span> 否则调用 obj.valueOf()，如果执行结果是原始值，返回之；</span><br><span class="line"><span class="number">4.</span> 否则抛异常。</span><br></pre></td></tr></table></figure>
+<p>还有一种情况：<br><figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">console.<span class="built_in">log</span>([]==![]);<span class="comment">// true</span></span><br></pre></td></tr></table></figure></p>
+<p>具体涉及到了运算符优先级，可以看看<a href="https://github.com/jawil/blog/issues/1" target="_blank" rel="noopener">这篇文章</a>，讲的非常详细</p>
+<h2 id="-1"><a href="#-1" class="headerlink" title="==="></a>===</h2><p>三等号 <code>===</code>，叫 严格相等比较，三等号将进行相同的比较，而不进行类型转换 (如果类型不同, 只是总会返回 <code>false</code> )</p>
+<h3 id="经典例子-1"><a href="#经典例子-1" class="headerlink" title="经典例子"></a>经典例子</h3><p>用 <code>===</code> 就不会出现 <code>==</code> 的一些奇怪的结果<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> num = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">var</span> obj = <span class="keyword">new</span> <span class="built_in">String</span>(<span class="string">"0"</span>);</span><br><span class="line"><span class="keyword">var</span> str = <span class="string">"0"</span>;</span><br><span class="line"><span class="keyword">var</span> b = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(num === num); <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(obj === obj); <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(str === str); <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(num === obj); <span class="comment">// false</span></span><br><span class="line"><span class="built_in">console</span>.log(num === str); <span class="comment">// false</span></span><br><span class="line"><span class="built_in">console</span>.log(obj === str); <span class="comment">// false</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="literal">null</span> === <span class="literal">undefined</span>); <span class="comment">// false</span></span><br><span class="line"><span class="built_in">console</span>.log(obj === <span class="literal">null</span>); <span class="comment">// false</span></span><br><span class="line"><span class="built_in">console</span>.log(obj === <span class="literal">undefined</span>); <span class="comment">// false</span></span><br></pre></td></tr></table></figure></p>
+<p>在日常中使用全等操作符几乎总是正确的选择，但还是有几个特殊的例子<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="literal">NaN</span> === <span class="literal">NaN</span>);<span class="comment">// false</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Symbol</span>(<span class="number">1</span>) === <span class="built_in">Symbol</span>(<span class="number">1</span>));<span class="comment">// false</span></span><br><span class="line"><span class="built_in">console</span>.log(&#123;<span class="attr">x</span>:<span class="number">1</span>&#125;===&#123;<span class="attr">x</span>:<span class="number">1</span>&#125;);<span class="comment">// false</span></span><br><span class="line"><span class="built_in">console</span>.log([]===[]);<span class="comment">// false</span></span><br></pre></td></tr></table></figure></p>
+<p>对于 <code>NaN</code> ，是 IEEE 754 规范上写的，而 <code>Symbol</code> 是 ES6 新增的原始数据类型，代表的意思就是独一无二的，所以当然不会相等，<code>{x:1}</code> 是一个对象，即使再声明一个一样的对象，它的内存地址不一样，也当然不一样了，<code>[]</code> 也是同样的道理，内存地址不同运用在 <code>==</code> 也是一样的。</p>
+<h2 id="Object-is"><a href="#Object-is" class="headerlink" title="Object.is()"></a>Object.is()</h2><p>由于 <code>===</code> 也会出现一些奇怪的判断，所以在 ES6 加入了 <code>Object.is()</code> 对于 <code>NaN</code>和 <code>-0</code> 和 <code>+0</code> 进行特殊处理。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="literal">NaN</span>,<span class="literal">NaN</span>);<span class="comment">// true</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="全部比较"><a href="#全部比较" class="headerlink" title="全部比较"></a>全部比较</h2><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://upload-images.jianshu.io/upload_images/5834506-7bf7a148c550b241.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<h1 id="typeof-和-instanceof"><a href="#typeof-和-instanceof" class="headerlink" title="typeof 和 instanceof"></a>typeof 和 instanceof</h1><p>另外两个比较混乱的判断就是 <code>typeof</code> 和 <code>instanceof</code></p>
+<h2 id="typeof"><a href="#typeof" class="headerlink" title="typeof"></a>typeof</h2><p><code>typeof</code> 操作符返回一个字符串，表示未经计算的操作数的类型。</p>
+<h3 id="经典例子-2"><a href="#经典例子-2" class="headerlink" title="经典例子"></a>经典例子</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Numbers</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="number">37</span> === <span class="string">'number'</span>;</span><br><span class="line"><span class="keyword">typeof</span> <span class="number">3.14</span> === <span class="string">'number'</span>;</span><br><span class="line"><span class="keyword">typeof</span> <span class="built_in">Math</span>.LN2 === <span class="string">'number'</span>;</span><br><span class="line"><span class="keyword">typeof</span> <span class="literal">Infinity</span> === <span class="string">'number'</span>;</span><br><span class="line"><span class="keyword">typeof</span> <span class="literal">NaN</span> === <span class="string">'number'</span>; <span class="comment">// 尽管NaN是"Not-A-Number"的缩写</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="built_in">Number</span>(<span class="number">1</span>) === <span class="string">'number'</span>; <span class="comment">// 但不要使用这种形式!</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Strings</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="string">""</span> === <span class="string">'string'</span>;</span><br><span class="line"><span class="keyword">typeof</span> <span class="string">"bla"</span> === <span class="string">'string'</span>;</span><br><span class="line"><span class="keyword">typeof</span> (<span class="keyword">typeof</span> <span class="number">1</span>) === <span class="string">'string'</span>; <span class="comment">// typeof总是返回一个字符串</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="built_in">String</span>(<span class="string">"abc"</span>) === <span class="string">'string'</span>; <span class="comment">// 但不要使用这种形式!</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Booleans</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="literal">true</span> === <span class="string">'boolean'</span>;</span><br><span class="line"><span class="keyword">typeof</span> <span class="literal">false</span> === <span class="string">'boolean'</span>;</span><br><span class="line"><span class="keyword">typeof</span> <span class="built_in">Boolean</span>(<span class="literal">true</span>) === <span class="string">'boolean'</span>; <span class="comment">// 但不要使用这种形式!</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Symbols</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="built_in">Symbol</span>() === <span class="string">'symbol'</span>;</span><br><span class="line"><span class="keyword">typeof</span> <span class="built_in">Symbol</span>(<span class="string">'foo'</span>) === <span class="string">'symbol'</span>;</span><br><span class="line"><span class="keyword">typeof</span> <span class="built_in">Symbol</span>.iterator === <span class="string">'symbol'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Undefined</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="literal">undefined</span> === <span class="string">'undefined'</span>;</span><br><span class="line"><span class="keyword">typeof</span> declaredButUndefinedVariable === <span class="string">'undefined'</span>;</span><br><span class="line"><span class="keyword">typeof</span> undeclaredVariable === <span class="string">'undefined'</span>; </span><br><span class="line"></span><br><span class="line"><span class="comment">// Objects</span></span><br><span class="line"><span class="keyword">typeof</span> &#123;<span class="attr">a</span>:<span class="number">1</span>&#125; === <span class="string">'object'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用Array.isArray 或者 Object.prototype.toString.call</span></span><br><span class="line"><span class="comment">// 区分数组,普通对象</span></span><br><span class="line"><span class="keyword">typeof</span> [<span class="number">1</span>, <span class="number">2</span>, <span class="number">4</span>] === <span class="string">'object'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typeof</span> <span class="keyword">new</span> <span class="built_in">Date</span>() === <span class="string">'object'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 下面的容易令人迷惑，不要使用！</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="keyword">new</span> <span class="built_in">Boolean</span>(<span class="literal">true</span>) === <span class="string">'object'</span>;</span><br><span class="line"><span class="keyword">typeof</span> <span class="keyword">new</span> <span class="built_in">Number</span>(<span class="number">1</span>) === <span class="string">'object'</span>;</span><br><span class="line"><span class="keyword">typeof</span> <span class="keyword">new</span> <span class="built_in">String</span>(<span class="string">"abc"</span>) === <span class="string">'object'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 函数</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125; === <span class="string">'function'</span>;</span><br><span class="line"><span class="keyword">typeof</span> <span class="class"><span class="keyword">class</span> <span class="title">C</span></span>&#123;&#125; === <span class="string">'function'</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="built_in">Math</span>.sin === <span class="string">'function'</span>;</span><br><span class="line"><span class="keyword">typeof</span> <span class="keyword">new</span> <span class="built_in">Function</span>() === <span class="string">'function'</span>;</span><br></pre></td></tr></table></figure>
+<h3 id="typeof-null"><a href="#typeof-null" class="headerlink" title="typeof null"></a>typeof null</h3><p>还有一个特别的例子：<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typeof</span> <span class="literal">null</span> === <span class="string">'object'</span>;</span><br></pre></td></tr></table></figure></p>
+<p>官方解释是：</p>
+<blockquote>
+<p>在 JavaScript 最初的实现中，JavaScript 中的值是由一个表示类型的标签和实际数据值表示的。对象的类型标签是 0。由于 null 代表的是空指针（大多数平台下值为 0x00），因此，null的类型标签也成为了 0，typeof null就错误的返回了”object”。</p>
+</blockquote>
+<h3 id="new-操作符"><a href="#new-操作符" class="headerlink" title="new 操作符"></a>new 操作符</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 所有的构造函数在实例化一个对象的时候 typeof 都会返回 'object'</span></span><br><span class="line"><span class="keyword">var</span> str = <span class="keyword">new</span> <span class="built_in">String</span>(<span class="string">'String'</span>);</span><br><span class="line"><span class="keyword">var</span> num = <span class="keyword">new</span> <span class="built_in">Number</span>(<span class="number">100</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">typeof</span> str; <span class="comment">//  'object'</span></span><br><span class="line"><span class="keyword">typeof</span> num; <span class="comment">// 'object'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 只有一个例外：构造函数</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> func = <span class="keyword">new</span> <span class="built_in">Function</span>();</span><br><span class="line"></span><br><span class="line"><span class="keyword">typeof</span> func; <span class="comment">//  'function'</span></span><br></pre></td></tr></table></figure>
+<h2 id="instanceof"><a href="#instanceof" class="headerlink" title="instanceof"></a>instanceof</h2><p>有时候我们需要判断一个对象的类型，如果我们用 <code>typeof</code> 只会得到 <code>&quot;object&quot;</code>：<br><figure class="highlight qml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</span><br><span class="line"><span class="keyword">typeof</span> arr;<span class="comment">// "object"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> <span class="built_in">date</span> = <span class="keyword">new</span> <span class="built_in">Date</span>();</span><br><span class="line"><span class="keyword">typeof</span> <span class="built_in">date</span>;<span class="comment">// "object"</span></span><br></pre></td></tr></table></figure></p>
+<p>这个时候就要用 <code>instanceof</code> 。<br><code>instanceof</code> 运算符用来测试一个对象在其原型链中是否存在一个构造函数的 <code>prototype</code> 属性。<br><figure class="highlight qml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</span><br><span class="line">arr <span class="keyword">instanceof</span> <span class="built_in">Array</span><span class="comment">// true</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> <span class="built_in">date</span> = <span class="keyword">new</span> <span class="built_in">Date</span>();</span><br><span class="line"><span class="built_in">date</span> <span class="keyword">instanceof</span> <span class="built_in">Date</span><span class="comment">// true</span></span><br></pre></td></tr></table></figure></p>
+<p>但这并不是 <code>instanceof</code> 原来的用法，<code>instanceof</code> 运算符用来检测 <code>constructor.prototype</code> 是否存在于参数 <code>object</code> 的原型链上。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义构造函数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">C</span>(<span class="params"></span>)</span>&#123;&#125; </span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">D</span>(<span class="params"></span>)</span>&#123;&#125; </span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> o = <span class="keyword">new</span> C();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">o <span class="keyword">instanceof</span> C; <span class="comment">// true，因为 Object.getPrototypeOf(o) === C.prototype</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">o <span class="keyword">instanceof</span> D; <span class="comment">// false，因为 D.prototype不在o的原型链上</span></span><br><span class="line"></span><br><span class="line">o <span class="keyword">instanceof</span> <span class="built_in">Object</span>; <span class="comment">// true,因为Object.prototype.isPrototypeOf(o)返回true</span></span><br><span class="line">C.prototype <span class="keyword">instanceof</span> <span class="built_in">Object</span> <span class="comment">// true,同上</span></span><br><span class="line"></span><br><span class="line">C.prototype = &#123;&#125;;</span><br><span class="line"><span class="keyword">var</span> o2 = <span class="keyword">new</span> C();</span><br><span class="line"></span><br><span class="line">o2 <span class="keyword">instanceof</span> C; <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line">o <span class="keyword">instanceof</span> C; <span class="comment">// false,C.prototype指向了一个空对象,这个空对象不在o的原型链上.</span></span><br><span class="line"></span><br><span class="line">D.prototype = <span class="keyword">new</span> C(); <span class="comment">// 继承</span></span><br><span class="line"><span class="keyword">var</span> o3 = <span class="keyword">new</span> D();</span><br><span class="line">o3 <span class="keyword">instanceof</span> D; <span class="comment">// true</span></span><br><span class="line">o3 <span class="keyword">instanceof</span> C; <span class="comment">// true</span></span><br></pre></td></tr></table></figure></p>
+<p>需要注意的是，如果表达式 <code>obj instanceof Foo</code> 返回 <code>true</code>，则并不意味着该表达式会永远返回 <code>true</code>，因为 <code>Foo.prototype</code> 属性的值有可能会改变，改变之后的值很有可能不存在于 <code>obj</code> 的原型链上，这时原表达式的值就会成为 <code>false</code> 。另外一种情况下，原表达式的值也会改变，就是改变对象 <code>obj</code> 的原型链的情况，虽然在目前的 ES 规范中，我们只能读取对象的原型而不能改变它，但借助于非标准的<code>__proto__</code>魔法属性，是可以实现的。比如执行 <code>obj.__proto__ = {}</code> 之后，<code>obj instanceof Foo</code> 就会返回 <code>false</code> 了。</p>
+<h3 id="神奇的例子"><a href="#神奇的例子" class="headerlink" title="神奇的例子"></a>神奇的例子</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> simpleStr = <span class="string">"This is a simple string"</span>; </span><br><span class="line"><span class="keyword">var</span> myString  = <span class="keyword">new</span> <span class="built_in">String</span>();</span><br><span class="line"><span class="keyword">var</span> newStr    = <span class="keyword">new</span> <span class="built_in">String</span>(<span class="string">"String created with constructor"</span>);</span><br><span class="line"><span class="keyword">var</span> myDate    = <span class="keyword">new</span> <span class="built_in">Date</span>();</span><br><span class="line"><span class="keyword">var</span> myObj     = &#123;&#125;;</span><br><span class="line"></span><br><span class="line">simpleStr <span class="keyword">instanceof</span> <span class="built_in">String</span>; <span class="comment">// returns false, 检查原型链会找到 undefined</span></span><br><span class="line">myString  <span class="keyword">instanceof</span> <span class="built_in">String</span>; <span class="comment">// returns true</span></span><br><span class="line">newStr    <span class="keyword">instanceof</span> <span class="built_in">String</span>; <span class="comment">// returns true</span></span><br><span class="line">myString  <span class="keyword">instanceof</span> <span class="built_in">Object</span>; <span class="comment">// returns true</span></span><br><span class="line"></span><br><span class="line">myObj <span class="keyword">instanceof</span> <span class="built_in">Object</span>;    <span class="comment">// returns true, despite an undefined prototype</span></span><br><span class="line">(&#123;&#125;)  <span class="keyword">instanceof</span> <span class="built_in">Object</span>;    <span class="comment">// returns true, 同上</span></span><br><span class="line"></span><br><span class="line">myString <span class="keyword">instanceof</span> <span class="built_in">Date</span>;   <span class="comment">// returns false</span></span><br><span class="line"></span><br><span class="line">myDate <span class="keyword">instanceof</span> <span class="built_in">Date</span>;     <span class="comment">// returns true</span></span><br><span class="line">myDate <span class="keyword">instanceof</span> <span class="built_in">Object</span>;   <span class="comment">// returns true</span></span><br><span class="line">myDate <span class="keyword">instanceof</span> <span class="built_in">String</span>;   <span class="comment">// returns false</span></span><br></pre></td></tr></table></figure>
+<p>所以我们判断是否是数组还是用这种方法<code>Object.prototype.toString.call(myObj) === &quot;[object Array]&quot;</code> 或者 ES6 新增的 <code>Array.isArray(myObj)</code>。</p>
+<blockquote>
+<p>参考<br><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/typeof" target="_blank" rel="noopener">MDN-typeof</a><br><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/instanceof" target="_blank" rel="noopener">MDN-instanceof</a><br><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Equality_comparisons_and_sameness" target="_blank" rel="noopener">JavaScript 中的相等性判断</a></p>
+</blockquote>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <footer>
+        <a href="https://recallhyx.github.io">
+            <img src="/img/avatar.jpg" alt="Recall HYX">
+            Recall HYX
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://recallhyx.github.io/2018/03/30/JavaScript关于判断的一些奇怪结果/&title=《JavaScript关于判断的一些奇怪结果》 — Recall Hyx&pic=https://recallhyx.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://recallhyx.github.io/2018/03/30/JavaScript关于判断的一些奇怪结果/&title=《JavaScript关于判断的一些奇怪结果》 — Recall Hyx&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://recallhyx.github.io/2018/03/30/JavaScript关于判断的一些奇怪结果/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JavaScript关于判断的一些奇怪结果》 — Recall Hyx&url=https://recallhyx.github.io/2018/03/30/JavaScript关于判断的一些奇怪结果/&via=https://recallhyx.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://recallhyx.github.io/2018/03/30/JavaScript关于判断的一些奇怪结果/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/03/29/Vuex的一些总结/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Vuex的一些总结</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+<section class="comments" id="comments">
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_shortname = 'recallhyx';
+    lazyScripts.push('//' + disqus_shortname + '.disqus.com/embed.js')
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Recall HYX &copy; 2017 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://recallhyx.github.io/2018/03/30/JavaScript关于判断的一些奇怪结果/&title=《JavaScript关于判断的一些奇怪结果》 — Recall Hyx&pic=https://recallhyx.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://recallhyx.github.io/2018/03/30/JavaScript关于判断的一些奇怪结果/&title=《JavaScript关于判断的一些奇怪结果》 — Recall Hyx&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://recallhyx.github.io/2018/03/30/JavaScript关于判断的一些奇怪结果/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JavaScript关于判断的一些奇怪结果》 — Recall Hyx&url=https://recallhyx.github.io/2018/03/30/JavaScript关于判断的一些奇怪结果/&via=https://recallhyx.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://recallhyx.github.io/2018/03/30/JavaScript关于判断的一些奇怪结果/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACsElEQVR42u3aS24bQQwFQN//0skmCwOJpPfIblkBalaG5+OuMdDkkPz6io9f347vv3l+9u/f75/5dePAw8PDWyz90bLys48W+hx2aj3/eCYeHh7eNd6jP9OGgefP2QSA9ho8PDy8z+FtrtzchYeHh/f/8vIw8DwhzsMGHh4e3mfyko//nL1Pu5OC7+FaCx4eHl7M26S/P/Xzlf4eHh4e3rqr/nzDbQPArA02W+efe/Hw8PAu8NoSajsu0A4H7NNlPDw8vPfw2hLDBjMbF2gDDx4eHt5tXrsR59TZUMIsrR+WJPDw8PBK3r3EN2+MJWFm+GQ8PDy8C7xNM6zO2eOwMbvycK8PDw8Pb51z5qNR7RBVvtHXBV88PDy8C7y8YtEm0PvntDWVYXjAw8PDK3n5UvIixX5wKknKowCGh4eHd43XFkw33/vtaMIs7Y7mDvDw8PAWvPZTvx0jmDWr9i00PDw8vHu8PCE+W+RN+nKrzh4eHh7eZV5eWm1bUJsycT7E8KL1hYeHh3eIl1/aFnM3ryYv3RahDg8PD+8Qr92y2/GpWbF4Vhx58R/Dw8PDO8pLNt9NE+vsXcOhKzw8PLyjvLy4MDuG23pctI2+EvDw8PCO8pIb8rAx4816WC8CGB4eHt4FXrK95pt4gpyFpXaYoKi74OHh4Y14+XL3HflZiWEVZvDw8PDeyGtLsbMW2vVCMB4eHt4beZsCxGzoahM8oi4fHh4e3pq3aWXN0u42QV+dxcPDw7vAy4+kKLBfer7pt2MHeHh4eGd5x9rzQekhf01tCv7wLB4eHt41XlvDODWSlVOHjTQ8PDy8D+O1W3mLyVPww5MReHh4eEd5eUlis/TZa8LDw8N7Jy/fvtuNPk++kyBUv0o8PDy8C7wDH/xB8MgDzKwJd6C/h4eHh/f6rt+5K0EF2d9gEgAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
