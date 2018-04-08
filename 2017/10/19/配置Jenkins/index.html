@@ -29,13 +29,13 @@ ga('send', 'pageview');
     
     
     <meta name="keywords" content="Jenkins">
-    <meta name="description" content="哈哈哈，终于搞定持续集成的配置了，买来的阿里云服务器也能发挥一点作用了，来记录一下怎么在阿里云服务器上配置持续集成 ####首先，什么是持续集成简单来说，就是代码提交到 Git 或者 SVN 上的时候，会帮你build项目，然后跑测试，如果在build项目或者跑测试的时候出现错误，构建就会失败，然后能够通知你哪里出错了，如果没有错误，就会帮你发布项目（这么一看是不是很爽，每次提交代码就能自动构建）">
+    <meta name="description" content="哈哈哈，终于搞定持续集成的配置了，买来的阿里云服务器也能发挥一点作用了，来记录一下怎么在阿里云服务器上配置持续集成 首先，什么是持续集成简单来说，就是代码提交到 Git 或者 SVN 上的时候，会帮你build项目，然后跑测试，如果在build项目或者跑测试的时候出现错误，构建就会失败，然后能够通知你哪里出错了，如果没有错误，就会帮你发布项目（这么一看是不是很爽，每次提交代码就能自动构建）我们使用">
 <meta name="keywords" content="Jenkins">
 <meta property="og:type" content="article">
 <meta property="og:title" content="配置Jenkins">
 <meta property="og:url" content="https://recallhyx.github.io/2017/10/19/配置Jenkins/index.html">
 <meta property="og:site_name" content="Recall Hyx">
-<meta property="og:description" content="哈哈哈，终于搞定持续集成的配置了，买来的阿里云服务器也能发挥一点作用了，来记录一下怎么在阿里云服务器上配置持续集成 ####首先，什么是持续集成简单来说，就是代码提交到 Git 或者 SVN 上的时候，会帮你build项目，然后跑测试，如果在build项目或者跑测试的时候出现错误，构建就会失败，然后能够通知你哪里出错了，如果没有错误，就会帮你发布项目（这么一看是不是很爽，每次提交代码就能自动构建）">
+<meta property="og:description" content="哈哈哈，终于搞定持续集成的配置了，买来的阿里云服务器也能发挥一点作用了，来记录一下怎么在阿里云服务器上配置持续集成 首先，什么是持续集成简单来说，就是代码提交到 Git 或者 SVN 上的时候，会帮你build项目，然后跑测试，如果在build项目或者跑测试的时候出现错误，构建就会失败，然后能够通知你哪里出错了，如果没有错误，就会帮你发布项目（这么一看是不是很爽，每次提交代码就能自动构建）我们使用">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5834506-a52fd187509d35b1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5834506-89e8812552c09bad.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
@@ -45,10 +45,10 @@ ga('send', 'pageview');
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5834506-65dd69fc4b508b18.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5834506-db8d059fa1032f9b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5834506-4f7339c56eceebeb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-01-19T15:36:05.710Z">
+<meta property="og:updated_time" content="2018-04-06T08:01:45.848Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="配置Jenkins">
-<meta name="twitter:description" content="哈哈哈，终于搞定持续集成的配置了，买来的阿里云服务器也能发挥一点作用了，来记录一下怎么在阿里云服务器上配置持续集成 ####首先，什么是持续集成简单来说，就是代码提交到 Git 或者 SVN 上的时候，会帮你build项目，然后跑测试，如果在build项目或者跑测试的时候出现错误，构建就会失败，然后能够通知你哪里出错了，如果没有错误，就会帮你发布项目（这么一看是不是很爽，每次提交代码就能自动构建）">
+<meta name="twitter:description" content="哈哈哈，终于搞定持续集成的配置了，买来的阿里云服务器也能发挥一点作用了，来记录一下怎么在阿里云服务器上配置持续集成 首先，什么是持续集成简单来说，就是代码提交到 Git 或者 SVN 上的时候，会帮你build项目，然后跑测试，如果在build项目或者跑测试的时候出现错误，构建就会失败，然后能够通知你哪里出错了，如果没有错误，就会帮你发布项目（这么一看是不是很爽，每次提交代码就能自动构建）我们使用">
 <meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/5834506-a52fd187509d35b1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
     
     <link rel="shortcut icon" href="/img/favicon.ico">
@@ -172,6 +172,13 @@ ga('send', 'pageview');
 
 <div class="container body-wrap">
     
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#首先，什么是持续集成"><span class="post-toc-number">1.</span> <span class="post-toc-text">首先，什么是持续集成</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#下载Jenkins"><span class="post-toc-number">2.</span> <span class="post-toc-text">下载Jenkins</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#启动Jenkins"><span class="post-toc-number">3.</span> <span class="post-toc-text">启动Jenkins</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Github配置"><span class="post-toc-number">4.</span> <span class="post-toc-text">Github配置</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#新建项目"><span class="post-toc-number">5.</span> <span class="post-toc-text">新建项目</span></a></li></ol>
+        </nav>
+    </aside>
+
 
 <article id="post-配置Jenkins"
   class="post-article article-type-post fade" itemprop="blogPost">
@@ -191,15 +198,16 @@ ga('send', 'pageview');
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
             <p>哈哈哈，终于搞定持续集成的配置了，买来的阿里云服务器也能发挥一点作用了，来记录一下怎么在阿里云服务器上配置持续集成</p>
-<p>####首先，什么是持续集成<br>简单来说，就是代码提交到 <code>Git</code> 或者 <code>SVN</code> 上的时候，会帮你<code>build</code>项目，然后跑测试，如果在build项目或者跑测试的时候出现错误，构建就会失败，然后能够通知你哪里出错了，如果没有错误，就会帮你发布项目（这么一看是不是很爽，每次提交代码就能自动构建）<br>我们使用的持续集成工具就是 <a href="https://jenkins.io/" target="_blank" rel="noopener">Jenkins</a></p>
-<p>####下载Jenkins<br><figure class="image-bubble">
+<h4 id="首先，什么是持续集成"><a href="#首先，什么是持续集成" class="headerlink" title="首先，什么是持续集成"></a>首先，什么是持续集成</h4><p>简单来说，就是代码提交到 <code>Git</code> 或者 <code>SVN</code> 上的时候，会帮你<code>build</code>项目，然后跑测试，如果在build项目或者跑测试的时候出现错误，构建就会失败，然后能够通知你哪里出错了，如果没有错误，就会帮你发布项目（这么一看是不是很爽，每次提交代码就能自动构建）<br>我们使用的持续集成工具就是 <a href="https://jenkins.io/" target="_blank" rel="noopener">Jenkins</a></p>
+<h4 id="下载Jenkins"><a href="#下载Jenkins" class="headerlink" title="下载Jenkins"></a>下载Jenkins</h4><figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
                     <img src="http://upload-images.jianshu.io/upload_images/5834506-a52fd187509d35b1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
                 </div>
                 <div class="image-caption"></div>
-            </figure><br>我们下载的是 <code>.war</code>后缀的，下载下来是一个包，需要装 <code>Java</code> 才能进行操作，怎么在服务器上装 <code>Java</code> 就不详细描述了</p>
-<p>####启动Jenkins<br>下载好 <code>Jenkins</code> ，安装且配置好 <code>Java</code> 后，我们只需要输入这条语句<br><code>java -jar jenkins.war</code> 就能启动<code>Jenkins</code><br>第一次启动 <code>Jenkins</code>会给一个秘钥</p>
+            </figure>
+<p>我们下载的是 <code>.war</code>后缀的，下载下来是一个包，需要装 <code>Java</code> 才能进行操作，怎么在服务器上装 <code>Java</code> 就不详细描述了</p>
+<h4 id="启动Jenkins"><a href="#启动Jenkins" class="headerlink" title="启动Jenkins"></a>启动Jenkins</h4><p>下载好 <code>Jenkins</code> ，安装且配置好 <code>Java</code> 后，我们只需要输入这条语句<br><code>java -jar jenkins.war</code> 就能启动<code>Jenkins</code><br>第一次启动 <code>Jenkins</code>会给一个秘钥</p>
 <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
@@ -208,6 +216,7 @@ ga('send', 'pageview');
                 <div class="image-caption"></div>
             </figure>
 <p>如果忘记了秘钥，就可以到<code>.jenkins/secrets/initialAdminPassword</code>这个文件找<br><strong>注意：这个文件是隐藏的，要在命令行用<code>ls -a</code>这个命令来显示</strong><br>启动后，就可以在浏览器输入网址来看，默认是8080端口<br><code>http://localhost:8080</code></p>
+<p><strong>注意：如果是把jenkins放在tomcat上，那么进入jenkins的网址就是 <code>http://localhost:8080/jenkins</code></strong></p>
 <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
@@ -224,7 +233,7 @@ ga('send', 'pageview');
                 <div class="image-caption"></div>
             </figure></p>
 <p>这就是界面了</p>
-<p>####Github配置<br>由于我们使用Github来做代码管理的，所以我们在自己的服务器上安装Git后生成ssh，添加到我们Github仓库</p>
+<h4 id="Github配置"><a href="#Github配置" class="headerlink" title="Github配置"></a>Github配置</h4><p>由于我们使用Github来做代码管理的，所以我们在自己的服务器上安装Git后生成ssh，添加到我们Github仓库</p>
 <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
@@ -232,8 +241,7 @@ ga('send', 'pageview');
                 </div>
                 <div class="image-caption"></div>
             </figure>
-<p>####新建项目</p>
-<figure class="image-bubble">
+<h4 id="新建项目"><a href="#新建项目" class="headerlink" title="新建项目"></a>新建项目</h4><figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
                     <img src="http://upload-images.jianshu.io/upload_images/5834506-65dd69fc4b508b18.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
