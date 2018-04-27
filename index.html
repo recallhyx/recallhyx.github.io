@@ -154,6 +154,55 @@ ga('send', 'pageview');
     <ul class="post-list">
     
         <li class="post-list-item fade">
+            <article id="post-JavaScript有技巧的函数"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2018-04-27 20:56:10" datetime="2018-04-27T12:56:10.000Z"  itemprop="datePublished">2018-04-27</time>
+
+        
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/前端/">前端</a></li></ul>
+
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2018/04/27/JavaScript有技巧的函数/">JavaScript有技巧的函数</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        前言JavaScript 有很多有技巧的函数，这篇文章是我自己的一个记录。
+链式调用看一个例子吧，我们要实现一个函数 fun ，它有以下功能：1fun(1).add(1).min(2).num // 0
+这是一个很典型的例子，用到了链式调用，其核心就是返回自己，即 return this，那么我们来实现这个函数吧：1234567891011function fun(num)&#123;   ...
+    
+
+        <a href="/2018/04/27/JavaScript有技巧的函数/" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
             <article id="post-JavaScript一些思考"
   class="article-card article-type-post" itemprop="blogPost">
 
@@ -583,55 +632,6 @@ vue-cli生成的项目，已经默认加入了处理sass的loader只需要在需
     <div class="post-footer">
         
 	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/css/">css</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-JavaScript事件循环"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2018-03-14 15:48:33" datetime="2018-03-14T07:48:33.000Z"  itemprop="datePublished">2018-03-14</time>
-
-        
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/前端/">前端</a></li></ul>
-
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2018/03/14/JavaScript事件循环/">JavaScript事件循环</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        引入例子先来个例子：123456setTimeout(function () &#123;    console.log(1);&#125;, 0);console.log(2);//2//1
-我们都知道，调用 setTimeout 时，会把函数参数，放到事件队列中，等主程序运行完，再调用。所以会先输出2再输出1。不过 setTimeout 第二个参数是延迟多少秒，都会放到事件队列。
-那我们...
-    
-
-        <a href="/2018/03/14/JavaScript事件循环/" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
 
     </div>
     
