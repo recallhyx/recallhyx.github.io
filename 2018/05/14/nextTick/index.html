@@ -40,7 +40,7 @@ ga('send', 'pageview');
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5834506-3363ab10ad9df969.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5834506-4dfaa1faa61aaba7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5834506-021889547efeb107.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-05-14T14:26:45.929Z">
+<meta property="og:updated_time" content="2018-05-15T01:44:51.383Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="理解nextTick">
 <meta name="twitter:description" content="前言一开始看到 nextTick 是在理解 JavaScript 事件循环的时候看到的，那个时候认为是 node 的东西，所以没怎么在意，但是后来看到 Vue 也有个地方用到了 nextTick，所以还是要花时间理解一下这个东西，看看它们的区别与联系。 node 中的 process.nextTick()在之前 事件循环 这一篇博客中可以知道有两个东西，一个叫 marcotask，另外一个叫 mi">
@@ -239,7 +239,7 @@ ga('send', 'pageview');
 <p><code>nextTick</code> 使用的是 <code>microtask</code> ，在 <code>marcotask</code> 执行完毕之后就会立即执行所有<code>microtask</code> ，那么 <code>flushBatcherQueue</code>（真正修改 DOM）便得以在此时立即完成，而后，当前轮次的 <code>microtask</code> 全部清理完成时，执行UI rendering，把重排重绘等操作真正更新到DOM上。<br>真正的去遍历 watcher，批处理更新是在 <code>microtask</code> 中执行的，而且用户在修改数据后自己执行的 <code>nextTick(cb)</code> 也会在此时执行 <code>cb</code>，他们都是在同一个 <code>microtask</code> 中执行。<br>之所以要这样，是因为用户的代码当中是可能多次修改数据的，而每次修改都会同步通知到所有订阅该数据的 watcher，而立马执行将数据写到 DOM 上是肯定不行的，那就只是把 watcher 加入数组。等到当前 <code>task</code> 执行完毕，所有的同步代码已经完成，那么这一轮次的数据修改就已经结束了，这个时候我可以安安心心的去将对监听到依赖变动的 watcher 完成数据真正写入到 DOM 上的操作，这样即使你在之前的 task 里改了一个 watcher 的依赖100次，我最终只会计算一次 value、改 DOM 一次。一方面省去了不必要的 DOM 修改，另一方面将DOM操作聚集，可以提升 DOM Render 效率。</p>
 <h1 id="区别与联系"><a href="#区别与联系" class="headerlink" title="区别与联系"></a>区别与联系</h1><p>在 node 里面，有一个专门的队列来存放 <code>nextTick</code> 中的回调函数，而 Vue 中的 <code>nextTick</code> 则是用 <code>microtask</code> 来实现，浏览器只有 <code>marcotask</code> 和 <code>microtask</code> 两种队列。 但是他们执行的时间是一样的，即是在 <code>marcotask</code> 执行完之后执行。</p>
 <blockquote>
-<p>参考：<br><a href="https://github.com/creeperyang/blog/issues/26" target="_blank" rel="noopener">Node.js的event loop及timer/setImmediate/nextTick</a><br><a href="www.ruanyifeng.com/blog/2018/02/node-event-loop.html">Node 定时器详解</a></p>
+<p>参考：<br><a href="https://github.com/creeperyang/blog/issues/26" target="_blank" rel="noopener">Node.js的event loop及timer/setImmediate/nextTick</a><br><a href="www.ruanyifeng.com/blog/2018/02/node-event-loop.html">Node 定时器详解</a><br><a href="https://github.com/Ma63d/vue-analysis/issues/6" target="_blank" rel="noopener">Vue源码详解之nextTick</a></p>
 </blockquote>
 
         </div>
