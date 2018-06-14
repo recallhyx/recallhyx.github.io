@@ -47,7 +47,7 @@ ga('send', 'pageview');
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5834506-9c6fe76f3ecf8527.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5834506-5618d4275ffd7ec2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5834506-c954d79e40411450.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-06-13T14:01:34.939Z">
+<meta property="og:updated_time" content="2018-06-14T13:57:37.813Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Vue组件开发流程">
 <meta name="twitter:description" content="需求分析首先分析好需求，确定做什么，怎么做。画流程图或原型图能够帮我们梳理一下重点，难点。推荐工具：ProcessOn、Axure 开发组件                                                                                                           推荐组件：awasome-vue 测试开发完组">
@@ -208,32 +208,37 @@ ga('send', 'pageview');
                 <div class="image-caption"></div>
             </figure>
 <p>推荐组件：<a href="https://github.com/vuejs/awesome-vue#components--libraries" target="_blank" rel="noopener">awasome-vue</a></p>
-<h1 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h1><p>开发完组件后需要测试一下，这里使用 <code>npm link</code> 的方式，简单快速。<br>首先我们在开发组件的项目下，打开命令行，输入：<code>npm link</code><br><figure class="image-bubble">
+<h1 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h1><p>开发完组件后需要测试一下，这里使用  <code>npm link</code> 的方式，简单快速。<br>首先我们在开发组件的项目下，打开命令行，输入： <code>npm link</code><br><figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
                     <img src="https://upload-images.jianshu.io/upload_images/5834506-4ce00fcfda102815.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
                 </div>
                 <div class="image-caption"></div>
-            </figure><br>这个时候就会提示已经连接到项目 <code>avatar</code> 下<br>然后我们新建一个项目，在新项目目录下，打开命令行，输入：<code>npm link avatar</code>，<br><figure class="image-bubble">
+            </figure></p>
+<p>这个时候就会提示已经连接到项目  <code>avatar</code>  下<br>然后我们新建一个项目，在新项目目录下，打开命令行，输入：<code>npm link avatar</code>，</p>
+<figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
                     <img src="https://upload-images.jianshu.io/upload_images/5834506-65e041ecace2416a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
                 </div>
                 <div class="image-caption"></div>
-            </figure><br>连接成功，在 VsCode 里面，也可以在 <code>node_modules</code>看到被连接的项目<br><figure class="image-bubble">
+            </figure>
+<p>连接成功，在 VsCode 里面，也可以在 <code>node_modules</code>看到被连接的项目<br><figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
                     <img src="https://upload-images.jianshu.io/upload_images/5834506-23000a844b54e303.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
                 </div>
                 <div class="image-caption"></div>
             </figure><br>然后我们就正常引入组件，在新的项目里面测试看看功能是否正常</p>
-<h1 id="打包"><a href="#打包" class="headerlink" title="打包"></a>打包</h1><h2 id="package-json"><a href="#package-json" class="headerlink" title="package.json"></a>package.json</h2><h3 id="修改"><a href="#修改" class="headerlink" title="修改"></a>修改</h3><p><code>package.json</code> 有几个地方需要修改的，因为我们要发布组件，所以 <code>private</code> 选项要改成 <code>false</code>，<br><figure class="image-bubble">
+<h1 id="打包"><a href="#打包" class="headerlink" title="打包"></a>打包</h1><h2 id="package-json"><a href="#package-json" class="headerlink" title="package.json"></a>package.json</h2><h3 id="修改"><a href="#修改" class="headerlink" title="修改"></a>修改</h3><p><code>package.json</code> 有几个地方需要修改的，因为我们要发布组件，所以 <code>private</code> 选项要改成 <code>false</code>，</p>
+<figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
                     <img src="https://upload-images.jianshu.io/upload_images/5834506-563a413cce843375.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
                 </div>
                 <div class="image-caption"></div>
-            </figure><br>然后把 <code>name</code>，<code>version</code>，<code>description</code>，<code>author</code>，看自己的情况修改。<br>注意：<code>name</code> 字段如果和 npm 上面已有的包重名，会发布不成功的。以后修改了组件但是发布的时候 <code>version</code> 没有修改也会发布失败。</p>
+            </figure>
+<p>然后把 <code>name</code>，<code>version</code>，<code>description</code>，<code>author</code>，看自己的情况修改。<br>注意：<code>name</code> 字段如果和 npm 上面已有的包重名，会发布不成功的。以后修改了组件但是发布的时候 <code>version</code> 没有修改也会发布失败。</p>
 <h3 id="添加"><a href="#添加" class="headerlink" title="添加"></a>添加</h3><ol>
 <li>添加 <code>files</code> 字段，这个字段是指定打包之后，包中存在的文件夹<br><img src="https://upload-images.jianshu.io/upload_images/5834506-d470727f6a98e619.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></li>
 <li>添加 <code>main</code> 字段，这个字段是当我们用 <code>import avatar from &#39;vue-crop-avatar&#39;</code> 时，会引入的文件<br><img src="https://upload-images.jianshu.io/upload_images/5834506-296b5fe452e531a0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>即我们用 <code>import avatar from &#39;vue-crop-avatar&#39;</code> 实际上是引入 <code>vue-avatar.min.js</code> 这个文件</li>
