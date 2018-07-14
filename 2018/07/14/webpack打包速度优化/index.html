@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-112417276-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>webpack打包速度优化 | Recall Hyx | Your star</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#FFC107">
+    
+    
+    <meta name="keywords" content="webpack">
+    <meta name="description" content="前言webpack 打包速度一直以来是个问题，之前用 webpack 打包 Angular 要等个几分钟，所以需要优化一下打包速度。 前期准备我们需要准备一个很大的项目，去网上找几个 UI 库安装下载就差不多了">
+<meta name="keywords" content="webpack">
+<meta property="og:type" content="article">
+<meta property="og:title" content="webpack打包速度优化">
+<meta property="og:url" content="https://recallhyx.github.io/2018/07/14/webpack打包速度优化/index.html">
+<meta property="og:site_name" content="Recall Hyx">
+<meta property="og:description" content="前言webpack 打包速度一直以来是个问题，之前用 webpack 打包 Angular 要等个几分钟，所以需要优化一下打包速度。 前期准备我们需要准备一个很大的项目，去网上找几个 UI 库安装下载就差不多了">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5834506-45fc0301d04f28f9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5834506-b2d9cc383136adc5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5834506-5d50e0bf36c3572a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5834506-a6624387a1889575.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5834506-48dd61bfb063eb52.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5834506-22ec88cae463ae35.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-07-14T02:25:09.649Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="webpack打包速度优化">
+<meta name="twitter:description" content="前言webpack 打包速度一直以来是个问题，之前用 webpack 打包 Angular 要等个几分钟，所以需要优化一下打包速度。 前期准备我们需要准备一个很大的项目，去网上找几个 UI 库安装下载就差不多了">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/5834506-45fc0301d04f28f9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Recall HYX</h5>
+          <a href="mailto:quce.hu@qq.com" title="quce.hu@qq.com" class="mail">quce.hu@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                文章
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/recallhyx" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">webpack打包速度优化</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">webpack打包速度优化</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-07-14T02:24:03.000Z" itemprop="datePublished" class="page-time">
+  2018-07-14
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/前端/">前端</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#前言"><span class="post-toc-number">1.</span> <span class="post-toc-text">前言</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#前期准备"><span class="post-toc-number">2.</span> <span class="post-toc-text">前期准备</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#HappyPack"><span class="post-toc-number">3.</span> <span class="post-toc-text">HappyPack</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#DllPlugin"><span class="post-toc-number">4.</span> <span class="post-toc-text">DllPlugin</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-webpack打包速度优化"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">webpack打包速度优化</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-07-14 10:24:03" datetime="2018-07-14T02:24:03.000Z"  itemprop="datePublished">2018-07-14</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/前端/">前端</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>webpack 打包速度一直以来是个问题，之前用 webpack 打包 Angular 要等个几分钟，所以需要优化一下打包速度。</p>
+<h1 id="前期准备"><a href="#前期准备" class="headerlink" title="前期准备"></a>前期准备</h1><p>我们需要准备一个很大的项目，去网上找几个 UI 库安装下载就差不多了<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://upload-images.jianshu.io/upload_images/5834506-45fc0301d04f28f9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure></p>
+<h1 id="HappyPack"><a href="#HappyPack" class="headerlink" title="HappyPack"></a>HappyPack</h1><p>我们就看一下 <code>HappyPack</code> 是怎么配置的。<br>首先，<code>HappyPack</code> 是个插件来的，所以我们要在 webpack 的 <code>plugins</code> 里面 <code>new</code> 一个：<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://upload-images.jianshu.io/upload_images/5834506-b2d9cc383136adc5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure></p>
+<p><code>happyThreadPool</code> 就是要用多少子进程来进行编译，我们在文件头声明一个变量<br><figure class="highlight roboconf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var happyThreadPool = HappyPack.ThreadPool(&#123; <span class="attribute">size</span>: os<span class="variable">.cpus</span>()<span class="variable">.length</span> &#125;);</span><br></pre></td></tr></table></figure></p>
+<p>这个就是获取操作系统的 cpu。<br>然后我们就把原来的 <code>loader</code> 替换：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://upload-images.jianshu.io/upload_images/5834506-5d50e0bf36c3572a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>前面是一样的，后面的 <code>id</code> 就是指定的 <code>HappyPack</code> 配置，也就是说我们可以有多个配置，只需要改变 <code>id</code> 和 <code>loader</code> 就能启用 <code>HappyPack</code>。</p>
+<p>现在，我们把 <code>HappyPack</code> 去掉，看一下打包要花多久：<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://upload-images.jianshu.io/upload_images/5834506-a6624387a1889575.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure></p>
+<p>快了 10 秒，效果还不错。</p>
+<h1 id="DllPlugin"><a href="#DllPlugin" class="headerlink" title="DllPlugin"></a>DllPlugin</h1><p>那我们再用另外一个插件 <code>DllPlugin</code> ， 它要和 <code>DllReferencePlugin</code> 配合使用。前者是用来打包 <code>dll.js</code>，后者是用在打包主流程时引用刚才的 <code>dll.js</code> 的。<br><code>Dll</code> 是动态链接库的意思，实际上就是将这些 <code>npm</code> 打包生成一个 <code>JSON</code> 文件，这个文件里包含了 <code>npm</code> 包的路径对应信息。<br>需要新建一个文件夹 <code>webpack.dll.conf.js</code> 来使用第一个插件 <code>DllPlugin</code>：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> webpack = <span class="built_in">require</span>(<span class="string">'webpack'</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    output: &#123;</span><br><span class="line">        <span class="comment">// 将会生成 lib.js文件</span></span><br><span class="line">        path: path.resolve(__dirname, <span class="string">'../statics/'</span>),</span><br><span class="line">        filename: <span class="string">'[name].js'</span>,</span><br><span class="line">        library: <span class="string">'[name]'</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">    entry: &#123;</span><br><span class="line">        <span class="string">"lib"</span>: [</span><br><span class="line">          <span class="comment">// ...其它库</span></span><br><span class="line">          <span class="string">'vue/dist/vue.esm.js'</span>,</span><br><span class="line">          <span class="string">'echarts'</span>,</span><br><span class="line">          <span class="string">'element-ui'</span>,</span><br><span class="line">          <span class="string">'iview'</span>,</span><br><span class="line">          <span class="string">'vue-material'</span>,</span><br><span class="line">          <span class="string">'vuetify'</span>,</span><br><span class="line">        ],</span><br><span class="line">    &#125;,</span><br><span class="line">    plugins: [</span><br><span class="line">        <span class="keyword">new</span> webpack.DllPlugin(&#123;</span><br><span class="line">            <span class="comment">// 生成的映射关系文件</span></span><br><span class="line">            path: path.resolve(__dirname, <span class="string">'../statics/[name]-mainfest.json'</span>),</span><br><span class="line">            name: <span class="string">'[name]'</span>,</span><br><span class="line">            context: __dirname,<span class="comment">// 执行的上下文环境，对之后DllReferencePlugin有用</span></span><br><span class="line">        &#125;), </span><br><span class="line">    ],</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>在 <code>package.json</code> 里面写个脚本：<br><figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"scripts"</span>: &#123;</span><br><span class="line">  <span class="string">"dev"</span>: <span class="string">"webpack-dev-server --inline --progress --config build/webpack.dev.conf.js"</span>,</span><br><span class="line">  <span class="string">"start"</span>: <span class="string">"npm run dev"</span>,</span><br><span class="line">  <span class="string">"build"</span>: <span class="string">"node build/build.js"</span>,</span><br><span class="line">  <span class="string">"build-dll"</span>: <span class="string">"webpack --config build/webpack.dll.conf.js"</span></span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure></p>
+<p>执行 <code>npm run build-dll</code>，就会生成下面的文件：<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://upload-images.jianshu.io/upload_images/5834506-48dd61bfb063eb52.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure></p>
+<p>第一步完成，然后我们在 <code>webpack.prod.conf.js</code> 里面添加我们的第二个插件 <code>DllReferencePlugin</code> ：<br><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">plugins</span>: [</span><br><span class="line">  new webpack.DllReferencePlugin(&#123;</span><br><span class="line">    <span class="attribute">context</span>: __dirname,</span><br><span class="line">    <span class="attribute">manifest</span>: require(<span class="string">'../statics/lib-mainfest.json'</span>) <span class="comment">// 指向这个json</span></span><br><span class="line">  &#125;),</span><br><span class="line">]</span><br></pre></td></tr></table></figure></p>
+<p>然后就可以啦，让我们试试添加插件之后的打包速度：<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://upload-images.jianshu.io/upload_images/5834506-22ec88cae463ae35.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure></p>
+<p>变成 30 秒了， <code>HappyPack</code> 和 <code>DllPlugin</code> 一起用比什么都没有快了一倍 ！减少构建时间能让我们更快的开发调试，还是挺有用的。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <footer>
+        <a href="https://recallhyx.github.io">
+            <img src="/img/avatar.jpg" alt="Recall HYX">
+            Recall HYX
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/webpack/">webpack</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://recallhyx.github.io/2018/07/14/webpack打包速度优化/&title=《webpack打包速度优化》 — Recall Hyx&pic=https://recallhyx.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://recallhyx.github.io/2018/07/14/webpack打包速度优化/&title=《webpack打包速度优化》 — Recall Hyx&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://recallhyx.github.io/2018/07/14/webpack打包速度优化/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《webpack打包速度优化》 — Recall Hyx&url=https://recallhyx.github.io/2018/07/14/webpack打包速度优化/&via=https://recallhyx.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://recallhyx.github.io/2018/07/14/webpack打包速度优化/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/07/11/前端导出excel/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">前端导出excel</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "gnMQ4bW3FRMELqY7UJSFCG2L-gzGzoHsz",
+            appKey: "8kUBso0hYLBcTE8e9h89D1Hc",
+            avatar: "mm",
+            placeholder: "Just go go",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Recall HYX &copy; 2017 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://recallhyx.github.io/2018/07/14/webpack打包速度优化/&title=《webpack打包速度优化》 — Recall Hyx&pic=https://recallhyx.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://recallhyx.github.io/2018/07/14/webpack打包速度优化/&title=《webpack打包速度优化》 — Recall Hyx&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://recallhyx.github.io/2018/07/14/webpack打包速度优化/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《webpack打包速度优化》 — Recall Hyx&url=https://recallhyx.github.io/2018/07/14/webpack打包速度优化/&via=https://recallhyx.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://recallhyx.github.io/2018/07/14/webpack打包速度优化/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACr0lEQVR42u3awU7kMBAEUP7/p9kraEWmqtteZqWX0yhkiJ+RbFPdHx/x9fnl+nrn+fnZ59kbVxceHh7eYuh/Xz+9LBnu87een8/H8/wuPDw8vHu82eKeY2ZbTj6GH+/j4eHhvQ2vZeS/f/M8Hh4e3nvykm+1B+JNkIGHh4f3W7xkQM8bQ3LIPhvpHs5a8PDw8GLe5vj7W5+v1Pfw8PDw1lX1/eLelsGeJ7QeLR4eHt4FXhuhzlqv2og2n6DojXh4eHgXeMlCvIl3hwt6Oa0vJh0PDw/vEG/WHNAC2oaDfQlt1fuAh4eHF5xFk1CgxbfBRLuFJO/Fw8PDu8fbkNrVOB/KgYYAPDw8vAu8/UI8i1zbEtqw9QoPDw/vAm9WrJot3JsD96yEhoeHh3eD1xb+i4V4cdTOSUW7AB4eHt5RXlKe3yCT39w2LkQtBXh4eHjXeLOWgmQpf76TbAOzrehb1oKHh4d3lJcA8qgi2R5m7QirAAUPDw/vKC8/7M7K/Kei3jYuwcPDw7vHa1fRGW8/uHzDKFoH8PDw8Ea8TUg6ezKfjrbJ4MeeMjw8PLwLvFkEkB+C86LarCT2oukKDw8P7wIvH/oszP2Mr3yKowgDDw8P7xovL0S1gUUbT8xaB+qUGg8PD2/Byxf0tk0qH+JsKvMABQ8PD+8Gb7NYt4DNZLXjxMPDw7vNaxfolpRHsfkxPQLj4eHhXeO1pH371LCsVf6R8PDw8M7yPstrUySbxQrtT799xsPDw7vA2xSiNpnALCyui154eHh413in4tdZ3JDcX20beHh4eNd4efEpD23b52fbz4tNAg8PD+8/4W3i3TZ6eHEfDw8P7214s3B2U07Lg2Y8PDy8f8NrD74JLzkc798bbQx4eHh4R3kH/uEPvpVvGO0YNmU5PDw8vJL3B6J+ac4tRFHzAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
