@@ -29,7 +29,7 @@ var happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length });
 
 前面是一样的，后面的 `id` 就是指定的 `HappyPack` 配置，也就是说我们可以有多个配置，只需要改变 `id` 和 `loader` 就能启用 `HappyPack`。
 
-现在，我们把 `HappyPack` 去掉，看一下打包要花多久：
+现在，我们重新 `build`，看一下打包要花多久：
 ![](https://upload-images.jianshu.io/upload_images/5834506-a6624387a1889575.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 快了 10 秒，效果还不错。
