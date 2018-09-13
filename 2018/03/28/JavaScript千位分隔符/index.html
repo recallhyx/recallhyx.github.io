@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-112417276-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>JavaScript千位分隔符 | Recall Hyx | Your star</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#FFC107">
+    
+    
+    <meta name="keywords" content="javascript">
+    <meta name="description" content="前言我们看一道题目  实现一个函数输入123456789，输出123，456，789  解法一，正则表达式str.replace(/(\d)(?=(?:\d{3})+$)/g,&amp;#39;$1,&amp;#39;)其中 (?:\d{3}) 叫作非捕获括号，匹配 \d{3} 但是不记住匹配项。然后它被正向肯定查找包裹住： (?=(?:\d{3})+$)，(?=) 这就是正向肯定查找，会匹配到 \d 仅仅当它后">
+<meta name="keywords" content="javascript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript千位分隔符">
+<meta property="og:url" content="https://recallhyx.github.io/2018/03/28/JavaScript千位分隔符/index.html">
+<meta property="og:site_name" content="Recall Hyx">
+<meta property="og:description" content="前言我们看一道题目  实现一个函数输入123456789，输出123，456，789  解法一，正则表达式str.replace(/(\d)(?=(?:\d{3})+$)/g,&amp;#39;$1,&amp;#39;)其中 (?:\d{3}) 叫作非捕获括号，匹配 \d{3} 但是不记住匹配项。然后它被正向肯定查找包裹住： (?=(?:\d{3})+$)，(?=) 这就是正向肯定查找，会匹配到 \d 仅仅当它后">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-09-13T13:53:36.227Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JavaScript千位分隔符">
+<meta name="twitter:description" content="前言我们看一道题目  实现一个函数输入123456789，输出123，456，789  解法一，正则表达式str.replace(/(\d)(?=(?:\d{3})+$)/g,&amp;#39;$1,&amp;#39;)其中 (?:\d{3}) 叫作非捕获括号，匹配 \d{3} 但是不记住匹配项。然后它被正向肯定查找包裹住： (?=(?:\d{3})+$)，(?=) 这就是正向肯定查找，会匹配到 \d 仅仅当它后">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Recall HYX</h5>
+          <a href="mailto:quce.hu@qq.com" title="quce.hu@qq.com" class="mail">quce.hu@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                文章
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/recallhyx" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">JavaScript千位分隔符</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">JavaScript千位分隔符</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-03-28T02:45:38.000Z" itemprop="datePublished" class="page-time">
+  2018-03-28
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/前端/">前端</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#前言"><span class="post-toc-number">1.</span> <span class="post-toc-text">前言</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#解法一，正则表达式"><span class="post-toc-number">2.</span> <span class="post-toc-text">解法一，正则表达式</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#解法二，toLocaleString"><span class="post-toc-number">3.</span> <span class="post-toc-text">解法二，toLocaleString()</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#解法三，new-Intl-NumberFormat-format"><span class="post-toc-number">4.</span> <span class="post-toc-text">解法三，new Intl.NumberFormat().format()</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-JavaScript千位分隔符"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">JavaScript千位分隔符</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-03-28 10:45:38" datetime="2018-03-28T02:45:38.000Z"  itemprop="datePublished">2018-03-28</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/前端/">前端</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>我们看一道题目</p>
+<blockquote>
+<p>实现一个函数输入123456789，输出123，456，789</p>
+</blockquote>
+<h1 id="解法一，正则表达式"><a href="#解法一，正则表达式" class="headerlink" title="解法一，正则表达式"></a>解法一，正则表达式</h1><p><code>str.replace(/(\d)(?=(?:\d{3})+$)/g,&#39;$1,&#39;)</code><br>其中 <code>(?:\d{3})</code> 叫作非捕获括号，匹配 <code>\d{3}</code> 但是不记住匹配项。然后它被正向肯定查找包裹住： <code>(?=(?:\d{3})+$)</code>，<code>(?=)</code> 这就是正向肯定查找，会匹配到 <code>\d</code> 仅仅当它后面跟着 <code>(?:\d{3})+$</code>，且不会把 <code>(?:\d{3})+$</code> 当做匹配的内容。最后就是 <code>$1,</code> ，由于我们是用字符串的 <code>replace</code> 方法，它接受两个参数，第一个是正则表达式，第二个是替换的内容，而正则表达式由 <code>()</code> 匹配的内容，可以用 <code>$1</code> 来表示第一个 <code>()</code> 匹配的内容，所以替换后就是在匹配的数字后面加上 <code>,</code>。整个流程就是，匹配数字（<code>(\d)</code>），仅仅当这个数字后面（<code>(?=)</code>）有一个或多个三个数字的组合并以数字结尾（<code>(?:\d{3})+&amp;</code>），匹配到就替换数字为原来的匹配项加上逗号。</p>
+<h1 id="解法二，toLocaleString"><a href="#解法二，toLocaleString" class="headerlink" title="解法二，toLocaleString()"></a>解法二，toLocaleString()</h1><p>这个是字符串的方法，我一开始是用在转化时间为本地时间的，没想到还能用上千位分隔符。<br><figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var a = <span class="number">123456789</span><span class="comment">;</span></span><br><span class="line">a.toLocaleString()<span class="comment">;//"123,456,789"</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="解法三，new-Intl-NumberFormat-format"><a href="#解法三，new-Intl-NumberFormat-format" class="headerlink" title="解法三，new Intl.NumberFormat().format()"></a>解法三，new Intl.NumberFormat().format()</h1><p>这个函数能提供特定区域设置的数字格式，默认是 <code>en-US</code>。<br><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="built_in">num</span> = <span class="number">123456789</span>;</span><br><span class="line"><span class="keyword">new</span> Intl.NumberFormat().format(<span class="built_in">num</span>);</span><br><span class="line"><span class="comment">//"123,456,789"</span></span><br></pre></td></tr></table></figure></p>
+<p>这个函数还能设置其他地区的数字的显示，具体可以参考 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NumberFormat" target="_blank" rel="noopener">MDN</a></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <footer>
+        <a href="https://recallhyx.github.io">
+            <img src="/img/avatar.jpg" alt="Recall HYX">
+            Recall HYX
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://recallhyx.github.io/2018/03/28/JavaScript千位分隔符/&title=《JavaScript千位分隔符》 — Recall Hyx&pic=https://recallhyx.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://recallhyx.github.io/2018/03/28/JavaScript千位分隔符/&title=《JavaScript千位分隔符》 — Recall Hyx&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://recallhyx.github.io/2018/03/28/JavaScript千位分隔符/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JavaScript千位分隔符》 — Recall Hyx&url=https://recallhyx.github.io/2018/03/28/JavaScript千位分隔符/&via=https://recallhyx.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://recallhyx.github.io/2018/03/28/JavaScript千位分隔符/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2018/03/29/Vuex的一些总结/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Vuex的一些总结</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/03/26/JavaScript正则表达式/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">JavaScript正则表达式</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "gnMQ4bW3FRMELqY7UJSFCG2L-gzGzoHsz",
+            appKey: "8kUBso0hYLBcTE8e9h89D1Hc",
+            avatar: "mm",
+            placeholder: "Just go go",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Recall HYX &copy; 2017 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://recallhyx.github.io/2018/03/28/JavaScript千位分隔符/&title=《JavaScript千位分隔符》 — Recall Hyx&pic=https://recallhyx.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://recallhyx.github.io/2018/03/28/JavaScript千位分隔符/&title=《JavaScript千位分隔符》 — Recall Hyx&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://recallhyx.github.io/2018/03/28/JavaScript千位分隔符/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JavaScript千位分隔符》 — Recall Hyx&url=https://recallhyx.github.io/2018/03/28/JavaScript千位分隔符/&via=https://recallhyx.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://recallhyx.github.io/2018/03/28/JavaScript千位分隔符/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACsUlEQVR42u3aMZLbQAwEQP3/03biwFVXomeAXVlBM7qSeCKaAQECeL3i49dfx/M5P8//+fnz3++u+Hz11YGHh4e3CP05rPaTNvTkyGPGw8PDu81LHvR7RpJyZonk7ed4eHh4X8bLg8t/f3M+Hh4e3nfyntsNSSL5RxEc32I8PDy8/8vLH/f7pNKW7B/qteDh4eHFvHyK9D1/X5nv4eHh4a2n6knR3I6p2ibvLM4/v4mHh4d3gde2UJ8DypcJ2oWt2Y3Aw8PDu8drB//5MGxf2SbrBVHxjYeHh3eUl7du83ZAu5jVFutF4sHDw8O7wMsvn4/B2uSR3Og88eDh4eF9hpevDiQP6BawP3M4DMPDw8Mb8ZLlp83nm0WEA6tXeHh4eEd5bQLYZJ7ZzcqbDm8703h4eHhHeUlwbZO3PWdWlBf/i4eHh3eUt2kizNoKbek8+/ZAjwQPDw8v3kfKGflAq21DtC3mt7+Gh4eHd4GXL0vlBXFCTVq0OfuVH3h4eHiHeDlmdvlo2+vQ+W971Xh4eHhHefmDO18vaPGz1m2R2PDw8PAu8PLQk5K6bdQebuAm5TUeHh7egpcXr5tw8zZum2Dw8PDwPslrA8oL381o7fBbAh4eHt6FN/T85T8pZw/U9cF1ZysIeHh4eKd4s3I5v3OzlHCqNYyHh4d3m9e+/G+Ca0dfefoZTs/w8PDwju4jJT/UrhrM2gp50sLDw8O7zcsbqe0awSa42XAODw8P7x5vP6DajMeStsXqWzw8PLwLvBuDqDb0U2X6a3Pg4eHhlbzZeH4/DGvTzDAx4OHh4V3jnS2C2zWs2RCuSAx4eHh4X8BLAt0HvWkx4+Hh4X0/L38ytw3itujHw8PD+wwvL3xnD/e2y5q0JKLY8PDw8C7wZi/8s5WszfltowQPDw/vAu831oMNAcX51KoAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

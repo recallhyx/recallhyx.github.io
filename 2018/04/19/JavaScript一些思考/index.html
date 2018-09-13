@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-112417276-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>JavaScript一些思考 | Recall Hyx | Your star</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#FFC107">
+    
+    
+    <meta name="keywords" content="javascript">
+    <meta name="description" content="前言最近走马观花的了解了很多东西，感觉web前端的趋势和发展很快，但是唯一不变的就是基础，所以需要把基础打好，把 JavaScript 学好 ，才能以不变应万变。 全局变量我们都很熟悉全局变量了，看一道面试题12345(function ()&amp;#123;  var a = b = 1;&amp;#125;)()console.log(b);// 1console.log(a);// Uncaught Re">
+<meta name="keywords" content="javascript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript一些思考">
+<meta property="og:url" content="https://recallhyx.github.io/2018/04/19/JavaScript一些思考/index.html">
+<meta property="og:site_name" content="Recall Hyx">
+<meta property="og:description" content="前言最近走马观花的了解了很多东西，感觉web前端的趋势和发展很快，但是唯一不变的就是基础，所以需要把基础打好，把 JavaScript 学好 ，才能以不变应万变。 全局变量我们都很熟悉全局变量了，看一道面试题12345(function ()&amp;#123;  var a = b = 1;&amp;#125;)()console.log(b);// 1console.log(a);// Uncaught Re">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-09-13T13:53:36.226Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JavaScript一些思考">
+<meta name="twitter:description" content="前言最近走马观花的了解了很多东西，感觉web前端的趋势和发展很快，但是唯一不变的就是基础，所以需要把基础打好，把 JavaScript 学好 ，才能以不变应万变。 全局变量我们都很熟悉全局变量了，看一道面试题12345(function ()&amp;#123;  var a = b = 1;&amp;#125;)()console.log(b);// 1console.log(a);// Uncaught Re">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Recall HYX</h5>
+          <a href="mailto:quce.hu@qq.com" title="quce.hu@qq.com" class="mail">quce.hu@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                文章
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/recallhyx" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">JavaScript一些思考</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">JavaScript一些思考</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-04-19T01:39:55.000Z" itemprop="datePublished" class="page-time">
+  2018-04-19
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/前端/">前端</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#前言"><span class="post-toc-number">1.</span> <span class="post-toc-text">前言</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#全局变量"><span class="post-toc-number">2.</span> <span class="post-toc-text">全局变量</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#for-循环"><span class="post-toc-number">3.</span> <span class="post-toc-text">for 循环</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#for-in-循环"><span class="post-toc-number">4.</span> <span class="post-toc-text">for-in 循环</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#自定义-log"><span class="post-toc-number">5.</span> <span class="post-toc-text">自定义 log</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#个人不推荐用-amp-amp-和-代替-if"><span class="post-toc-number">6.</span> <span class="post-toc-text">个人不推荐用 &amp;&amp; 和 || 代替 if</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-JavaScript一些思考"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">JavaScript一些思考</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-04-19 09:39:55" datetime="2018-04-19T01:39:55.000Z"  itemprop="datePublished">2018-04-19</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/前端/">前端</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近走马观花的了解了很多东西，感觉web前端的趋势和发展很快，但是唯一不变的就是基础，所以需要把基础打好，把 JavaScript 学好 ，才能以不变应万变。</p>
+<h1 id="全局变量"><a href="#全局变量" class="headerlink" title="全局变量"></a>全局变量</h1><p>我们都很熟悉全局变量了，看一道面试题<br><figure class="highlight delphi"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span> <span class="params">()</span><span class="comment">&#123;</span></span></span><br><span class="line"><span class="function"><span class="comment">  var a = b = 1;</span></span></span><br><span class="line"><span class="function"><span class="comment">&#125;</span>)<span class="params">()</span></span></span><br><span class="line"><span class="function"><span class="title">console</span>.<span class="title">log</span><span class="params">(b)</span>;</span><span class="comment">// 1</span></span><br><span class="line">console.log(a);<span class="comment">// Uncaught ReferenceError: a is not defined</span></span><br></pre></td></tr></table></figure></p>
+<p>实际上，JavaScript 是从右到左赋值的，相当于<br><figure class="highlight clojure"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(<span class="name">function</span> ()&#123;</span><br><span class="line">  var a = (<span class="name">b</span> = <span class="number">1</span>)<span class="comment">;</span></span><br><span class="line">&#125;)()</span><br></pre></td></tr></table></figure></p>
+<p>先给 <code>b</code> 赋值，然后再把 <code>b</code> 的值赋值给 <code>a</code>。<code>b</code> 没有用 <code>var</code> 声明就赋值，所以是一个全局变量，因此能够在函数体外访问。<br>所以如果是想用这种连续赋值的方式赋值又不想暴露全局变量的话，可以用以下的方式赋值：<br><figure class="highlight delphi"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span> <span class="params">()</span><span class="comment">&#123;</span></span></span><br><span class="line"><span class="function"><span class="comment">  var a,b;</span></span></span><br><span class="line"><span class="function"><span class="comment">  a = b = 1;</span></span></span><br><span class="line"><span class="function"><span class="comment">&#125;</span>)<span class="params">()</span></span></span><br><span class="line"><span class="function"><span class="title">console</span>.<span class="title">log</span><span class="params">(b)</span>;</span><span class="comment">// Uncaught ReferenceError: b is not defined</span></span><br><span class="line">console.log(a);<span class="comment">// Uncaught ReferenceError: a is not defined</span></span><br></pre></td></tr></table></figure></p>
+<p>其实全局变量分为两种，显式全局变量和隐式全局变量。<br>隐式全局变量和明确定义的全局变量间有些小的差异，判断方法就是能否通过 <code>delete</code> 操作符让变量未定义的能力。</p>
+<ul>
+<li>通过 <code>var</code> 创建的全局变量（任何函数之外的程序中创建）是不能被删除的。</li>
+<li>无 <code>var</code> 创建的隐式全局变量（无视是否在函数中创建）是能被删除的。（即上例的 <code>b</code>）</li>
+</ul>
+<p>让我们看个例子：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义三个全局变量</span></span><br><span class="line"><span class="keyword">var</span> global_var = <span class="number">1</span>;</span><br><span class="line">global_novar = <span class="number">2</span>; <span class="comment">// 反面教材</span></span><br><span class="line">(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">   global_fromfunc = <span class="number">3</span>; <span class="comment">// 反面教材</span></span><br><span class="line">&#125;());</span><br><span class="line"></span><br><span class="line"><span class="comment">// 试图删除</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">delete</span> global_var); <span class="comment">// false</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">delete</span> global_novar); <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">delete</span> global_fromfunc); <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 测试该删除</span></span><br><span class="line"><span class="keyword">typeof</span> global_var; <span class="comment">// "number"</span></span><br><span class="line"><span class="keyword">typeof</span> global_novar; <span class="comment">// "undefined"</span></span><br><span class="line"><span class="keyword">typeof</span> global_fromfunc; <span class="comment">// "undefined"</span></span><br></pre></td></tr></table></figure></p>
+<p>这下我们就明白了，隐式全局变量并不是真正的全局变量，它们是全局对象的属性。属性是可以通过 <code>delete</code> 操作符删除的，而变量是不能的。所以隐式全局变量我们也可以通过全局对象来访问：<br><figure class="highlight delphi"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span> <span class="params">()</span><span class="comment">&#123;</span></span></span><br><span class="line"><span class="function"><span class="comment">  var a = b = 1;</span></span></span><br><span class="line"><span class="function"><span class="comment">&#125;</span>)<span class="params">()</span></span></span><br><span class="line"><span class="function"><span class="title">console</span>.<span class="title">log</span><span class="params">(window.b)</span>;</span><span class="comment">// 1</span></span><br></pre></td></tr></table></figure></p>
+<p>当然，这种隐式全局变量是不安全的，因为是全局变量的属性，所以很可能被其他变量所覆盖导致代码出错：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 文件1定义了 id 函数</span></span><br><span class="line">id = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'id'</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 文件2定义了 id 变量并赋值</span></span><br><span class="line">id = <span class="number">1</span>;</span><br><span class="line"><span class="comment">// 文件1 并不知道文件2定义了 id，并覆盖了id 函数，当执行的时候就会出错</span></span><br><span class="line">id();<span class="comment">// Uncaught TypeError: id is not a function</span></span><br></pre></td></tr></table></figure></p>
+<p>所以为了团队开发，不要使用隐式全局变量。</p>
+<h1 id="for-循环"><a href="#for-循环" class="headerlink" title="for 循环"></a>for 循环</h1><p>很多人需要遍历一个数组的时候都是这样子的：<br><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(var <span class="built_in">i</span> = <span class="number">0</span>; <span class="built_in">i</span> &lt; arr.<span class="built_in">length</span>; <span class="built_in">i</span>++)&#123;</span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这样做每次循环都会获取数组的长度，这样会降低性能，特别是如果我们对 DOM 进行操作的时候：<br><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(var <span class="built_in">i</span> = <span class="number">0</span>;<span class="built_in">i</span> &lt; document.getElementsByTagName(<span class="string">'div'</span>).<span class="built_in">length</span>; <span class="built_in">i</span>++)&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>每次都要获取 <code>div</code> ，会极大的降低性能，所以我们一般都会用一个变量保存：<br><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(var <span class="built_in">i</span> = <span class="number">0</span>, len = arr.<span class="built_in">length</span>; <span class="built_in">i</span> &lt; len; <span class="built_in">i</span>++)&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="for-in-循环"><a href="#for-in-循环" class="headerlink" title="for-in 循环"></a>for-in 循环</h1><p>for-in 循环应该用在非数组对象的遍历上，而且 for-in 循环要小心使用，因为它会遍历原型链上的属性，我们先看一个例子：<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> div = document.getElementsByTagName('div')</span><br><span class="line"><span class="keyword">var</span> <span class="keyword">count</span> = 0;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> value <span class="keyword">in</span> div[0])&#123;</span><br><span class="line">    <span class="keyword">count</span>++;</span><br><span class="line">&#125;</span><br><span class="line">console.<span class="built_in">log</span>(<span class="keyword">count</span>)<span class="comment">// 232</span></span><br></pre></td></tr></table></figure></p>
+<p>结果不一定就是正好 <code>232</code> 但是可以从这个例子看出来，一个 DOM 结点是有很多属性的，那如果我们恰巧在一个对象的原型链上添加了一个 DOM 结点，没有过滤掉的话就会白白浪费性能又得不到我们想要的结果。<br><code>Object.hasOwnProperty()</code> 能够帮我们过滤原型链上的属性：<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 对象</span></span><br><span class="line"><span class="keyword">var</span> <span class="keyword">man</span> = &#123;</span><br><span class="line">   hands: 2,</span><br><span class="line">   legs: 2,</span><br><span class="line">   heads: 1</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 在代码的某个地方</span></span><br><span class="line"><span class="comment">// 一个方法添加给了所有对象</span></span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">typeof</span> Object.prototype.clone === <span class="string">"undefined"</span>) &#123;</span><br><span class="line">   Object.prototype.clone = function () &#123;&#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 1.</span></span><br><span class="line"><span class="comment">// for-in 循环</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i <span class="keyword">in</span> <span class="keyword">man</span>) &#123;</span><br><span class="line">   <span class="keyword">if</span> (<span class="keyword">man</span>.hasOwnProperty(i)) &#123; <span class="comment">// 过滤</span></span><br><span class="line">      console.<span class="built_in">log</span>(i, <span class="string">":"</span>, <span class="keyword">man</span>[i]);</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/* 控制台显示结果</span></span><br><span class="line"><span class="comment">hands : 2</span></span><br><span class="line"><span class="comment">legs : 2</span></span><br><span class="line"><span class="comment">heads : 1</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="comment">// 2.</span></span><br><span class="line"><span class="comment">// 反面例子:</span></span><br><span class="line"><span class="comment">// for-in loop without checking hasOwnProperty()</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i <span class="keyword">in</span> <span class="keyword">man</span>) &#123;</span><br><span class="line">   console.<span class="built_in">log</span>(i, <span class="string">":"</span>, <span class="keyword">man</span>[i]);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">控制台显示结果</span></span><br><span class="line"><span class="comment">hands : 2</span></span><br><span class="line"><span class="comment">legs : 2</span></span><br><span class="line"><span class="comment">heads : 1</span></span><br><span class="line"><span class="comment">clone: function()</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure></p>
+<p>让我们看另外一个例子：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>];</span><br><span class="line"><span class="built_in">Array</span>.prototype.a = <span class="number">4</span>;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i <span class="keyword">in</span> arr)&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(arr[i]);</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'arr.length'</span>,arr.length);</span><br><span class="line"><span class="comment">// 1</span></span><br><span class="line"><span class="comment">// 2</span></span><br><span class="line"><span class="comment">// 3</span></span><br><span class="line"><span class="comment">// 4</span></span><br><span class="line"><span class="comment">// arr.length 3</span></span><br></pre></td></tr></table></figure></p>
+<p>突然出现了 <code>4</code> ，与我们实际的结果不一致，所以 for-in 不要用在数组上，还是用普通的 for 循环。</p>
+<h1 id="自定义-log"><a href="#自定义-log" class="headerlink" title="自定义 log"></a>自定义 log</h1><p>很多时候我们都要用 <code>console.log</code> 来 debug，但是一堆 <code>console.log</code> 也不知道对应哪个文件的输出，所以我们需要自己自定义 log，在 log 加上前缀。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">log</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> args = <span class="built_in">Array</span>.from(<span class="built_in">arguments</span>); <span class="comment">// 用 ES6 的 Array.from 将 arguments 对象转为数组 </span></span><br><span class="line">    args.unshift(<span class="string">'[app.js]'</span>);       <span class="comment">// 在数组头部添加前缀</span></span><br><span class="line">    <span class="built_in">console</span>.log.apply(<span class="built_in">console</span>, args);     <span class="comment">// 调用console.log()</span></span><br><span class="line">&#125;</span><br><span class="line">log(<span class="string">'hello'</span>,<span class="string">'world'</span>)</span><br></pre></td></tr></table></figure></p>
+<h1 id="个人不推荐用-amp-amp-和-代替-if"><a href="#个人不推荐用-amp-amp-和-代替-if" class="headerlink" title="个人不推荐用 &amp;&amp; 和 || 代替 if"></a>个人不推荐用 &amp;&amp; 和 || 代替 if</h1><figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var <span class="attr">foo</span> = <span class="number">10</span>;  </span><br><span class="line"><span class="attr">foo</span> === <span class="number">10</span> &amp;&amp; doSomething(); // 等效 <span class="keyword">if</span> (<span class="attr">foo</span> == <span class="number">10</span>) doSomething(); </span><br><span class="line"><span class="attr">foo</span> === <span class="number">5</span> || doSomething(); // 等效 <span class="keyword">if</span> (foo != <span class="number">5</span>) doSomething();</span><br></pre></td></tr></table></figure>
+<p>确实有人这么写，说是代码简洁了，但是如果不懂短路原理的人看这个就会混乱，毕竟一个团队技术水平参差不齐，而且代码以后也可能交给别人维护，可读性要比较好。</p>
+<blockquote>
+<p>参考：<br><a href="http://www.cnblogs.com/TomXu/archive/2011/12/28/2286877.html" target="_blank" rel="noopener">深入理解JavaScript系列（1）：编写高质量JavaScript代码的基本要点</a><br><a href="https://rainzhaojy.github.io/2015/js_tips.html" target="_blank" rel="noopener">JS里的进阶技巧</a></p>
+</blockquote>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <footer>
+        <a href="https://recallhyx.github.io">
+            <img src="/img/avatar.jpg" alt="Recall HYX">
+            Recall HYX
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://recallhyx.github.io/2018/04/19/JavaScript一些思考/&title=《JavaScript一些思考》 — Recall Hyx&pic=https://recallhyx.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://recallhyx.github.io/2018/04/19/JavaScript一些思考/&title=《JavaScript一些思考》 — Recall Hyx&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://recallhyx.github.io/2018/04/19/JavaScript一些思考/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JavaScript一些思考》 — Recall Hyx&url=https://recallhyx.github.io/2018/04/19/JavaScript一些思考/&via=https://recallhyx.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://recallhyx.github.io/2018/04/19/JavaScript一些思考/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2018/04/27/JavaScript有技巧的函数/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">JavaScript有技巧的函数</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/04/01/ES6（5）/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">JavaScript ES6一些有用的语法特性（class继承）</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "gnMQ4bW3FRMELqY7UJSFCG2L-gzGzoHsz",
+            appKey: "8kUBso0hYLBcTE8e9h89D1Hc",
+            avatar: "mm",
+            placeholder: "Just go go",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Recall HYX &copy; 2017 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://recallhyx.github.io/2018/04/19/JavaScript一些思考/&title=《JavaScript一些思考》 — Recall Hyx&pic=https://recallhyx.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://recallhyx.github.io/2018/04/19/JavaScript一些思考/&title=《JavaScript一些思考》 — Recall Hyx&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://recallhyx.github.io/2018/04/19/JavaScript一些思考/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JavaScript一些思考》 — Recall Hyx&url=https://recallhyx.github.io/2018/04/19/JavaScript一些思考/&via=https://recallhyx.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://recallhyx.github.io/2018/04/19/JavaScript一些思考/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACK0lEQVR42u3aO24kMQwFwL7/pXsBZ4ax8iOlMSCpFDnw9HQp4PD3PPF5v07+P++PU/3U84mDgYGxLeMdnv99Wf7M8XWMGcm7YWBg3MNYFUDzkD1zZRgYGBjjx1VTveTV8ydgYGBgVMvLcdCcSRAxMDAwekVstdzNPztmLK7FMTAwNmRUS9C//PuD8w0MDIxNGG/x9Br6vaZ/4a0wMDCOZiQlZW8AmSdweUr6SzjGwMC4gDFTvo4L11VNvWfVfWBgYGzIWBVqqylgufU/pGJgYJzNqC5P5MnfDLUalDEwMG5gzK9EzCeOM4EYAwPjbEYPk4Ta6tXkoTlaDsPAwDiUkYTXpGGXJ5f5d0WJKQYGxnGM6jBgpljNh5TVchoDA+MGRm9IkIfOfADZHD9gYGAczciXMPIitjp6rKakzcULDAyMbRl5mZo366tBPE9Do98NDAyMQxmrllCrK2Uz5e63Z2JgYBzNmG+KVRtzeUlc/THAwMC4gZGXsr00bqY8LpeyGBgYBzE+MlCcaNvl6xpP70EYGBjbMnrLE+Pgm6SMvTUODAyM2xjJq+SwXtFbHUtgYGDcxniLp1dwzqSSUZqIgYFxNKPavs9HAr2ytpeYYmBg3MCYHyImSeTMBUWfxcDAuIDRS+byyF2O8cWxKAYGBkZ1jbVX9ObhHgMDAyN59eriV34pPSoGBsYNjF77LF+wyAcP1YVaDAyMGxi9AnJZmyweNizAYGBg7Mf4BxKYvCpkRS18AAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

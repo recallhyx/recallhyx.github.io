@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-112417276-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>webpack多页面配置 | Recall Hyx | Your star</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#FFC107">
+    
+    
+    <meta name="keywords" content="webpack">
+    <meta name="description" content="前言之前一直用 vue 开发单页面应用，最后打包生成的只有一个 .html 和 几个 js 文件，然后把生成的 js 文件都嵌进这个页面。但是在实习的时候遇到的项目是用 vue 开发多页面应用，这让我措手不及，还是要记录一下。 多页面 VS 单页面多页面优点：首屏渲染快，SEO 效果好。为什么多页应用的首屏时间快？首屏时间叫做页面首个屏幕的内容展现的时间，当我们访问页面的时候，服务器返回一个 ht">
+<meta name="keywords" content="webpack">
+<meta property="og:type" content="article">
+<meta property="og:title" content="webpack多页面配置">
+<meta property="og:url" content="https://recallhyx.github.io/2018/08/05/webpack多页面配置/index.html">
+<meta property="og:site_name" content="Recall Hyx">
+<meta property="og:description" content="前言之前一直用 vue 开发单页面应用，最后打包生成的只有一个 .html 和 几个 js 文件，然后把生成的 js 文件都嵌进这个页面。但是在实习的时候遇到的项目是用 vue 开发多页面应用，这让我措手不及，还是要记录一下。 多页面 VS 单页面多页面优点：首屏渲染快，SEO 效果好。为什么多页应用的首屏时间快？首屏时间叫做页面首个屏幕的内容展现的时间，当我们访问页面的时候，服务器返回一个 ht">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5834506-e07dc391947a222c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5834506-25067bc22127c364.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5834506-86531c5dfa34916a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-09-13T13:53:36.232Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="webpack多页面配置">
+<meta name="twitter:description" content="前言之前一直用 vue 开发单页面应用，最后打包生成的只有一个 .html 和 几个 js 文件，然后把生成的 js 文件都嵌进这个页面。但是在实习的时候遇到的项目是用 vue 开发多页面应用，这让我措手不及，还是要记录一下。 多页面 VS 单页面多页面优点：首屏渲染快，SEO 效果好。为什么多页应用的首屏时间快？首屏时间叫做页面首个屏幕的内容展现的时间，当我们访问页面的时候，服务器返回一个 ht">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/5834506-e07dc391947a222c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Recall HYX</h5>
+          <a href="mailto:quce.hu@qq.com" title="quce.hu@qq.com" class="mail">quce.hu@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                文章
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/recallhyx" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">webpack多页面配置</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">webpack多页面配置</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-08-05T14:40:54.000Z" itemprop="datePublished" class="page-time">
+  2018-08-05
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/前端/">前端</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#前言"><span class="post-toc-number">1.</span> <span class="post-toc-text">前言</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#多页面-VS-单页面"><span class="post-toc-number">2.</span> <span class="post-toc-text">多页面 VS 单页面</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#多页面"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">多页面</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#优点：首屏渲染快，SEO-效果好。"><span class="post-toc-number">2.1.1.</span> <span class="post-toc-text">优点：首屏渲染快，SEO 效果好。</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#缺点：路由跳转慢"><span class="post-toc-number">2.1.2.</span> <span class="post-toc-text">缺点：路由跳转慢</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#单页面"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">单页面</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#优点：路由切换快"><span class="post-toc-number">2.2.1.</span> <span class="post-toc-text">优点：路由切换快</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#缺点：首屏时间慢，SEO差"><span class="post-toc-number">2.2.2.</span> <span class="post-toc-text">缺点：首屏时间慢，SEO差</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#如何选择"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">如何选择</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#webpack-多页面配置"><span class="post-toc-number">3.</span> <span class="post-toc-text">webpack 多页面配置</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#目录"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">目录</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#webpack-entry"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">webpack entry</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#HtmlWebpackPlugin"><span class="post-toc-number">3.3.</span> <span class="post-toc-text">HtmlWebpackPlugin</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#dev-server"><span class="post-toc-number">3.4.</span> <span class="post-toc-text">dev-server</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#package-json"><span class="post-toc-number">3.5.</span> <span class="post-toc-text">package.json</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#效果"><span class="post-toc-number">4.</span> <span class="post-toc-text">效果</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-webpack多页面配置"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">webpack多页面配置</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-08-05 22:40:54" datetime="2018-08-05T14:40:54.000Z"  itemprop="datePublished">2018-08-05</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/前端/">前端</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>之前一直用 vue 开发单页面应用，最后打包生成的只有一个 .html 和 几个 js 文件，然后把生成的 js 文件都嵌进这个页面。但是在实习的时候遇到的项目是用 vue 开发多页面应用，这让我措手不及，还是要记录一下。</p>
+<h1 id="多页面-VS-单页面"><a href="#多页面-VS-单页面" class="headerlink" title="多页面 VS 单页面"></a>多页面 VS 单页面</h1><h2 id="多页面"><a href="#多页面" class="headerlink" title="多页面"></a>多页面</h2><h3 id="优点：首屏渲染快，SEO-效果好。"><a href="#优点：首屏渲染快，SEO-效果好。" class="headerlink" title="优点：首屏渲染快，SEO 效果好。"></a>优点：首屏渲染快，SEO 效果好。</h3><p>为什么多页应用的首屏时间快？<br>首屏时间叫做页面首个屏幕的内容展现的时间，当我们访问页面的时候，服务器返回一个 html，页面就会展示出来，这个过程只经历了一个 http 请求，所以页面展示的速度非常快。<br>为什么搜索引擎优化效果好（SEO）？<br>搜索引擎在做网页排名的时候，要根据网页内容才能给网页权重，来进行网页的排名。搜索引擎是可以识别 html 内容的，而我们每个页面所有的内容都放在 html 中，所以这种多页应用，SEO 排名效果好。</p>
+<h3 id="缺点：路由跳转慢"><a href="#缺点：路由跳转慢" class="headerlink" title="缺点：路由跳转慢"></a>缺点：路由跳转慢</h3><p>因为每次跳转都需要发出一个 http 请求，如果网络比较慢，在页面之间来回跳转时，就会发现明显的卡顿。</p>
+<h2 id="单页面"><a href="#单页面" class="headerlink" title="单页面"></a>单页面</h2><h3 id="优点：路由切换快"><a href="#优点：路由切换快" class="headerlink" title="优点：路由切换快"></a>优点：路由切换快</h3><p>第一次进入页面的时候会请求一个 html 文件和其他 js 文件。切换路由，其实就是切换到其他组件，此时路径也相应变化，但是并没有新的html文件请求，页面内容也变化了。<br>原理是：js 会感知到 url 的变化，通过这一点，可以用 js 动态的将当前页面的内容清除掉，然后将下一个页面的内容挂载到当前页面上，这个时候的路由不是后端来做了，而是前端来做，判断页面到底是显示哪个组件，清除不需要的，显示需要的组件。这种过程就是单页应用，每次跳转的时候不需要再请求 html 文件了，这样就节约了很多http发送时延。</p>
+<h3 id="缺点：首屏时间慢，SEO差"><a href="#缺点：首屏时间慢，SEO差" class="headerlink" title="缺点：首屏时间慢，SEO差"></a>缺点：首屏时间慢，SEO差</h3><p>单页应用的首屏时间慢，首屏时需要请求一次 html ，同时还要发送一次 js 请求，两次请求回来了，首屏才会展示出来。相对于多页应用，首屏时间慢。<br>SEO 效果差，因为搜索引擎只认识 html 里的内容，不认识 js 的内容，而单页应用的内容都是靠 js 渲染生成出来的，搜索引擎不识别这部分内容，也就不会给一个好的排名，会导致单页应用做出来的网页在百度和谷歌上的排名差。</p>
+<h2 id="如何选择"><a href="#如何选择" class="headerlink" title="如何选择"></a>如何选择</h2><p>选择单页面还是多页面主要看场景<br>1.大部分后台系统，ToB 系统，等对数据操作，页面切换频繁，比较注重的是操作的流畅性，spa来做当然会更合适。</p>
+<ol start="2">
+<li>很多ToC 项目，追求的是首屏的展现速度，注重的是观看体验，操作较少，就比较适合多页面，配合服务端渲染。<br>但是现在单页面应用框架不断发展，已经有很多解决方案了，比如 SEO， vue 有 <code>nuxt</code> ，react 有 <code>next</code>。首屏展现速度，可以用路由懒加载。相比之下，多页面应用却不能解决每次跳转路由重新下载资源的问题，所以现在单页面应用是一个趋势，但是为啥还要讲 webpack 的多页面配置，（<del>因为还要维护旧项目啊</del>）不同场景下有不同的解决方案。<h1 id="webpack-多页面配置"><a href="#webpack-多页面配置" class="headerlink" title="webpack 多页面配置"></a>webpack 多页面配置</h1><h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2>进入正题，首先，我们要把目录搞好<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://upload-images.jianshu.io/upload_images/5834506-e07dc391947a222c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+</li>
+</ol>
+<p>关注 <code>src</code> 目录，因为我们是多页面，所以 <code>moduleA</code> 和 <code>moduleB</code> 是一个模块，<code>insideA</code> 和 <code>insideB</code> 就是我们实际的页面，外层有一个大的 <code>module</code> 包住 <code>moduleA</code> 和 <code>moduleB</code>，之后会解释。<br>可以看到，一个页面，即 <code>insideA</code> 这个文件夹，至少需要三个文件，分别是 <code>app.vue</code>，<code>index.html</code>，<code>index.js</code>，内容其实很简单：<br><figure class="highlight dust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="xml">// app.vue</span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;<span class="name">div</span>&gt;</span>this is from moduleA<span class="tag">&lt;/<span class="name">div</span>&gt;</span>  </span></span><br><span class="line"><span class="xml"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span></span><br><span class="line"><span class="xml">export default </span><span class="template-variable">&#123;</span></span><br><span class="line"><span class="template-variable">  </span></span><br><span class="line"><span class="template-variable">&#125;</span><span class="xml"></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// index.html</span><br><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">title</span>&gt;</span>moduleA<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"app"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// index.js</span></span><br><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">'vue'</span>;</span><br><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">'./app'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> Vue(&#123;</span><br><span class="line">  el: <span class="string">'#app'</span>,</span><br><span class="line">  template: <span class="string">'&lt;App/&gt;'</span>,</span><br><span class="line">  components: &#123; App &#125;,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>因为每次路由跳转都是一个新的页面，所以每个页面都需要一个 vue 实例，如果需要自己写多个 vue 文件，只需要想写单页面文件那样，把写好的 vue 文件 以组件的形式引入到 <code>app.vue</code> 文件里面就能正常使用了。</p>
+<h2 id="webpack-entry"><a href="#webpack-entry" class="headerlink" title="webpack entry"></a>webpack entry</h2><p>因为我们是多页面，所以 <code>webpack.base.conf.js</code> 里面的 <code>entry</code> 需要改一下：<br><figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// webpack.base.conf.js</span></span><br><span class="line"><span class="keyword">module</span>.exports = &#123;</span><br><span class="line">  ...</span><br><span class="line">  <span class="comment">// entry: &#123;</span></span><br><span class="line">  <span class="comment">//   app: './src/main.js'</span></span><br><span class="line">  <span class="comment">// &#125;,</span></span><br><span class="line">  entry: entries,</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这个 <code>entries</code> 就是我们的目录，这个时候我们就需要一个方法 <code>getEntry</code> 来获取所有打包的入口，我们在 <code>utils</code> 文件里面写这个函数：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// utils.js</span></span><br><span class="line"><span class="comment">// Get entry list from global path</span></span><br><span class="line"><span class="keyword">const</span> glob = <span class="built_in">require</span>(<span class="string">'glob'</span>);</span><br><span class="line">exports.getEntry = <span class="function"><span class="keyword">function</span> (<span class="params">globPath</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> entries = &#123;&#125;;</span><br><span class="line"></span><br><span class="line">  glob.sync(globPath).forEach(<span class="function"><span class="keyword">function</span> (<span class="params">entry</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> tmp = entry.split(<span class="string">'/'</span>).splice(<span class="number">-3</span>);</span><br><span class="line">    <span class="keyword">const</span> pathname = <span class="string">`<span class="subst">$&#123;tmp.splice(<span class="number">0</span>, <span class="number">1</span>)&#125;</span>/<span class="subst">$&#123;tmp.splice(<span class="number">0</span>, <span class="number">1</span>)&#125;</span>`</span>;</span><br><span class="line">    entries[pathname] = entry;</span><br><span class="line">    <span class="built_in">console</span>.log(chalk.green(<span class="string">'module: '</span>, pathname));</span><br><span class="line">    <span class="built_in">console</span>.log(chalk.cyan(<span class="string">'template: '</span>, entry));</span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="keyword">return</span> entries;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>然后我们这么用：<br><figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> entries = utils.getEntry(<span class="string">'./src/'</span>+<span class="built_in">config</span>.dev.tag+<span class="string">'/**/*.js'</span>);</span><br></pre></td></tr></table></figure></p>
+<p>最后得到的结果：<br><figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#123; <span class="string">'moduleA/insideA'</span>: <span class="string">'./src/module/moduleA/insideA/index.js'</span>,</span><br><span class="line">  <span class="string">'moduleB/insideB'</span>: <span class="string">'./src/module/moduleB/insideB/index.js'</span> &#125;</span><br></pre></td></tr></table></figure></p>
+<p>注意到 <code>config.dev.tag</code>，上面说过为什么要用 <code>module</code> 包含 <code>moduleA</code> 和 <code>moduleB</code>，因为我们在开发的时候，有时只改动一个文件，却要编译整个项目，而且整个项目编译一次要等好久，拉低开发效率，所以我们有一个 <code>tag</code> ，只编译 <code>tag</code> 目录下的文件，这个时候只会把 <code>tag</code> 下的文件当成 <code>entry</code>，减少编译的文件，加快我们的开发。设置这个 <code>tag</code> 也很简单，在 <code>config/index.js</code>：<br><figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// index.js</span></span><br><span class="line"><span class="keyword">module</span>.exports = &#123;</span><br><span class="line">  dev: &#123;</span><br><span class="line">    ...</span><br><span class="line">    tag: <span class="string">'module'</span>,</span><br><span class="line">    ...</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这个时候就只会打包 <code>module</code> 目录下的文件了。</p>
+<h2 id="HtmlWebpackPlugin"><a href="#HtmlWebpackPlugin" class="headerlink" title="HtmlWebpackPlugin"></a>HtmlWebpackPlugin</h2><p>要知道，多页面应用最特别的就是，每个页面有自己的 js 和 公共的 js，彼此能访问到公共的 js，但是访问不了别人特有的 js，用 webpack 的 <code>HtmlWebpackPlugin</code> 就能帮我们解决这一问题：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// webpack.dev.conf.js</span></span><br><span class="line"><span class="keyword">const</span> pages = utils.getEntry(<span class="string">'./src/'</span>+config.dev.tag+<span class="string">'/**/*.html'</span>);</span><br><span class="line"><span class="built_in">Object</span>.keys(pages).forEach(<span class="function">(<span class="params">pathname</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> conf = &#123;</span><br><span class="line">    filename: <span class="string">`<span class="subst">$&#123;pathname&#125;</span>.html`</span>,</span><br><span class="line">    template: pages[pathname],</span><br><span class="line">    minify: &#123;</span><br><span class="line">      removeComments: <span class="literal">true</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">    inject: <span class="string">'body'</span>,</span><br><span class="line">    cache: <span class="literal">true</span>,</span><br><span class="line">    chunks: [pathname],</span><br><span class="line">  &#125;;</span><br><span class="line">  devWebpackConfig.plugins.push(<span class="keyword">new</span> HtmlWebpackPlugin(conf));</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>循环文件，设置好之后再 <code>push</code> 进 <code>devWebpackConfig</code> 的 <code>plugins</code> 里面，<code>chunks</code> 里面就是插进 <code>html</code> 里面的 js，可以把公共的 js 放到里面。</p>
+<h2 id="dev-server"><a href="#dev-server" class="headerlink" title="dev-server"></a>dev-server</h2><p>其实就是开启服务器调试环境：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">require</span>(<span class="string">'./check-versions'</span>)();</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> config = <span class="built_in">require</span>(<span class="string">'../config'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (!process.env.NODE_ENV) &#123;</span><br><span class="line">  process.env.NODE_ENV = <span class="built_in">JSON</span>.parse(config.dev.env.NODE_ENV);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> opn = <span class="built_in">require</span>(<span class="string">'opn'</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>);</span><br><span class="line"><span class="keyword">const</span> webpack = <span class="built_in">require</span>(<span class="string">'webpack'</span>);</span><br><span class="line"><span class="keyword">const</span> proxyMiddleware = <span class="built_in">require</span>(<span class="string">'http-proxy-middleware'</span>);</span><br><span class="line"><span class="keyword">const</span> webpackConfig = process.env.NODE_ENV === <span class="string">'testing'</span></span><br><span class="line">  ? <span class="built_in">require</span>(<span class="string">'./webpack.prod.conf'</span>)</span><br><span class="line">  : <span class="built_in">require</span>(<span class="string">'./webpack.dev.conf'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"process.env.NODE_ENV"</span>,process.env.NODE_ENV);</span><br><span class="line"><span class="comment">// default port where dev server listens for incoming traffic</span></span><br><span class="line"><span class="keyword">const</span> port = process.env.PORT || config.dev.port;</span><br><span class="line"><span class="comment">// automatically open browser, if not set will be false</span></span><br><span class="line"><span class="keyword">const</span> autoOpenBrowser = config.dev.autoOpenBrowser;</span><br><span class="line"><span class="comment">// Define HTTP proxies to your custom API backend</span></span><br><span class="line"><span class="comment">// https://github.com/chimurai/http-proxy-middleware</span></span><br><span class="line"><span class="comment">//const proxyTable = config.dev.proxyTable;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = express();</span><br><span class="line"><span class="keyword">const</span> compiler = webpack(webpackConfig);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> devMiddleware = <span class="built_in">require</span>(<span class="string">'webpack-dev-middleware'</span>)(compiler, &#123;</span><br><span class="line">  publicPath: webpackConfig.output.publicPath,</span><br><span class="line">  quiet: <span class="literal">false</span>,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> hotMiddleware = <span class="built_in">require</span>(<span class="string">'webpack-hot-middleware'</span>)(compiler, &#123;</span><br><span class="line">  log: <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// force page reload when html-webpack-plugin template changes</span></span><br><span class="line">compiler.plugin(<span class="string">'compilation'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">compilation</span>) </span>&#123;</span><br><span class="line">  compilation.plugin(<span class="string">'html-webpack-plugin-after-emit'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">data, cb</span>) </span>&#123;</span><br><span class="line">    hotMiddleware.publish(&#123; <span class="attr">action</span>: <span class="string">'reload'</span> &#125;);</span><br><span class="line">    cb();</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// proxy api requests</span></span><br><span class="line"><span class="comment">// Object.keys(proxyTable).forEach(function (context) &#123;</span></span><br><span class="line"><span class="comment">//   let options = proxyTable[context];</span></span><br><span class="line"><span class="comment">//   if (typeof options === 'string') &#123;</span></span><br><span class="line"><span class="comment">//     options = &#123; target: options &#125;;</span></span><br><span class="line"><span class="comment">//   &#125;</span></span><br><span class="line"><span class="comment">//   app.use(proxyMiddleware(options.filter || context, options));</span></span><br><span class="line"><span class="comment">// &#125;);</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// handle fallback for HTML5 history API</span></span><br><span class="line"><span class="keyword">const</span> connectHistoryApiFallbackConf = &#123;</span><br><span class="line">  <span class="comment">// logger: console.log.bind(console),</span></span><br><span class="line">  <span class="comment">// verbose: true,</span></span><br><span class="line">  rewrites: [&#123;</span><br><span class="line">    <span class="keyword">from</span>: <span class="regexp">/^\/\w+\/\w+$/</span>,</span><br><span class="line">    to: <span class="function"><span class="keyword">function</span>(<span class="params">context</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> context.parsedUrl.pathname + <span class="string">".html"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;]</span><br><span class="line">&#125;</span><br><span class="line">app.use(<span class="built_in">require</span>(<span class="string">'connect-history-api-fallback'</span>)(connectHistoryApiFallbackConf));</span><br><span class="line"></span><br><span class="line"><span class="comment">// serve webpack bundle output</span></span><br><span class="line">app.use(devMiddleware);</span><br><span class="line"></span><br><span class="line"><span class="comment">// enable hot-reload and state-preserving</span></span><br><span class="line"><span class="comment">// compilation error display</span></span><br><span class="line">app.use(hotMiddleware);</span><br><span class="line"></span><br><span class="line"><span class="comment">// serve pure static assets</span></span><br><span class="line"><span class="keyword">const</span> staticPath = path.posix.join(config.dev.assetsPublicPath, config.dev.assetsSubDirectory);</span><br><span class="line">app.use(staticPath, express.static(<span class="string">'./statics'</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">// const uri = `http://localhost:$&#123;port&#125;`;</span></span><br><span class="line"><span class="keyword">const</span> uri = <span class="string">`http://0.0.0.0:<span class="subst">$&#123;port&#125;</span>`</span>;</span><br><span class="line"></span><br><span class="line">devMiddleware.waitUntilValid(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">`&gt; Listening at <span class="subst">$&#123;uri&#125;</span>\n`</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = app.listen(port, <span class="function"><span class="keyword">function</span> (<span class="params">err</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (err) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(err);</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// when env is testing, don't need open it</span></span><br><span class="line">  <span class="keyword">if</span> (autoOpenBrowser &amp;&amp; process.env.NODE_ENV !== <span class="string">'testing'</span>) &#123;</span><br><span class="line">    opn(uri);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>在 webpack-dev-server 里使用路由，能够实现访问 /a 时候显示 a.html，/b 显示 b.html。</p>
+<h2 id="package-json"><a href="#package-json" class="headerlink" title="package.json"></a>package.json</h2><p>就是把 <code>script</code> 里面的 <code>npm run dev</code> 改成 <code>node --optimize_for_size build/dev-server.js</code> 启动我们的 webpack 服务器。</p>
+<h1 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h1><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://upload-images.jianshu.io/upload_images/5834506-25067bc22127c364.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://upload-images.jianshu.io/upload_images/5834506-86531c5dfa34916a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<blockquote>
+<p>参考<br><a href="https://segmentfault.com/a/1190000005920125" target="_blank" rel="noopener">使用webpack构建多页面应用</a><br><a href="https://www.jianshu.com/p/4c9c29967dd6" target="_blank" rel="noopener">单页应用和多页应用</a><br><a href="https://segmentfault.com/a/1190000012744818" target="_blank" rel="noopener">webpack搭建多页面系统（三） 理解webpack.config.js的四个核心概念</a></p>
+</blockquote>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <footer>
+        <a href="https://recallhyx.github.io">
+            <img src="/img/avatar.jpg" alt="Recall HYX">
+            Recall HYX
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/webpack/">webpack</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://recallhyx.github.io/2018/08/05/webpack多页面配置/&title=《webpack多页面配置》 — Recall Hyx&pic=https://recallhyx.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://recallhyx.github.io/2018/08/05/webpack多页面配置/&title=《webpack多页面配置》 — Recall Hyx&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://recallhyx.github.io/2018/08/05/webpack多页面配置/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《webpack多页面配置》 — Recall Hyx&url=https://recallhyx.github.io/2018/08/05/webpack多页面配置/&via=https://recallhyx.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://recallhyx.github.io/2018/08/05/webpack多页面配置/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2018/08/18/JsonWebToken介绍/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">JsonWebToken介绍</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/07/14/webpack打包速度优化/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">webpack打包速度优化</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "gnMQ4bW3FRMELqY7UJSFCG2L-gzGzoHsz",
+            appKey: "8kUBso0hYLBcTE8e9h89D1Hc",
+            avatar: "mm",
+            placeholder: "Just go go",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Recall HYX &copy; 2017 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://recallhyx.github.io/2018/08/05/webpack多页面配置/&title=《webpack多页面配置》 — Recall Hyx&pic=https://recallhyx.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://recallhyx.github.io/2018/08/05/webpack多页面配置/&title=《webpack多页面配置》 — Recall Hyx&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://recallhyx.github.io/2018/08/05/webpack多页面配置/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《webpack多页面配置》 — Recall Hyx&url=https://recallhyx.github.io/2018/08/05/webpack多页面配置/&via=https://recallhyx.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://recallhyx.github.io/2018/08/05/webpack多页面配置/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACKUlEQVR42u3awXLsIAwEwPz/T++75hA7M8h5VYbmtJXFgfaBFZK+vuLx+Taenf99TrtKPTAwMF7L+NyOqznJwsn/uZqTz8fAwDiHkRyFyUE5B9+ve/l3DAwMjHJD+YHbvj4MDAyMnLEWXOaBIwYGBsZ8E0mAeP9sHho+fBfHwMB4ISPPuv//z39S38DAwHgV41OOtSLBJECMdoWBgbE1YxK6tcm45Km1/WBgYJzDWLtGrm06T7cVwSIGBsYxjPmS81TaYhkVAwNja8ZfXCnzMmddqmwTcBgYGC9nLB5n5cHarj7qFsHAwNiakTdPTK7Ea20ZUSCIgYGxNSO5oE4KA/ebyL+9fOkYGBjHM9oAbu0VtIxfekYwMDA2YhTh16AlYi3d9kCYiIGBsREjCfLyJZNLbMLOL9sYGBh7M+4BbaCWHMT5MZq/LAwMjHMYeSEzAbSB46gpBAMD4wBGst22IWPSXpa8xB9CQwwMjE0Zk0CwLWFO0v3RxRgDA+MAxmSjT7WRte0al78eGBgYBzCevbLmAWXbwFHUYDEwMLZgTD5Pmr3a9Nwv3SIYGBjbMT7lWAsl2zaLvMkDAwPjBMZiyTAO8uahYXuRxsDA2JWRH7J5eTK56M7TdhgYGKcx2oMvLzROmjbywioGBgZGMmdSMMiTa1HWEAMDAyMI4HLe2rOPHbgYGBivYuTFgLblYm1bdWsaBgbG1oy2xJi3TbQtGpMWEAwMjE0Z/wCH3rJQVBmN+QAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

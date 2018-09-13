@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-112417276-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>JavaScript ES6一些有用的语法特性（Generator） | Recall Hyx | Your star</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#FFC107">
+    
+    
+    <meta name="keywords" content="javascript">
+    <meta name="description" content="简介Generator 函数是 ES6 提供的一种异步编程解决方案，语法行为与传统函数完全不同。Python的协程也是用Generator函数这种方案来实现的。  以前的异步编程方案：  回调函数 事件监听 发布/订阅 Promise 对象   Generator 函数有多种理解角度。语法上，首先可以把它理解成，Generator 函数是一个状态机，封装了多个内部状态。 执行 Generator">
+<meta name="keywords" content="javascript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript ES6一些有用的语法特性（Generator）">
+<meta property="og:url" content="https://recallhyx.github.io/2018/03/08/ES6（4）/index.html">
+<meta property="og:site_name" content="Recall Hyx">
+<meta property="og:description" content="简介Generator 函数是 ES6 提供的一种异步编程解决方案，语法行为与传统函数完全不同。Python的协程也是用Generator函数这种方案来实现的。  以前的异步编程方案：  回调函数 事件监听 发布/订阅 Promise 对象   Generator 函数有多种理解角度。语法上，首先可以把它理解成，Generator 函数是一个状态机，封装了多个内部状态。 执行 Generator">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-09-13T13:53:36.224Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JavaScript ES6一些有用的语法特性（Generator）">
+<meta name="twitter:description" content="简介Generator 函数是 ES6 提供的一种异步编程解决方案，语法行为与传统函数完全不同。Python的协程也是用Generator函数这种方案来实现的。  以前的异步编程方案：  回调函数 事件监听 发布/订阅 Promise 对象   Generator 函数有多种理解角度。语法上，首先可以把它理解成，Generator 函数是一个状态机，封装了多个内部状态。 执行 Generator">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Recall HYX</h5>
+          <a href="mailto:quce.hu@qq.com" title="quce.hu@qq.com" class="mail">quce.hu@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                文章
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/recallhyx" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">JavaScript ES6一些有用的语法特性（Generator）</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">JavaScript ES6一些有用的语法特性（Generator）</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-03-08T13:03:17.000Z" itemprop="datePublished" class="page-time">
+  2018-03-08
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/前端/">前端</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#简介"><span class="post-toc-number">1.</span> <span class="post-toc-text">简介</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#yield-表达式"><span class="post-toc-number">2.</span> <span class="post-toc-text">yield 表达式</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#next-方法的参数"><span class="post-toc-number">3.</span> <span class="post-toc-text">next 方法的参数</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Generator-prototype-return"><span class="post-toc-number">4.</span> <span class="post-toc-text">Generator.prototype.return()</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Generator-prototype-throw"><span class="post-toc-number">5.</span> <span class="post-toc-text">Generator.prototype.throw()</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#next-、throw-、return-的共同点"><span class="post-toc-number">6.</span> <span class="post-toc-text">next()、throw()、return() 的共同点</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#一些注意的点"><span class="post-toc-number">7.</span> <span class="post-toc-text">一些注意的点</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-ES6（4）"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">JavaScript ES6一些有用的语法特性（Generator）</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-03-08 21:03:17" datetime="2018-03-08T13:03:17.000Z"  itemprop="datePublished">2018-03-08</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/前端/">前端</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>Generator 函数是 ES6 提供的一种异步编程解决方案，语法行为与传统函数完全不同。Python的协程也是用Generator函数这种方案来实现的。</p>
+<blockquote>
+<p>以前的异步编程方案：</p>
+<ul>
+<li>回调函数</li>
+<li>事件监听</li>
+<li>发布/订阅</li>
+<li>Promise 对象</li>
+</ul>
+</blockquote>
+<p>Generator 函数有多种理解角度。语法上，首先可以把它理解成，Generator 函数是一个状态机，封装了多个内部状态。</p>
+<p>执行 Generator 函数会返回一个遍历器对象，也就是说，Generator 函数除了状态机，还是一个遍历器对象生成函数。返回的遍历器对象，可以依次遍历 Generator 函数内部的每一个状态。</p>
+<p>形式上，Generator 函数是一个普通函数，但是有两个特征。一是，<code>function</code>关键字与函数名之间有一个星号；二是，函数体内部使用<code>yield</code>表达式，定义不同的内部状态（<code>yield</code>在英语里的意思就是“产出”）。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span>* <span class="title">helloWorldGenerator</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">yield</span> <span class="string">'hello'</span>;</span><br><span class="line">  <span class="keyword">yield</span> <span class="string">'world'</span>;</span><br><span class="line">  <span class="keyword">return</span> <span class="string">'ending'</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> hw = helloWorldGenerator();</span><br></pre></td></tr></table></figure></p>
+<p>上面代码定义了一个 Generator 函数helloWorldGenerator，它内部有两个<code>yield</code>表达式（<code>hello</code>和<code>world</code>），即该函数有三个状态：<code>hello</code>，<code>world</code> 和 <code>return</code> 语句（结束执行）。</p>
+<p>然后，Generator 函数的调用方法与普通函数一样，也是在函数名后面加上一对圆括号。不同的是，调用 Generator 函数后，该函数并不执行，返回的也不是函数运行结果，而是一个指向内部状态的指针对象，也就是遍历器对象（<code>Iterator Object</code>）。</p>
+<p>下一步，必须调用遍历器对象的<code>next</code>方法，使得指针移向下一个状态。也就是说，每次调用<code>next</code>方法，内部指针就从函数头部或上一次停下来的地方开始执行，直到遇到下一个<code>yield</code>表达式（或return语句）为止。换言之，Generator 函数是分段执行的，<code>yield</code>表达式是暂停执行的标记，而<code>next</code>方法可以恢复执行。<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">hw.next()</span></span><br><span class="line"><span class="string">//</span> <span class="string">&#123;</span> <span class="attr">value:</span> <span class="string">'hello'</span><span class="string">,</span> <span class="attr">done:</span> <span class="literal">false</span> <span class="string">&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="string">hw.next()</span></span><br><span class="line"><span class="string">//</span> <span class="string">&#123;</span> <span class="attr">value:</span> <span class="string">'world'</span><span class="string">,</span> <span class="attr">done:</span> <span class="literal">false</span> <span class="string">&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="string">hw.next()</span></span><br><span class="line"><span class="string">//</span> <span class="string">&#123;</span> <span class="attr">value:</span> <span class="string">'ending'</span><span class="string">,</span> <span class="attr">done:</span> <span class="literal">true</span> <span class="string">&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="string">hw.next()</span></span><br><span class="line"><span class="string">//</span> <span class="string">&#123;</span> <span class="attr">value:</span> <span class="string">undefined,</span> <span class="attr">done:</span> <span class="literal">true</span> <span class="string">&#125;</span></span><br></pre></td></tr></table></figure></p>
+<p>上面代码一共调用了四次<code>next</code>方法。</p>
+<p>第一次调用，Generator 函数开始执行，直到遇到第一个<code>yield</code>表达式为止。<code>next</code>方法返回一个对象，它的<code>value</code>属性就是当前<code>yield</code>表达式的值<code>hello</code>，<code>done</code>属性的值<code>false</code>，表示遍历还没有结束。</p>
+<p>第二次调用，Generator 函数从上次<code>yield</code>表达式停下的地方，一直执行到下一个<code>yield</code>表达式。<code>next</code>方法返回的对象的<code>value</code>属性就是当前<code>yield</code>表达式的值<code>world</code>，<code>done</code>属性的值<code>false</code>，表示遍历还没有结束。</p>
+<p>第三次调用，Generator 函数从上次<code>yield</code>表达式停下的地方，一直执行到<code>return</code>语句（如果没有return语句，就执行到函数结束）。<code>next</code>方法返回的对象的<code>value</code>属性，就是紧跟在<code>return</code>语句后面的表达式的值（如果没有<code>return</code>语句，则<code>value</code>属性的值为<code>undefined</code>），<code>done</code>属性的值<code>true</code>，表示遍历已经结束。</p>
+<p>第四次调用，此时 Generator 函数已经运行完毕，<code>next</code>方法返回对象的<code>value</code>属性为<code>undefined</code>，<code>done</code>属性为<code>true</code>。以后再调用<code>next</code>方法，返回的都是这个值。</p>
+<p>总结一下，调用 Generator 函数，返回一个遍历器对象，代表 Generator 函数的内部指针。以后，每次调用遍历器对象的<code>next</code>方法，就会返回一个有着<code>value</code>和<code>done</code>两个属性的对象。<code>value</code>属性表示当前的内部状态的值，是<code>yield</code>表达式后面那个表达式的值；<code>done</code>属性是一个布尔值，表示是否遍历结束。</p>
+<p>ES6 没有规定，<code>function</code>关键字与函数名之间的星号，写在哪个位置。这导致下面的写法都能通过<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> * <span class="title">foo</span>(<span class="params">x, y</span>) </span>&#123; ··· &#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> *<span class="title">foo</span>(<span class="params">x, y</span>) </span>&#123; ··· &#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span>* <span class="title">foo</span>(<span class="params">x, y</span>) </span>&#123; ··· &#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span>*<span class="title">foo</span>(<span class="params">x, y</span>) </span>&#123; ··· &#125;</span><br></pre></td></tr></table></figure></p>
+<p>由于 Generator 函数仍然是普通函数，所以一般的写法是上面的第三种，即星号紧跟在<code>function</code>关键字后面。</p>
+<h2 id="yield-表达式"><a href="#yield-表达式" class="headerlink" title="yield 表达式"></a>yield 表达式</h2><p>由于 Generator 函数返回的遍历器对象，只有调用<code>next</code>方法才会遍历下一个内部状态，所以其实提供了一种可以暂停执行的函数。<code>yield</code>表达式就是暂停标志。</p>
+<p>遍历器对象的<code>next</code>方法的运行逻辑如下。</p>
+<p>（1）遇到yield表达式，就暂停执行后面的操作，并将紧跟在yield后面的那个表达式的值，作为返回的对象的value属性值。</p>
+<p>（2）下一次调用<code>next</code>方法时，再继续往下执行，直到遇到下一个<code>yield</code>表达式。</p>
+<p>（3）如果没有再遇到新的yield表达式，就一直运行到函数结束，直到<code>return</code>语句为止，并将<code>return</code>语句后面的表达式的值，作为返回的对象的<code>value</code>属性值。</p>
+<p>（4）如果该函数没有<code>return</code>语句，则返回的对象的value属性值为<code>undefined</code>。</p>
+<p>需要注意的是，<code>yield</code>表达式后面的表达式，只有当调用<code>next</code>方法、内部指针指向该语句时才会执行，因此等于为 JavaScript 提供了手动的“惰性求值”（<code>Lazy Evaluation</code>）的语法功能。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span>* <span class="title">gen</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">yield</span>  <span class="number">123</span> + <span class="number">456</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>上面代码中，<code>yield</code>后面的表达式<code>123 + 456</code>，不会立即求值，只会在<code>next</code>方法将指针移到这一句时，才会求值。</p>
+<p><code>yield</code>表达式与<code>return</code>语句既有相似之处，也有区别。相似之处在于，都能返回紧跟在语句后面的那个表达式的值。区别在于每次遇到<code>yield</code>，函数暂停执行，下一次再从该位置继续向后执行，而<code>return</code>语句不具备位置记忆的功能。一个函数里面，只能执行一次（或者说一个）<code>return</code>语句，但是可以执行多次（或者说多个）<code>yield</code>表达式。正常函数只能返回一个值，因为只能执行一次<code>return；</code>Generator 函数可以返回一系列的值，因为可以有任意多个<code>yield</code>。从另一个角度看，也可以说 Generator 生成了一系列的值，这也就是它的名称的来历（英语中，<code>generator</code> 这个词是“生成器”的意思）。</p>
+<p>Generator 函数可以不用yield表达式，这时就变成了一个单纯的暂缓执行函数。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span>* <span class="title">f</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'Generator函数执行了'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> generator = f();</span><br><span class="line"><span class="comment">//不会输出‘Generator函数执行了’</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">g</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'函数g()执行了'</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> gen = g();</span><br><span class="line"><span class="comment">//输出‘函数g()执行了’</span></span><br></pre></td></tr></table></figure></p>
+<p>上面代码中，函数 g 是普通函数，在为变量<code>gen</code>赋值时就会执行。但是，函数 f 是一个 Generator 函数，就变成只有调用<code>next</code>方法时，函数 f 才会执行。</p>
+<p>另外需要注意，<code>yield</code>表达式只能用在 Generator 函数里面，用在其他地方都会报错。</p>
+<p>另外，<code>yield</code>表达式如果用在另一个表达式之中，必须放在圆括号里面。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span>* <span class="title">demo</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'Hello'</span> + <span class="keyword">yield</span>); <span class="comment">// SyntaxError</span></span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'Hello'</span> + <span class="keyword">yield</span> <span class="number">123</span>); <span class="comment">// SyntaxError</span></span><br><span class="line"></span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'Hello'</span> + (<span class="keyword">yield</span>)); <span class="comment">// OK</span></span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'Hello'</span> + (<span class="keyword">yield</span> <span class="number">123</span>)); <span class="comment">// OK</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><code>yield</code>表达式用作函数参数或放在赋值表达式的右边，可以不加括号。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span>* <span class="title">demo</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  foo(<span class="keyword">yield</span> <span class="string">'a'</span>, <span class="keyword">yield</span> <span class="string">'b'</span>); <span class="comment">// OK</span></span><br><span class="line">  <span class="keyword">let</span> input = <span class="keyword">yield</span>; <span class="comment">// OK</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="next-方法的参数"><a href="#next-方法的参数" class="headerlink" title="next 方法的参数"></a>next 方法的参数</h2><p><code>yield</code>表达式本身没有返回值，或者说总是返回<code>undefined</code>。<code>next</code>方法可以带一个参数，该参数就会被当作上一个<code>yield</code>表达式的返回值。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span>* <span class="title">f</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; <span class="literal">true</span>; i++) &#123;</span><br><span class="line">    <span class="keyword">var</span> reset = <span class="keyword">yield</span> i;</span><br><span class="line">    <span class="keyword">if</span>(reset) &#123; i = <span class="number">-1</span>; &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> g = f();</span><br><span class="line"></span><br><span class="line">g.next() <span class="comment">// &#123; value: 0, done: false &#125;</span></span><br><span class="line">g.next() <span class="comment">// &#123; value: 1, done: false &#125;</span></span><br><span class="line">g.next(<span class="literal">true</span>) <span class="comment">// &#123; value: 0, done: false &#125;</span></span><br></pre></td></tr></table></figure></p>
+<p>上面代码先定义了一个可以无限运行的 Generator 函数f，如果<code>next</code>方法没有参数，每次运行到<code>yield</code>表达式，变量<code>reset</code>的值总是<code>undefined</code>。当<code>next</code>方法带一个参数<code>true</code>时，变量<code>reset</code>就被重置为这个参数（即<code>true</code>），因此<code>i</code>会等于<code>-1</code>，下一轮循环就会从<code>-1</code>开始递增。</p>
+<p>这个功能有很重要的语法意义。Generator 函数从暂停状态到恢复运行，它的上下文状态（<code>context</code>）是不变的。通过<code>next</code>方法的参数，就有办法在 Generator 函数开始运行之后，继续向函数体内部注入值。也就是说，可以在 Generator 函数运行的不同阶段，从外部向内部注入不同的值，从而调整函数行为。</p>
+<p>注意，由于<code>next</code>方法的参数表示上一个<code>yield</code>表达式的返回值，所以在第一次使用<code>next</code>方法时，传递参数是无效的。V8 引擎直接忽略第一次使用<code>next</code>方法时的参数，只有从第二次使用<code>next</code>方法开始，参数才是有效的。从语义上讲，第一个<code>next</code>方法用来启动遍历器对象，所以不用带有参数。</p>
+<p>如果想要第一次调用<code>next</code>方法时，就能够输入值，可以在 Generator 函数外面再包一层。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">wrapper</span>(<span class="params">generatorFunction</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params">...args</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> generatorObject = generatorFunction(...args);</span><br><span class="line">    generatorObject.next();</span><br><span class="line">    <span class="keyword">return</span> generatorObject;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> wrapped = wrapper(<span class="function"><span class="keyword">function</span>* (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">`First input: <span class="subst">$&#123;<span class="keyword">yield</span>&#125;</span>`</span>);</span><br><span class="line">  <span class="keyword">return</span> <span class="string">'DONE'</span>;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">wrapped().next(<span class="string">'hello!'</span>)</span><br><span class="line"><span class="comment">// First input: hello!</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="Generator-prototype-return"><a href="#Generator-prototype-return" class="headerlink" title="Generator.prototype.return()"></a>Generator.prototype.return()</h2><p>Generator 函数返回的遍历器对象，还有一个<code>return</code>方法，可以返回给定的值，并且终结遍历 Generator 函数。<br><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span>* <span class="title">gen</span><span class="params">()</span></span> &#123;</span><br><span class="line">  <span class="built_in">yield</span> <span class="number">1</span>;</span><br><span class="line">  <span class="built_in">yield</span> <span class="number">2</span>;</span><br><span class="line">  <span class="built_in">yield</span> <span class="number">3</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var g = gen();</span><br><span class="line"></span><br><span class="line">g.<span class="built_in">next</span>()        // &#123; value: <span class="number">1</span>, done: <span class="literal">false</span> &#125;</span><br><span class="line">g.<span class="keyword">return</span>(<span class="string">'foo'</span>) // &#123; value: <span class="string">"foo"</span>, done: <span class="literal">true</span> &#125;</span><br><span class="line">g.<span class="built_in">next</span>()        // &#123; value: undefined, done: <span class="literal">true</span> &#125;</span><br></pre></td></tr></table></figure></p>
+<p>上面代码中，遍历器对象g调用<code>return</code>方法后，返回值的<code>value</code>属性就是<code>return</code>方法的参数<code>foo</code>。并且，Generator 函数的遍历就终止了，返回值的<code>done</code>属性为<code>true</code>，以后再调用<code>next</code>方法，<code>done</code>属性总是返回<code>true</code>。</p>
+<p>如果<code>return</code>方法调用时，不提供参数，则返回值的<code>value</code>属性为<code>undefined</code>。</p>
+<p>如果 Generator 函数内部有<code>try...finally</code>代码块，那么<code>return</code>方法会推迟到<code>finally</code>代码块执行完再执行。<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">function*</span> <span class="string">numbers</span> <span class="string">()</span> <span class="string">&#123;</span></span><br><span class="line">  <span class="string">yield</span> <span class="number">1</span><span class="string">;</span></span><br><span class="line">  <span class="string">try</span> <span class="string">&#123;</span></span><br><span class="line">    <span class="string">yield</span> <span class="number">2</span><span class="string">;</span></span><br><span class="line">    <span class="string">yield</span> <span class="number">3</span><span class="string">;</span></span><br><span class="line">  <span class="string">&#125;</span> <span class="string">finally</span> <span class="string">&#123;</span></span><br><span class="line">    <span class="string">yield</span> <span class="number">4</span><span class="string">;</span></span><br><span class="line">    <span class="string">yield</span> <span class="number">5</span><span class="string">;</span></span><br><span class="line">  <span class="string">&#125;</span></span><br><span class="line">  <span class="string">yield</span> <span class="number">6</span><span class="string">;</span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string">var</span> <span class="string">g</span> <span class="string">=</span> <span class="string">numbers();</span></span><br><span class="line"><span class="string">g.next()</span> <span class="string">//</span> <span class="string">&#123;</span> <span class="attr">value:</span> <span class="number">1</span><span class="string">,</span> <span class="attr">done:</span> <span class="literal">false</span> <span class="string">&#125;</span></span><br><span class="line"><span class="string">g.next()</span> <span class="string">//</span> <span class="string">&#123;</span> <span class="attr">value:</span> <span class="number">2</span><span class="string">,</span> <span class="attr">done:</span> <span class="literal">false</span> <span class="string">&#125;</span></span><br><span class="line"><span class="string">g.return(7)</span> <span class="string">//</span> <span class="string">&#123;</span> <span class="attr">value:</span> <span class="number">4</span><span class="string">,</span> <span class="attr">done:</span> <span class="literal">false</span> <span class="string">&#125;</span></span><br><span class="line"><span class="string">g.next()</span> <span class="string">//</span> <span class="string">&#123;</span> <span class="attr">value:</span> <span class="number">5</span><span class="string">,</span> <span class="attr">done:</span> <span class="literal">false</span> <span class="string">&#125;</span></span><br><span class="line"><span class="string">g.next()</span> <span class="string">//</span> <span class="string">&#123;</span> <span class="attr">value:</span> <span class="number">7</span><span class="string">,</span> <span class="attr">done:</span> <span class="literal">true</span> <span class="string">&#125;</span></span><br></pre></td></tr></table></figure></p>
+<p>上面代码中，调用<code>return</code>方法后，就开始执行<code>finally</code>代码块，然后等到<code>finally</code>代码块执行完，再执行<code>return</code>方法。</p>
+<h2 id="Generator-prototype-throw"><a href="#Generator-prototype-throw" class="headerlink" title="Generator.prototype.throw()"></a>Generator.prototype.throw()</h2><p>Generator 函数返回的遍历器对象，都有一个<code>throw</code>方法，可以在函数体外抛出错误，然后在 Generator 函数体内捕获。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> g = <span class="function"><span class="keyword">function</span>* (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">yield</span>;</span><br><span class="line">  &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'内部捕获'</span>, e);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> i = g();</span><br><span class="line">i.next();</span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">  i.throw(<span class="string">'a'</span>);</span><br><span class="line">  i.throw(<span class="string">'b'</span>);</span><br><span class="line">&#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'外部捕获'</span>, e);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 内部捕获 a</span></span><br><span class="line"><span class="comment">// 外部捕获 b</span></span><br></pre></td></tr></table></figure></p>
+<p>上面代码中，遍历器对象<code>i</code>连续抛出两个错误。第一个错误被 Generator 函数体内的<code>catch</code>语句捕获。i第二次抛出错误，由于 Generator 函数内部的<code>catch</code>语句已经执行过了，不会再捕捉到这个错误了，所以这个错误就被抛出了 Generator 函数体，被函数体外的<code>catch</code>语句捕获。</p>
+<p><code>throw</code>方法可以接受一个参数，该参数会被<code>catch</code>语句接收，建议抛出<code>Error</code>对象的实例。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> g = <span class="function"><span class="keyword">function</span>* (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">yield</span>;</span><br><span class="line">  &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(e);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> i = g();</span><br><span class="line">i.next();</span><br><span class="line">i.throw(<span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'出错了！'</span>));</span><br><span class="line"><span class="comment">// Error: 出错了！(…)</span></span><br></pre></td></tr></table></figure></p>
+<p>注意，不要混淆遍历器对象的<code>throw</code>方法和全局的<code>throw</code>命令。上面代码的错误，是用遍历器对象的<code>throw</code>方法抛出的，而不是用<code>throw</code>命令抛出的。后者只能被函数体外的<code>catch</code>语句捕获。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> g = <span class="function"><span class="keyword">function</span>* (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="keyword">yield</span>;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">      <span class="keyword">if</span> (e != <span class="string">'a'</span>) <span class="keyword">throw</span> e;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">'内部捕获'</span>, e);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> i = g();</span><br><span class="line">i.next();</span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'a'</span>);</span><br><span class="line">  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'b'</span>);</span><br><span class="line">&#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'外部捕获'</span>, e);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 外部捕获 [Error: a]</span></span><br></pre></td></tr></table></figure></p>
+<p>上面代码之所以只捕获了<code>a</code>，是因为函数体外的<code>catch</code>语句块，捕获了抛出的<code>a</code>错误以后，就不会再继续<code>try</code>代码块里面剩余的语句了。</p>
+<p>如果 Generator 函数内部没有部署<code>try...catch</code>代码块，那么<code>throw</code>方法抛出的错误，将被外部<code>try...catch</code>代码块捕获。</p>
+<p>如果 Generator 函数内部和外部，都没有部署<code>try...catch</code>代码块，那么程序将报错，直接中断执行。</p>
+<p><code>throw</code>方法被捕获以后，会附带执行下一条<code>yield</code>表达式。也就是说，会附带执行一次<code>next</code>方法。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> gen = <span class="function"><span class="keyword">function</span>* <span class="title">gen</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">yield</span> <span class="built_in">console</span>.log(<span class="string">'a'</span>);</span><br><span class="line">  &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">yield</span> <span class="built_in">console</span>.log(<span class="string">'b'</span>);</span><br><span class="line">  <span class="keyword">yield</span> <span class="built_in">console</span>.log(<span class="string">'c'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> g = gen();</span><br><span class="line">g.next() <span class="comment">// a</span></span><br><span class="line">g.throw() <span class="comment">// b</span></span><br><span class="line">g.next() <span class="comment">// c</span></span><br></pre></td></tr></table></figure></p>
+<p>上面代码中，<code>g.throw</code>方法被捕获以后，自动执行了一次<code>next</code>方法，所以会打印<code>b</code>。另外，也可以看到，只要 Generator 函数内部部署了<code>try...catch</code>代码块，那么遍历器的<code>throw</code>方法抛出的错误，不影响下一次遍历。</p>
+<p>这种函数体内捕获错误的机制，大大方便了对错误的处理。多个<code>yield</code>表达式，可以只用一个<code>try...catch</code>代码块来捕获错误。如果使用回调函数的写法，想要捕获多个错误，就不得不为每个函数内部写一个错误处理语句，现在只在 Generator 函数内部写一次<code>catch</code>语句就可以了。</p>
+<p>一旦 Generator 执行过程中抛出错误，且没有被内部捕获，就不会再执行下去了。如果此后还调用<code>next</code>方法，将返回一个<code>value</code>属性等于<code>undefined</code>、<code>done</code>属性等于<code>true</code>的对象，即 JavaScript 引擎认为这个 Generator 已经运行结束了。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span>* <span class="title">g</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">yield</span> <span class="number">1</span>;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'throwing an exception'</span>);</span><br><span class="line">  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'generator broke!'</span>);</span><br><span class="line">  <span class="keyword">yield</span> <span class="number">2</span>;</span><br><span class="line">  <span class="keyword">yield</span> <span class="number">3</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">log</span>(<span class="params">generator</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> v;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'starting generator'</span>);</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    v = generator.next();</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'第一次运行next方法'</span>, v);</span><br><span class="line">  &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'捕捉错误'</span>, v);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    v = generator.next();</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'第二次运行next方法'</span>, v);</span><br><span class="line">  &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'捕捉错误'</span>, v);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    v = generator.next();</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'第三次运行next方法'</span>, v);</span><br><span class="line">  &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'捕捉错误'</span>, v);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'caller done'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">log(g());</span><br><span class="line"><span class="comment">// starting generator</span></span><br><span class="line"><span class="comment">// 第一次运行next方法 &#123; value: 1, done: false &#125;</span></span><br><span class="line"><span class="comment">// throwing an exception</span></span><br><span class="line"><span class="comment">// 捕捉错误 &#123; value: 1, done: false &#125;</span></span><br><span class="line"><span class="comment">// 第三次运行next方法 &#123; value: undefined, done: true &#125;</span></span><br><span class="line"><span class="comment">// caller done</span></span><br></pre></td></tr></table></figure></p>
+<p>上面代码一共三次运行<code>next</code>方法，第二次运行的时候会抛出错误，然后第三次运行的时候，Generator 函数就已经结束了，不再执行下去了。</p>
+<h2 id="next-、throw-、return-的共同点"><a href="#next-、throw-、return-的共同点" class="headerlink" title="next()、throw()、return() 的共同点"></a>next()、throw()、return() 的共同点</h2><p><code>next()</code>、<code>throw()</code>、<code>return()</code>这三个方法本质上是同一件事，可以放在一起理解。它们的作用都是让 Generator 函数恢复执行，并且使用不同的语句替换<code>yield</code>表达式。</p>
+<p><code>next()</code>是将<code>yield</code>表达式替换成一个值。<br><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> g = function* (x, y) &#123;</span><br><span class="line">  <span class="keyword">let</span> <span class="literal">result</span> = <span class="keyword">yield</span> x + y;</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">result</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> gen = g(<span class="number">1</span>, <span class="number">2</span>);</span><br><span class="line">gen.next(); // <span class="type">Object</span> &#123;value: <span class="number">3</span>, done: <span class="literal">false</span>&#125;</span><br><span class="line"></span><br><span class="line">gen.next(<span class="number">1</span>); // <span class="type">Object</span> &#123;value: <span class="number">1</span>, done: <span class="literal">true</span>&#125;</span><br><span class="line">// 相当于将 <span class="keyword">let</span> <span class="literal">result</span> = <span class="keyword">yield</span> x + y</span><br><span class="line">// 替换成 <span class="keyword">let</span> <span class="literal">result</span> = <span class="number">1</span>;</span><br></pre></td></tr></table></figure></p>
+<p>上面代码中，第二个<code>next(1)</code>方法就相当于将<code>yield</code>表达式替换成一个值<code>1</code>。如果<code>next</code>方法没有参数，就相当于替换成<code>undefined</code>。</p>
+<p><code>throw()</code>是将<code>yield</code>表达式替换成一个<code>throw</code>语句。<br><figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">gen.<span class="keyword">throw</span>(<span class="keyword">new</span> Error(<span class="string">'出错了'</span>)); <span class="regexp">//</span> Uncaught Error: 出错了</span><br><span class="line"><span class="regexp">//</span> 相当于将 let result = <span class="keyword">yield</span> x + y</span><br><span class="line"><span class="regexp">//</span> 替换成 let result = <span class="keyword">throw</span>(<span class="keyword">new</span> Error(<span class="string">'出错了'</span>));</span><br></pre></td></tr></table></figure></p>
+<p><code>return()</code>是将<code>yield</code>表达式替换成一个<code>return</code>语句。<br>gen.return(2); // Object {value: 2, done: true}<br>// 相当于将 let result = yield x + y<br>// 替换成 let result = return 2;</p>
+<h2 id="一些注意的点"><a href="#一些注意的点" class="headerlink" title="一些注意的点"></a>一些注意的点</h2><p>如果Generator函数已经return了，那么Generator函数就不会再执行下去了<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">function* generator()&#123;</span><br><span class="line">  <span class="keyword">yield</span> <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">2</span>;</span><br><span class="line">  <span class="keyword">yield</span> <span class="number">3</span>;</span><br><span class="line">&#125;</span><br><span class="line">var gen = generator();</span><br><span class="line">gen.<span class="keyword">next</span>();<span class="regexp">//</span>&#123;<span class="symbol">value:</span> <span class="number">1</span>, <span class="symbol">done:</span> <span class="literal">false</span>&#125;</span><br><span class="line">gen.<span class="keyword">next</span>();<span class="regexp">//</span>&#123;<span class="symbol">value:</span> <span class="number">2</span>, <span class="symbol">done:</span> <span class="literal">true</span>&#125;</span><br><span class="line">gen.<span class="keyword">next</span>();<span class="regexp">//</span>&#123;<span class="symbol">value:</span> undefined, <span class="symbol">done:</span> <span class="literal">true</span>&#125;</span><br></pre></td></tr></table></figure></p>
+<p>上述代码，在第二次<code>gen.next()</code>执行之后，Generator函数就已经<code>return</code>，代表结束了，再进行下次<code>gen.next()</code>就不会输出<code>3</code></p>
+<p>如果<code>yield</code>的是一个函数，那这个函数会在<code>value</code>值里面，要调用只能通过<code>value</code>调用<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span>* <span class="title">generator</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">yield</span> <span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'f is called'</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> gen = generator();</span><br><span class="line">gen.next().value();<span class="comment">//f is called</span></span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>参考：阮一峰<a href="http://es6.ruanyifeng.com/" target="_blank" rel="noopener">《ECMAScript 6 入门》</a></p>
+</blockquote>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <footer>
+        <a href="https://recallhyx.github.io">
+            <img src="/img/avatar.jpg" alt="Recall HYX">
+            Recall HYX
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://recallhyx.github.io/2018/03/08/ES6（4）/&title=《JavaScript ES6一些有用的语法特性（Generator）》 — Recall Hyx&pic=https://recallhyx.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://recallhyx.github.io/2018/03/08/ES6（4）/&title=《JavaScript ES6一些有用的语法特性（Generator）》 — Recall Hyx&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://recallhyx.github.io/2018/03/08/ES6（4）/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JavaScript ES6一些有用的语法特性（Generator）》 — Recall Hyx&url=https://recallhyx.github.io/2018/03/08/ES6（4）/&via=https://recallhyx.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://recallhyx.github.io/2018/03/08/ES6（4）/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2018/03/11/Vue-loader入门/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Vue-loader入门</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/03/04/Angular-React-Vue三大框架对比/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Angular,React,Vue三大框架对比</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "gnMQ4bW3FRMELqY7UJSFCG2L-gzGzoHsz",
+            appKey: "8kUBso0hYLBcTE8e9h89D1Hc",
+            avatar: "mm",
+            placeholder: "Just go go",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Recall HYX &copy; 2017 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://recallhyx.github.io/2018/03/08/ES6（4）/&title=《JavaScript ES6一些有用的语法特性（Generator）》 — Recall Hyx&pic=https://recallhyx.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://recallhyx.github.io/2018/03/08/ES6（4）/&title=《JavaScript ES6一些有用的语法特性（Generator）》 — Recall Hyx&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://recallhyx.github.io/2018/03/08/ES6（4）/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JavaScript ES6一些有用的语法特性（Generator）》 — Recall Hyx&url=https://recallhyx.github.io/2018/03/08/ES6（4）/&via=https://recallhyx.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://recallhyx.github.io/2018/03/08/ES6（4）/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACJ0lEQVR42u3aQY7DQAgF0bn/pT3b2bRTH+KRDNWrKLGdfl4goPn5wev6s06/8utP15C7WkuGDBmvZVy363TNCXDikSeTu45UGTJkLGCQTdyH1/vtktDMX5MMGTJkpAzyPU8EZciQIaPPSItSTpIhQ4aMe0aaovHysvY6HqzFZciQ8UIG77r//+dHzjdkyJDxKsYVLv4cfkh5tZcMGTJmM2oFKj+2TEvcTsEsQ4aMqQzeyq819Ak+fXLxzcmQIeO1jDTJq4VjHmT5vR9CvwwZMgYxnkv1amVqLU2UIUPGBkYaUmv9efIKvjAtIkOGjKEMXsrePy59TgcpQ4aMzYx06IpsJU0i4xJXhgwZCxi12EW2zsM6T0/REaYMGTIGMUhrjPD463iizSdDhowNDP73nXSQbJS32GTIkLGNUdtoetCYhmA+diZDhow9jDTt4/MPtWviI1UZMmSMZtSSwrT1n46Fpd/LkCFjDyNtx/NxjTSU14bGZMiQMZURBzWc/NUaZ8XhDBkyZCxgkGQuHZV4YsjsQ8CVIUPGaEatNcZL2Xhb4X/JkCFjKuMKF2mlkUDMS9ag/pYhQ8ZQRlp81pK2zuhqZwRWhgwZkxhpkK0dJHQGYVHCKkOGjAWMtJWWDlV0QjBCypAhQ0ap3VYLxCQct6ZFZMiQsYzBi16+LR6gvxZwZciQ8RIGKWL5QEZtFLV2ICFDhowNDB5AO0VmbeyMHxXIkCFjKOMXmpDk84nGCI4AAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

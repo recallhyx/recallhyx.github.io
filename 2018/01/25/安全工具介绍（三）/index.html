@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-112417276-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>安全工具介绍（三） | Recall Hyx | Your star</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#FFC107">
+    
+    
+    <meta name="keywords" content="工具">
+    <meta name="description" content="SQLMAP特点  开源sql注入漏洞监测、利用的工具 检测动态页面中get/post 参数、cookie、http头 数据榨取 文件系统访问 操作系统命令执行 引擎强大、特性丰富 XSS漏洞检测  五种漏洞监测技术  基于布尔的盲注检测 基于时间的盲注检测&amp;#39;and (select * from (select(sleep(20)))a)--+ 基于错误的检测 基于union联合查询的检测">
+<meta name="keywords" content="工具">
+<meta property="og:type" content="article">
+<meta property="og:title" content="安全工具介绍（三）">
+<meta property="og:url" content="https://recallhyx.github.io/2018/01/25/安全工具介绍（三）/index.html">
+<meta property="og:site_name" content="Recall Hyx">
+<meta property="og:description" content="SQLMAP特点  开源sql注入漏洞监测、利用的工具 检测动态页面中get/post 参数、cookie、http头 数据榨取 文件系统访问 操作系统命令执行 引擎强大、特性丰富 XSS漏洞检测  五种漏洞监测技术  基于布尔的盲注检测 基于时间的盲注检测&amp;#39;and (select * from (select(sleep(20)))a)--+ 基于错误的检测 基于union联合查询的检测">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-09-13T13:53:36.243Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="安全工具介绍（三）">
+<meta name="twitter:description" content="SQLMAP特点  开源sql注入漏洞监测、利用的工具 检测动态页面中get/post 参数、cookie、http头 数据榨取 文件系统访问 操作系统命令执行 引擎强大、特性丰富 XSS漏洞检测  五种漏洞监测技术  基于布尔的盲注检测 基于时间的盲注检测&amp;#39;and (select * from (select(sleep(20)))a)--+ 基于错误的检测 基于union联合查询的检测">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Recall HYX</h5>
+          <a href="mailto:quce.hu@qq.com" title="quce.hu@qq.com" class="mail">quce.hu@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                文章
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/recallhyx" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">安全工具介绍（三）</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">安全工具介绍（三）</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-01-25T07:09:40.000Z" itemprop="datePublished" class="page-time">
+  2018-01-25
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/安全/">安全</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#SQLMAP"><span class="post-toc-number">1.</span> <span class="post-toc-text">SQLMAP</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-安全工具介绍（三）"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">安全工具介绍（三）</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-01-25 15:09:40" datetime="2018-01-25T07:09:40.000Z"  itemprop="datePublished">2018-01-25</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/安全/">安全</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="SQLMAP"><a href="#SQLMAP" class="headerlink" title="SQLMAP"></a>SQLMAP</h1><p><strong>特点</strong></p>
+<ul>
+<li>开源sql注入漏洞监测、利用的工具</li>
+<li>检测动态页面中get/post 参数、cookie、http头</li>
+<li>数据榨取</li>
+<li>文件系统访问</li>
+<li>操作系统命令执行</li>
+<li>引擎强大、特性丰富</li>
+<li>XSS漏洞检测</li>
+</ul>
+<p><strong>五种漏洞监测技术</strong></p>
+<ul>
+<li>基于布尔的盲注检测</li>
+<li>基于时间的盲注检测<br><code>&#39;and (select * from (select(sleep(20)))a)--+</code></li>
+<li>基于错误的检测</li>
+<li>基于union联合查询的检测<br>适用于通过for循环直接输出联合查询结果，否则只显示第一项结果</li>
+<li>基于堆叠查询的检测<br>;堆叠多个查询语句<br>适用于非select的数据修改、删除的操作</li>
+</ul>
+<p><strong>SQLMAP参数介绍</strong></p>
+<ul>
+<li>TARGET:<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Target:</span><br><span class="line">    At least one of these options has <span class="keyword">to</span> be provided <span class="keyword">to</span> define the</span><br><span class="line">    target(s)</span><br><span class="line"></span><br><span class="line">    -d DIRECT          <span class="built_in"> Connection </span>string <span class="keyword">for</span> direct database connection</span><br><span class="line">    -u URL, <span class="attribute">--url</span>=URL   Target URL (e.g. <span class="string">"http://www.site.com/vuln.php?id=1"</span>)</span><br><span class="line">    -l LOGFILE          Parse target(s) <span class="keyword">from</span> Burp <span class="keyword">or</span> WebScarab<span class="built_in"> proxy </span>log file</span><br><span class="line">    -x SITEMAPURL       Parse target(s) <span class="keyword">from</span> remote sitemap(.xml) file</span><br><span class="line">    -m BULKFILE         Scan multiple targets given <span class="keyword">in</span> a textual file</span><br><span class="line">    -r REQUESTFILE      Load HTTP request <span class="keyword">from</span> a file</span><br><span class="line">    -g GOOGLEDORK       Process Google dork results as target URLs</span><br><span class="line">    -c CONFIGFILE       Load options <span class="keyword">from</span> a configuration INI file</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>Get方法<br><figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sqlmap -u "http://172.16.242.128/mutillidae/index.php?page=user-info.php&amp;username=1&amp;password=1&amp;user-info-php-submit-button=View+Account+Details" -p username -f </span><br><span class="line">（-p的意思就是只指定一个变量，-f就是查看数据库版本）</span><br><span class="line">-<span class="ruby">-user（就是查看数据库用户）</span></span><br><span class="line"><span class="ruby">--dbs（目标数据库有什么库）</span></span><br><span class="line"><span class="ruby">--schema（查看元数据库）</span></span><br></pre></td></tr></table></figure></p>
+<p>Post方法<br><figure class="highlight vbscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">使用http请求文件（brupsuite）：sqlmap -r <span class="built_in">request</span>.txt（使用burpsuite截断代理</span><br><span class="line">并将截断的post中raw标签内的全部内容贴到<span class="built_in">request</span>.txt文件，</span><br><span class="line">不能有多余的空行，要和burpsuite中看到的一样）</span><br><span class="line">使用brupsuite <span class="built_in">log</span>文件：sqlmap -l <span class="built_in">log</span>.txt（在burpsuite的<span class="keyword">option</span>中开启<span class="built_in">log</span>）</span><br></pre></td></tr></table></figure></p>
+<p>HTTPS<br><figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sqlmap -u <span class="string">"http://1.1.1.1/a.php?id=1:8843"</span> <span class="comment">--force-ssl</span></span><br></pre></td></tr></table></figure></p>
+<p>扫描配置文件<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">sqlmap</span> <span class="selector-tag">-c</span> <span class="selector-tag">sqlmap</span><span class="selector-class">.conf</span></span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>REQUEST：<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">Request:</span><br><span class="line">    These options can be used <span class="keyword">to</span> specify how <span class="keyword">to</span> connect <span class="keyword">to</span> the target URL</span><br><span class="line"></span><br><span class="line">    <span class="attribute">--method</span>=METHOD     Force usage of given HTTP method (e.g. PUT)</span><br><span class="line">    <span class="attribute">--data</span>=DATA         Data string <span class="keyword">to</span> be sent through POST</span><br><span class="line">    <span class="attribute">--param-del</span>=PARA..  Character used <span class="keyword">for</span> splitting parameter values</span><br><span class="line">    <span class="attribute">--cookie</span>=COOKIE     HTTP Cookie header value</span><br><span class="line">    <span class="attribute">--cookie-del</span>=COO..  Character used <span class="keyword">for</span> splitting cookie values</span><br><span class="line">    <span class="attribute">--load-cookies</span>=L..  File containing cookies <span class="keyword">in</span> Netscape/wget format</span><br><span class="line">    --drop-set-cookie   Ignore Set-Cookie header <span class="keyword">from</span> response</span><br><span class="line">    <span class="attribute">--user-agent</span>=AGENT  HTTP User-Agent header value</span><br><span class="line">    --random-agent      Use randomly selected HTTP User-Agent header value</span><br><span class="line">    <span class="attribute">--host</span>=HOST         HTTP Host header value</span><br><span class="line">    <span class="attribute">--referer</span>=REFERER   HTTP Referer header value</span><br><span class="line">    -H HEADER, --hea<span class="built_in">..</span>  Extra header (e.g. <span class="string">"X-Forwarded-For: 127.0.0.1"</span>)</span><br><span class="line">    <span class="attribute">--headers</span>=HEADERS   Extra headers (e.g. <span class="string">"Accept-Language: fr\nETag: 123"</span>)</span><br><span class="line">    <span class="attribute">--auth-type</span>=AUTH..  HTTP authentication<span class="built_in"> type </span>(Basic, Digest, NTLM <span class="keyword">or</span> PKI)</span><br><span class="line">    <span class="attribute">--auth-cred</span>=AUTH..  HTTP authentication credentials (name:password)</span><br><span class="line">    <span class="attribute">--auth-file</span>=AUTH..  HTTP authentication PEM cert/private key file</span><br><span class="line">    <span class="attribute">--ignore-code</span>=IG..  Ignore HTTP <span class="builtin-name">error</span> code (e.g. 401)</span><br><span class="line">    --ignore-proxy      Ignore<span class="built_in"> system default proxy </span>settings</span><br><span class="line">    --ignore-redirects  Ignore redirection attempts</span><br><span class="line">    --ignore-timeouts   Ignore<span class="built_in"> connection </span>timeouts</span><br><span class="line">    <span class="attribute">--proxy</span>=PROXY       Use a<span class="built_in"> proxy </span><span class="keyword">to</span> connect <span class="keyword">to</span> the target URL</span><br><span class="line">    <span class="attribute">--proxy-cred</span>=PRO.. <span class="built_in"> Proxy </span>authentication credentials (name:password)</span><br><span class="line">    <span class="attribute">--proxy-file</span>=PRO..  Load<span class="built_in"> proxy </span>list <span class="keyword">from</span> a file</span><br><span class="line">    --tor               Use Tor anonymity network</span><br><span class="line">    <span class="attribute">--tor-port</span>=TORPORT  <span class="builtin-name">Set</span> Tor<span class="built_in"> proxy port </span>other than default</span><br><span class="line">    <span class="attribute">--tor-type</span>=TORTYPE  <span class="builtin-name">Set</span> Tor<span class="built_in"> proxy type </span>(HTTP, SOCKS4 <span class="keyword">or</span> SOCKS5 (default))</span><br><span class="line">    --check-tor         Check <span class="keyword">to</span> see <span class="keyword">if</span> Tor is used properly</span><br><span class="line">    <span class="attribute">--delay</span>=DELAY       Delay <span class="keyword">in</span> seconds between each HTTP request</span><br><span class="line">    <span class="attribute">--timeout</span>=TIMEOUT   Seconds <span class="keyword">to</span> wait before timeout<span class="built_in"> connection </span>(default 30)</span><br><span class="line">    <span class="attribute">--retries</span>=RETRIES   Retries when the<span class="built_in"> connection </span>timeouts (default 3)</span><br><span class="line">    <span class="attribute">--randomize</span>=RPARAM  Randomly change value <span class="keyword">for</span> given parameter(s)</span><br><span class="line">    <span class="attribute">--safe-url</span>=SAFEURL  URL<span class="built_in"> address </span><span class="keyword">to</span> visit frequently during testing</span><br><span class="line">    <span class="attribute">--safe-post</span>=SAFE..  POST data <span class="keyword">to</span> send <span class="keyword">to</span> a safe URL</span><br><span class="line">    <span class="attribute">--safe-req</span>=SAFER..  Load safe HTTP request <span class="keyword">from</span> a file</span><br><span class="line">    <span class="attribute">--safe-freq</span>=SAFE..  Test requests between two visits <span class="keyword">to</span> a given safe URL</span><br><span class="line">    --skip-urlencode    Skip URL encoding of payload data</span><br><span class="line">    <span class="attribute">--csrf-token</span>=CSR..  Parameter used <span class="keyword">to</span> hold anti-CSRF token</span><br><span class="line">    <span class="attribute">--csrf-url</span>=CSRFURL  URL<span class="built_in"> address </span><span class="keyword">to</span> visit <span class="keyword">to</span> extract anti-CSRF token</span><br><span class="line">    --force-ssl         Force usage of SSL/HTTPS</span><br><span class="line">    --hpp               Use HTTP parameter pollution method</span><br><span class="line">    <span class="attribute">--eval</span>=EVALCODE     Evaluate provided Python code before the request (e.g.</span><br><span class="line">                        <span class="string">"import hashlib;id2=hashlib.md5(id).hexdigest()"</span>)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>数据端：–data<br><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">get</span>/<span class="built_in">post</span> 都适用</span><br><span class="line">sqlmap -u <span class="string">"http://1.1.1.1/a.php"</span> <span class="comment">--date="user=1&amp;password=1"-f</span></span><br></pre></td></tr></table></figure></p>
+<p>变量分隔符： –param-del<br><figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">http:</span><span class="comment">//1.1.1.1/a.php?q=foo;id=1</span></span><br><span class="line">sqlmap -u <span class="string">"http://1.1.1.1/a.php"</span> --data=<span class="string">"q=foo;id=1"</span>--param-del</span><br></pre></td></tr></table></figure></p>
+<p>设置cookie：–cookie<br><figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">要先登录过网站，然后在浏览器中获得相应的cookie</span><br><span class="line">sqlmap -u <span class="string">"http://172.16.242.128/dvwa/vulnerabilities/sqli/?id=1&amp;Submit=Submit#"</span> <span class="params">--cookie=</span><span class="string">"security=low; PHPSESSID=ad58bee7a7c5b3dcd7e26a24e4446e56"</span></span><br><span class="line">检查cookie中的注入点，则要加上 <span class="params">--level</span> 2（至少大于等于2）</span><br></pre></td></tr></table></figure></p>
+<p>user-agent：<br><figure class="highlight sqf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">--<span class="built_in">random</span>-<span class="built_in">agent</span>：使用这个参数，就会使用/usr/share/sqlmap/txt/user-<span class="built_in">agents</span>.txt</span><br><span class="line">这个字典来代替默认的user-<span class="built_in">agent</span></span><br><span class="line">检查user-<span class="built_in">agent</span>中的注入点，则要加上--level <span class="number">3</span>（至少大于等于<span class="number">3</span>）</span><br></pre></td></tr></table></figure></p>
+<p>host头：<br><figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-<span class="ruby">-host=<span class="string">""</span></span></span><br><span class="line"><span class="ruby">检查host中的注入点，则要加上--level <span class="number">5</span> （<span class="number">5</span>为最高级别）</span></span><br></pre></td></tr></table></figure></p>
+<p>基于HTTP协议的身份验证<br><figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Basic</span></span><br><span class="line"><span class="keyword">Digest</span></span><br><span class="line"><span class="keyword">NTLM</span></span><br><span class="line"><span class="keyword">sqlmap </span>-u <span class="string">"http://1.1.1.1/a.php?id=1"</span> --auth-type <span class="keyword">Basic </span>--auth-cred <span class="string">"user:pass"</span></span><br></pre></td></tr></table></figure></p>
+<p>–auth-cert / –auth-file<br><figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-<span class="ruby">-auth-file=<span class="string">"ca.PEM"</span></span></span><br><span class="line"><span class="ruby">含有私钥的PEM 格式证书文件</span></span><br><span class="line"><span class="ruby">PEM格式的证书链文件</span></span><br></pre></td></tr></table></figure></p>
+<p>http(s) 代理<br><figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-<span class="ruby">-proxy=<span class="string">"http://127.0.0.1:8087"</span>（代理服务器开启后的地址）</span></span><br><span class="line"><span class="ruby">--proxy-cred=<span class="string">"name:pass"</span> （连接代理需要的身份验证）</span></span><br><span class="line"><span class="ruby">--ignore-proxy（忽略系统级代理设置，通常用于扫描本地网络目标）</span></span><br></pre></td></tr></table></figure></p>
+<p>其他参数<br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--delay （每次http(s)请求之间延迟时间，浮点数，单位为秒，默认无延迟）</span></span><br><span class="line"><span class="comment">--timeout（请求超时时间，浮点数，默认30s）</span></span><br><span class="line"><span class="comment">--retries（http(s)连接超时重试次数，默认3次）</span></span><br><span class="line"><span class="comment">--randomize（长度、类型与原始值保持一致的前提下，指定每次请求随机取值的参数名）</span></span><br><span class="line">例 sqlmap -u <span class="string">"http://1.1.1.1/a.php?id=100"</span> <span class="comment">--randomize='id'</span></span><br><span class="line">（这样的话，每次<span class="built_in">id</span>就会在<span class="number">100</span><span class="number">-999</span>随机取，因为长度、类型都与原始值保持一致）</span><br><span class="line"><span class="comment">--scope（过滤日志内容，通过正则表达式筛选扫描对象）</span></span><br><span class="line">例 sqlmap -l burp.<span class="built_in">log</span> <span class="comment">--scope="(www)?\.target\.(com | net | org)"</span></span><br><span class="line">例 sqlmap -l <span class="number">2.</span><span class="built_in">log</span> <span class="comment">--scope="(19)?\.169\.20\.(1 | 10 | 100)"</span></span><br><span class="line"><span class="comment">--safe-url / --safe-freq（检测和盲注阶段会产生大量失败请求，服务端可能会销毁session）</span></span><br><span class="line">（每发送<span class="comment">--safe-freq次注入请求后，发送一次正常请求）</span></span><br><span class="line"><span class="comment">--skip-urlencode（默认Get方法会对传输内容进行编码，某些web服务器不遵守RFC标准编码，使用原始字符提交数据）</span></span><br><span class="line"><span class="comment">--eval（每次请求前执行指定的python代码，每次请求更改或增加新的参数值（时间依赖、其他参数值依赖））</span></span><br><span class="line">例 sqlmap -u <span class="string">"http://1.1.1.1/a.php?id=1&amp;hash=111111111111111111"</span> <span class="comment">--eval=</span></span><br><span class="line"><span class="string">"import hashlib;hash=hashlib.md5(id).hexdigest()"</span></span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>OPTIMIZATTION:<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Optimization:</span><br><span class="line">    These options can be used <span class="keyword">to</span> optimize the performance of sqlmap</span><br><span class="line"></span><br><span class="line">    -o                  Turn on all optimization switches</span><br><span class="line">    --predict-output    Predict common queries output</span><br><span class="line">    --keep-alive        Use persistent HTTP(s) connections</span><br><span class="line">    --null-connection   Retrieve<span class="built_in"> page </span>length without actual HTTP response body</span><br><span class="line">    <span class="attribute">--threads</span>=THREADS   Max number of concurrent HTTP(s) requests (default 1)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>-o开启下面三个性能呢参数，（除–threads参数）<br><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">--predict-output（根据检测方法，比对返回值和统计表内容，不断缩小检测范围，提高检测效率）</span><br><span class="line">（检测版本名，用户名，密码，Privileges，role，数据库名称，表名，列名）</span><br><span class="line">与--threads参数不兼容</span><br><span class="line">统计表<span class="symbol">:/usr/share/sqlmap/txt/common-outputs</span>.txt</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--keep-alive</span></span><br><span class="line">(使用<span class="keyword">http</span>(s)长连接，性能好)</span><br><span class="line">与<span class="comment">--proxy参数不兼容</span></span><br><span class="line">长连接避免重复建立连接的网络开销，但大量长连接会严重占用服务器资源</span><br></pre></td></tr></table></figure>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--null-connection</span></span><br><span class="line">之火取相应页面的大小值，而非页面具体内容</span><br><span class="line">通常用于盲注判断 真/假 ，降低网络带宽消耗</span><br><span class="line">与<span class="comment">--text-only参数不兼容</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">--threads</span><br><span class="line">最大并发线程，盲注时每个线程获取一个字符（<span class="number">7</span>次请求），获取完成后线程结束</span><br><span class="line">默认值为<span class="number">1</span>,建议不要超过<span class="number">10</span>,否则可能影响站点可用性</span><br><span class="line">与--predict-output参数不兼容</span><br></pre></td></tr></table></figure>
+<ul>
+<li>INJECTION<figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">-<span class="ruby">p （指定扫描的参数，使--level失效）</span></span><br><span class="line"><span class="ruby">-skip（排除指定的扫描参数）</span></span><br><span class="line"><span class="ruby">--dbms=<span class="string">"mysql"</span>（指定数据库管理系统版本）</span></span><br><span class="line"><span class="ruby">--os（指定操作系统 linux或window）</span></span><br><span class="line"><span class="ruby">--invalid-bignum / --invalid-logical （通常sqlmap使用负值使参数取值失效 id=<span class="number">13</span>-&gt;id=-<span class="number">13</span>）</span></span><br><span class="line"><span class="ruby">（bignum使用大数使参数值失效 id=<span class="number">9999999999</span>）</span></span><br><span class="line"><span class="ruby">（logical使用布尔判断使取值失效 id=<span class="number">13</span> AND <span class="number">18</span>=<span class="number">19</span>）</span></span><br><span class="line"><span class="ruby">--no-escape（处于混淆和避免出错的目的，payload中用单引号界定字符串时</span></span><br><span class="line"><span class="ruby">sqlmap使用char()编码逃逸的方法替换字符串）</span></span><br><span class="line"><span class="ruby">--tamper（混淆脚本，用于绕过应用层过滤，IPS，WAF）</span></span><br><span class="line"><span class="ruby">sqlmap -u <span class="string">"http://1.1.1.1/a.php?id=1"</span> --tamper=<span class="string">"between.py,randomcase.py"</span></span></span><br><span class="line"><span class="ruby">具体目录（/usr/share/sqlmap/tamper）</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>暂时就介绍这么多，sqlmap还有很多参数，可以用命令<code>sqlmap -hh</code>查看</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <footer>
+        <a href="https://recallhyx.github.io">
+            <img src="/img/avatar.jpg" alt="Recall HYX">
+            Recall HYX
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/工具/">工具</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://recallhyx.github.io/2018/01/25/安全工具介绍（三）/&title=《安全工具介绍（三）》 — Recall Hyx&pic=https://recallhyx.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://recallhyx.github.io/2018/01/25/安全工具介绍（三）/&title=《安全工具介绍（三）》 — Recall Hyx&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://recallhyx.github.io/2018/01/25/安全工具介绍（三）/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《安全工具介绍（三）》 — Recall Hyx&url=https://recallhyx.github.io/2018/01/25/安全工具介绍（三）/&via=https://recallhyx.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://recallhyx.github.io/2018/01/25/安全工具介绍（三）/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2018/01/27/手动漏洞挖掘（一）/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">手动漏洞挖掘（一）</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/01/22/安全工具介绍（二）/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">安全工具介绍（二）</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "gnMQ4bW3FRMELqY7UJSFCG2L-gzGzoHsz",
+            appKey: "8kUBso0hYLBcTE8e9h89D1Hc",
+            avatar: "mm",
+            placeholder: "Just go go",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Recall HYX &copy; 2017 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://recallhyx.github.io/2018/01/25/安全工具介绍（三）/&title=《安全工具介绍（三）》 — Recall Hyx&pic=https://recallhyx.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://recallhyx.github.io/2018/01/25/安全工具介绍（三）/&title=《安全工具介绍（三）》 — Recall Hyx&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://recallhyx.github.io/2018/01/25/安全工具介绍（三）/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《安全工具介绍（三）》 — Recall Hyx&url=https://recallhyx.github.io/2018/01/25/安全工具介绍（三）/&via=https://recallhyx.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://recallhyx.github.io/2018/01/25/安全工具介绍（三）/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACvklEQVR42u3aQW7cMAwF0Nz/0ummiy7qmf9JKZ0CzyvDsWU/BZA4JL++4uP74Xh9z5/Xn86fRsvvOXDg4eHhHfr0p09JnnoizUZLpuZxCvDw8PCu8Z5W1M15sqAnk/j6/I0FDw8P7wN4SeyaPJWPiYeHh/e/806xZ9sGHh4e3ufw2kRAHhBvQvNN8gIPDw/vHi+vIn3O+ZX6Hh4eHt66qp43CsxC56RpYPadv5/Fw8PDu8DbJBSSRqs8zD0VLuPh4eH9DK+NSNtGgXbLyTeeTWkNDw8Pb8M71VDV3tPih40IeHh4eEd57dK8KZglm0f+3qjNCw8PD+8Cb5aQbRMKSfIiCehXtTs8PDy8Q7zZoj8rYs2C+LbA9pf6Hh4eHt413qwJIA+d8+ttGuJxfDw8PLxrvLYhIFn0NwmO1/Fw8UY8PDy8C7zZre2n5NtJ275Q9EHg4eHhHeV9l8cmGZFvM/skBR4eHt4NXv65m7aAdjPIF/0378XDw8O7wNv81M8D61mjQDtlb6YDDw8P7xovLzvNwJsJmgXceHh4eGd57Y/8Wap330bQ/rXIJePh4eGVvHzfyNuh8oaDNqXblsrw8PDwbvBmg25C7ba0NgvlvzZzhoeHhxfEwLPkab7Ez6YmD6lXTVd4eHh4C94m2ZqU/2dbQrI5vRkTDw8P7xovHyJvNcgLV8mVWUIZDw8P7zavXZo3i/immaBIWODh4eH9IG9W7G+bpdoAPQnfoznDw8PDG/G+y6PdADYLettA8Ng6gIeHh3eUN0vFbpKzZ0PzPKmBh4eHd5aXbwZ5WJynG/Zh/Zv/GB4eHt41Xhvg7pulcliegCg6I/Dw8PD+Ka9d3NsPnTVm4eHh4X0yr22N2pTT8vQHHh4e3m1eW/Tapw/azWNWeMPDw8O7wRv2asXJ2TYEfz3CsDkADw8P7wzvFweDiL2AxriOAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

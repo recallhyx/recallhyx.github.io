@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-112417276-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>前端导出excel | Recall Hyx | Your star</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#FFC107">
+    
+    
+    <meta name="keywords" content="javascript">
+    <meta name="description" content="前言之前导出 Excel 的工作是交给后端来做的，后来才发现前端也可以导出 Excel，还是太年轻了，接下来一起看一下怎么做的。 前期准备我们用 Vue，可以很容易生成一个表格：12345678910111213141516171819202122232425262728293031323334353637&amp;lt;template&amp;gt;  &amp;lt;div&amp;gt;    &amp;lt;table bor">
+<meta name="keywords" content="javascript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端导出excel">
+<meta property="og:url" content="https://recallhyx.github.io/2018/07/11/前端导出excel/index.html">
+<meta property="og:site_name" content="Recall Hyx">
+<meta property="og:description" content="前言之前导出 Excel 的工作是交给后端来做的，后来才发现前端也可以导出 Excel，还是太年轻了，接下来一起看一下怎么做的。 前期准备我们用 Vue，可以很容易生成一个表格：12345678910111213141516171819202122232425262728293031323334353637&amp;lt;template&amp;gt;  &amp;lt;div&amp;gt;    &amp;lt;table bor">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5834506-9682a45af7fc7797.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5834506-d769e5d4f16bb52a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5834506-338383b9468ef671.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-09-13T13:53:36.242Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="前端导出excel">
+<meta name="twitter:description" content="前言之前导出 Excel 的工作是交给后端来做的，后来才发现前端也可以导出 Excel，还是太年轻了，接下来一起看一下怎么做的。 前期准备我们用 Vue，可以很容易生成一个表格：12345678910111213141516171819202122232425262728293031323334353637&amp;lt;template&amp;gt;  &amp;lt;div&amp;gt;    &amp;lt;table bor">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/5834506-9682a45af7fc7797.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Recall HYX</h5>
+          <a href="mailto:quce.hu@qq.com" title="quce.hu@qq.com" class="mail">quce.hu@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                文章
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/recallhyx" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">前端导出excel</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">前端导出excel</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-07-11T15:07:56.000Z" itemprop="datePublished" class="page-time">
+  2018-07-11
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/前端/">前端</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#前言"><span class="post-toc-number">1.</span> <span class="post-toc-text">前言</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#前期准备"><span class="post-toc-number">2.</span> <span class="post-toc-text">前期准备</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#导出-Excel"><span class="post-toc-number">3.</span> <span class="post-toc-text">导出 Excel</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#分辨浏览器"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">分辨浏览器</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#转换成-Excel"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">转换成 Excel</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#IE处理"><span class="post-toc-number">3.3.</span> <span class="post-toc-text">IE处理</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#其他浏览器处理"><span class="post-toc-number">3.4.</span> <span class="post-toc-text">其他浏览器处理</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#效果"><span class="post-toc-number">4.</span> <span class="post-toc-text">效果</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#拓展"><span class="post-toc-number">5.</span> <span class="post-toc-text">拓展</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-前端导出excel"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">前端导出excel</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-07-11 23:07:56" datetime="2018-07-11T15:07:56.000Z"  itemprop="datePublished">2018-07-11</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/前端/">前端</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>之前导出 Excel 的工作是交给后端来做的，后来才发现前端也可以导出 Excel，还是太年轻了，接下来一起看一下怎么做的。</p>
+<h1 id="前期准备"><a href="#前期准备" class="headerlink" title="前期准备"></a>前期准备</h1><p>我们用 Vue，可以很容易生成一个表格：<br><figure class="highlight django"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">table</span> <span class="attr">border</span>=<span class="string">"1"</span> <span class="attr">ref</span>=<span class="string">"table"</span>&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;<span class="name">thead</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span></span><br><span class="line"><span class="xml">          <span class="tag">&lt;<span class="name">th</span> <span class="attr">v-for</span>=<span class="string">"(head, index) in thead"</span> <span class="attr">:key</span>=<span class="string">"index"</span>&gt;</span></span><span class="template-variable">&#123;&#123;head&#125;&#125;</span><span class="xml"><span class="tag">&lt;/<span class="name">th</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;/<span class="name">thead</span>&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;<span class="name">tbody</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">tr</span> <span class="attr">v-for</span>=<span class="string">"(row, index) in rows"</span> <span class="attr">:key</span>=<span class="string">"index"</span>&gt;</span></span></span><br><span class="line"><span class="xml">          <span class="tag">&lt;<span class="name">td</span> <span class="attr">v-for</span>=<span class="string">"(item, idx) in row"</span> <span class="attr">:key</span>=<span class="string">"idx"</span>&gt;</span></span><span class="template-variable">&#123;&#123;item&#125;&#125;</span><span class="xml"><span class="tag">&lt;/<span class="name">td</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;/<span class="name">tbody</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">table</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">id</span>=<span class="string">"hrefToExportTable"</span> <span class="attr">style</span>=<span class="string">"postion: absolute;left: -10px;top: -10px;width: 0px;height: 0px;"</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">"download"</span>&gt;</span>下载<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span></span><br><span class="line"><span class="xml">export default &#123;</span></span><br><span class="line"><span class="xml">  name: "HelloWorld",</span></span><br><span class="line"><span class="xml">  data() &#123;</span></span><br><span class="line"><span class="xml">    return &#123;</span></span><br><span class="line"><span class="xml">      thead: ['姓名','学号','性别','年龄'],</span></span><br><span class="line"><span class="xml">      rows: [</span></span><br><span class="line"><span class="xml">        ['小明','1','男','18'],</span></span><br><span class="line"><span class="xml">        ['小红','2','女','17'],</span></span><br><span class="line"><span class="xml">        ['小白','3','男','19'],</span></span><br><span class="line"><span class="xml">      ],</span></span><br><span class="line"><span class="xml">    &#125;;</span></span><br><span class="line"><span class="xml">  &#125;</span></span><br><span class="line"><span class="xml">&#125;;</span></span><br><span class="line"><span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span></span><br></pre></td></tr></table></figure></p>
+<p>注意：表格的结构和我们之后要导出 Excel 之前的解析有关，所以要按照格式来。<br>效果：<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://upload-images.jianshu.io/upload_images/5834506-9682a45af7fc7797.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure></p>
+<p>就是一个表格，一个按钮还有一个看不见的链接。当我们点击按钮，其实就是点击链接，我们只要把链接的 <code>href</code> 换成base64，就可以下载 Excel，功能我们之后再补充</p>
+<h1 id="导出-Excel"><a href="#导出-Excel" class="headerlink" title="导出 Excel"></a>导出 Excel</h1><h2 id="分辨浏览器"><a href="#分辨浏览器" class="headerlink" title="分辨浏览器"></a>分辨浏览器</h2><p>我们在 <code>src</code> 下新建文件夹 <code>libs</code>，然后新建文件 <code>utils.js</code> （个人习惯），然后我们一步一步分析。<br>首先，不同的浏览器导出 Excel 的方式不一样， IE 是用 <code>ActiveXObject</code> 用于启动创建对象的应用程序，在创建某个对象后，可在代码中使用已定义的对象变量引用该对象。但是其他主流浏览器就是用 <code>base64</code> 的方式下载的，所以第一步就是要判断现在的浏览器是什么。<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">function getExplorer () &#123;</span><br><span class="line">    <span class="keyword">var</span> explorer = window.navigator.userAgent;</span><br><span class="line">    <span class="keyword">if</span> (explorer.indexOf(<span class="string">'MSIE'</span>) &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="comment">// ie</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">'ie'</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (explorer.indexOf(<span class="string">'Firefox'</span>) &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="comment">// firefox</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">'Firefox'</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (explorer.indexOf(<span class="string">'Chrome'</span>) &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="comment">// Chrome</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">'Chrome'</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (explorer.indexOf(<span class="string">'Opera'</span>) &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="comment">// Opera</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">'Opera'</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (explorer.indexOf(<span class="string">'Safari'</span>) &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="comment">// Safari</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">'Safari'</span>;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>我们用 <code>window.navigator.userAgent</code> 来识别浏览器，<br>IE11的 <code>userAgent</code> 是 <code>Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 10.0; WOW64; Trident/7.0; .NET4.0C; .NET4.0E)</code>，<br>Chrome 的 <code>userAgent</code> 是 <code>Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36</code><br>特定的浏览器有特定的标识符，所以第一步判断浏览器就完成了，其实，只是为了分成两类：IE 和 非 IE 。。。</p>
+<h2 id="转换成-Excel"><a href="#转换成-Excel" class="headerlink" title="转换成 Excel"></a>转换成 Excel</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">tranform</span> (<span class="params">table, aId, name</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> tableHead = table.children[<span class="number">0</span>];</span><br><span class="line">    <span class="keyword">let</span> tableBody = table.children[<span class="number">1</span>];</span><br><span class="line">    <span class="keyword">let</span> tableInnerHTML = <span class="string">'&lt;thead&gt;&lt;tr&gt;'</span>;</span><br><span class="line">    <span class="keyword">if</span> (table.children.length !== <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="keyword">let</span> len = tableBody.rows.length;</span><br><span class="line">        <span class="keyword">let</span> i = <span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">while</span> (i &lt; len) &#123;</span><br><span class="line">            <span class="keyword">if</span> (i === <span class="number">-1</span>) &#123;</span><br><span class="line">                <span class="built_in">Array</span>.from(tableHead.rows[<span class="number">0</span>].children).forEach(<span class="function">(<span class="params">th</span>) =&gt;</span> &#123;</span><br><span class="line">                    tableInnerHTML = tableInnerHTML + <span class="string">'&lt;th&gt;'</span> + th.innerHTML + <span class="string">'&lt;/th&gt;'</span>;</span><br><span class="line">                &#125;);</span><br><span class="line">                tableInnerHTML += <span class="string">'&lt;/tr&gt;&lt;thead&gt;&lt;tbody&gt;'</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                tableInnerHTML += <span class="string">'&lt;tr&gt;'</span>;</span><br><span class="line">                <span class="built_in">Array</span>.from(tableBody.rows[i].children).forEach(<span class="function">(<span class="params">td</span>) =&gt;</span> &#123;</span><br><span class="line">                    tableInnerHTML = tableInnerHTML + <span class="string">'&lt;td&gt;'</span> + td.innerHTML + <span class="string">'&lt;/td&gt;'</span>;</span><br><span class="line">                &#125;);</span><br><span class="line">                tableInnerHTML += <span class="string">'&lt;/tr&gt;'</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            i++;</span><br><span class="line">        &#125;</span><br><span class="line">        tableInnerHTML += <span class="string">'&lt;/tbody&gt;'</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (getExplorer() !== <span class="string">'Safari'</span> &amp;&amp; name.substr(<span class="number">-1</span>, <span class="number">4</span>) !== <span class="string">'.xls'</span>) &#123;</span><br><span class="line">        name += <span class="string">'.xls'</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (getExplorer() === <span class="string">'ie'</span>) &#123;</span><br><span class="line">        <span class="keyword">var</span> curTbl = table;</span><br><span class="line">        <span class="keyword">var</span> oXL = <span class="keyword">new</span> ActiveXObject(<span class="string">'Excel.Application'</span>);</span><br><span class="line">        <span class="keyword">var</span> oWB = oXL.Workbooks.Add();</span><br><span class="line">        <span class="keyword">var</span> xlsheet = oWB.Worksheets(<span class="number">1</span>);</span><br><span class="line">        <span class="keyword">var</span> sel = <span class="built_in">document</span>.body.createTextRange();</span><br><span class="line">        sel.moveToElementText(curTbl);</span><br><span class="line">        sel.select();</span><br><span class="line">        sel.execCommand(<span class="string">'Copy'</span>);</span><br><span class="line">        xlsheet.Paste();</span><br><span class="line">        oXL.Visible = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">var</span> fname = oXL.Application.GetSaveAsFilename(<span class="string">'Excel.xls'</span>, <span class="string">'Excel Spreadsheets (*.xls), *.xls'</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">            print(<span class="string">'Nested catch caught '</span> + e);</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            oWB.SaveAs(fname);</span><br><span class="line">            <span class="comment">// oWB.Close(savechanges = false);</span></span><br><span class="line">            oXL.Quit();</span><br><span class="line">            oXL = <span class="literal">null</span>;</span><br><span class="line">            idTmr = setInterval(Cleanup(), <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        tableToExcel(tableInnerHTML, aId, name);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Cleanup</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">window</span>.clearInterval(idTmr);</span><br><span class="line">    <span class="comment">// CollectGarbage();</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> tableToExcel = (<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> uri = <span class="string">'data:application/vnd.ms-excel;base64,'</span>;</span><br><span class="line">    <span class="keyword">let</span> template = <span class="string">'&lt;html&gt;&lt;head&gt;&lt;meta charset="UTF-8"&gt;&lt;/head&gt;&lt;body&gt;&lt;table&gt;&#123;table&#125;&lt;/table&gt;&lt;/body&gt;&lt;/html&gt;'</span>;</span><br><span class="line">    <span class="keyword">let</span> base64 = <span class="function"><span class="keyword">function</span> (<span class="params">s</span>) </span>&#123; <span class="keyword">return</span> <span class="built_in">window</span>.btoa(<span class="built_in">unescape</span>(<span class="built_in">encodeURIComponent</span>(s))); &#125;;</span><br><span class="line">    <span class="keyword">let</span> format = <span class="function"><span class="keyword">function</span> (<span class="params">s, c</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> s.replace(<span class="regexp">/&#123;(\w+)&#125;/g</span>, <span class="function"><span class="keyword">function</span> (<span class="params">m, p</span>) </span>&#123; <span class="keyword">return</span> c[p]; &#125;);</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params">table, aId, name</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">let</span> ctx = &#123;<span class="attr">worksheet</span>: name || <span class="string">'Worksheet'</span>, <span class="attr">table</span>: table&#125;;</span><br><span class="line">        <span class="built_in">document</span>.getElementById(aId).href = uri + base64(format(template, ctx));</span><br><span class="line">        <span class="built_in">document</span>.getElementById(aId).download = name;</span><br><span class="line">        <span class="built_in">document</span>.getElementById(aId).click();</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
+<p>我们一段一段讲：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">tranform</span> (<span class="params">table, aId, name</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> tableHead = table.children[<span class="number">0</span>];</span><br><span class="line">    <span class="keyword">let</span> tableBody = table.children[<span class="number">1</span>];</span><br><span class="line">    <span class="keyword">let</span> tableInnerHTML = <span class="string">'&lt;thead&gt;&lt;tr&gt;'</span>;</span><br><span class="line">    <span class="keyword">if</span> (table.children.length !== <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="keyword">let</span> len = tableBody.rows.length;</span><br><span class="line">        <span class="keyword">let</span> i = <span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">while</span> (i &lt; len) &#123;</span><br><span class="line">            <span class="keyword">if</span> (i === <span class="number">-1</span>) &#123;</span><br><span class="line">                <span class="built_in">Array</span>.from(tableHead.rows[<span class="number">0</span>].children).forEach(<span class="function">(<span class="params">th</span>) =&gt;</span> &#123;</span><br><span class="line">                    tableInnerHTML = tableInnerHTML + <span class="string">'&lt;th&gt;'</span> + th.innerHTML + <span class="string">'&lt;/th&gt;'</span>;</span><br><span class="line">                &#125;);</span><br><span class="line">                tableInnerHTML += <span class="string">'&lt;/tr&gt;&lt;thead&gt;&lt;tbody&gt;'</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                tableInnerHTML += <span class="string">'&lt;tr&gt;'</span>;</span><br><span class="line">                <span class="built_in">Array</span>.from(tableBody.rows[i].children).forEach(<span class="function">(<span class="params">td</span>) =&gt;</span> &#123;</span><br><span class="line">                    tableInnerHTML = tableInnerHTML + <span class="string">'&lt;td&gt;'</span> + td.innerHTML + <span class="string">'&lt;/td&gt;'</span>;</span><br><span class="line">                &#125;);</span><br><span class="line">                tableInnerHTML += <span class="string">'&lt;/tr&gt;'</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            i++;</span><br><span class="line">        &#125;</span><br><span class="line">        tableInnerHTML += <span class="string">'&lt;/tbody&gt;'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>函数 <code>transform</code> 传入三个参数，第一个就是 <code>table</code> 的 DOM 节点，第二个是下载按钮的 id，第三个是 下载的文件名。<br>由变量名称可以知道是在获取表头和表格的元素，然后循环，将表格的 html 存到字符串 <code>tableInnerHTML</code> 里面，之后要用到，其实，在循环那里完全可以一把梭这么写：<br><figure class="highlight pf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">let <span class="built_in">table</span>InnerHTML = <span class="built_in">table</span>Head.outerHTML+<span class="built_in">table</span>Body.outerHTML;</span><br></pre></td></tr></table></figure></p>
+<p>效果是一样的，如果我们一开始表格的结构变了，那我们也要改变这条语句，而第一种方式就比较通用一点。</p>
+<h2 id="IE处理"><a href="#IE处理" class="headerlink" title="IE处理"></a>IE处理</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> idTmr;</span><br><span class="line"><span class="keyword">if</span> (getExplorer() === <span class="string">'ie'</span>) &#123;</span><br><span class="line">        <span class="keyword">var</span> curTbl = table;</span><br><span class="line">        <span class="keyword">var</span> oXL = <span class="keyword">new</span> ActiveXObject(<span class="string">'Excel.Application'</span>);</span><br><span class="line">        <span class="keyword">var</span> oWB = oXL.Workbooks.Add();</span><br><span class="line">        <span class="keyword">var</span> xlsheet = oWB.Worksheets(<span class="number">1</span>);</span><br><span class="line">        <span class="keyword">var</span> sel = <span class="built_in">document</span>.body.createTextRange();</span><br><span class="line">        sel.moveToElementText(curTbl);</span><br><span class="line">        sel.select();</span><br><span class="line">        sel.execCommand(<span class="string">'Copy'</span>);</span><br><span class="line">        xlsheet.Paste();</span><br><span class="line">        oXL.Visible = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">var</span> fname = oXL.Application.GetSaveAsFilename(<span class="string">'Excel.xls'</span>, <span class="string">'Excel Spreadsheets (*.xls), *.xls'</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">            print(<span class="string">'Nested catch caught '</span> + e);</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            oWB.SaveAs(fname);</span><br><span class="line">            <span class="comment">// oWB.Close(savechanges = false);</span></span><br><span class="line">            oXL.Quit();</span><br><span class="line">            oXL = <span class="literal">null</span>;</span><br><span class="line">            idTmr = setInterval(Cleanup(), <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        tableToExcel(tableInnerHTML, aId, name);</span><br><span class="line">    &#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Cleanup</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">window</span>.clearInterval(idTmr);</span><br><span class="line">    <span class="comment">// CollectGarbage();</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其实就是调用 IE 的方法，生成 IE，这就不说了</p>
+<h2 id="其他浏览器处理"><a href="#其他浏览器处理" class="headerlink" title="其他浏览器处理"></a>其他浏览器处理</h2><figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">let tableToExcel = (<span class="name">function</span> () &#123;</span><br><span class="line">    let uri = 'data<span class="symbol">:application/vnd</span>.ms-excel<span class="comment">;base64,';</span></span><br><span class="line">    let template = '&lt;html&gt;&lt;head&gt;&lt;meta charset=<span class="string">"UTF-8"</span>&gt;&lt;/head&gt;&lt;body&gt;&lt;table&gt;&#123;table&#125;&lt;/table&gt;&lt;/body&gt;&lt;/html&gt;'<span class="comment">;</span></span><br><span class="line">    let base64 = function (<span class="name">s</span>) &#123; return window.btoa(<span class="name">unescape</span>(<span class="name">encodeURIComponent</span>(<span class="name">s</span>)))<span class="comment">; &#125;;</span></span><br><span class="line">    let format = function (<span class="name">s</span>, c) &#123;</span><br><span class="line">        return s.replace(<span class="name">/</span>&#123;(\w+)&#125;/g, function (<span class="name">m</span>, p) &#123; return c[p]<span class="comment">; &#125;);</span></span><br><span class="line">    &#125;<span class="comment">;</span></span><br><span class="line">    return function (<span class="name">table</span>, aId, name) &#123;</span><br><span class="line">        let ctx = &#123;worksheet: name || 'Worksheet', table: table&#125;<span class="comment">;</span></span><br><span class="line">        document.getElementById(<span class="name">aId</span>).href = uri + base64(<span class="name">format</span>(<span class="name">template</span>, ctx))<span class="comment">;</span></span><br><span class="line">        document.getElementById(<span class="name">aId</span>).download = name<span class="comment">;</span></span><br><span class="line">        document.getElementById(<span class="name">aId</span>).click()<span class="comment">;</span></span><br><span class="line">    &#125;<span class="comment">;</span></span><br><span class="line">&#125;)()<span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<p>一个立即执行函数，首先就是 <code>uri</code>，可以看到是 base64 的格式，然后 <code>template</code> 就是一个页面，里面的 <code>{table}</code> 就是我们上面生成的 <code>tableInnerHTML</code> ，用字符串的 <code>replace</code> 方法替换，然后把 <code>uri</code> 和 base64 连接，赋值给我们的链接，手动点击，就能下载了。</p>
+<h1 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h1> <figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://upload-images.jianshu.io/upload_images/5834506-d769e5d4f16bb52a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://upload-images.jianshu.io/upload_images/5834506-338383b9468ef671.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>可以看到，我们的文件已经下载下来了，由于是直接保存 html，所以 Excel 会警告，而且没有样式，如果想自己加样式，就在 <code>template</code> 那里自己写 <code>&lt;style&gt;</code> 样式。</p>
+<h1 id="拓展"><a href="#拓展" class="headerlink" title="拓展"></a>拓展</h1><p>有了 <code>table2excel</code> 那有没有 <code>table2img</code> 呢？当然有了，思路也是差不多，就是利用 <code>html2canvas</code> 这个插件，将 table 的 html 转成 canvas，然后 canvas 转成 图片。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <footer>
+        <a href="https://recallhyx.github.io">
+            <img src="/img/avatar.jpg" alt="Recall HYX">
+            Recall HYX
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://recallhyx.github.io/2018/07/11/前端导出excel/&title=《前端导出excel》 — Recall Hyx&pic=https://recallhyx.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://recallhyx.github.io/2018/07/11/前端导出excel/&title=《前端导出excel》 — Recall Hyx&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://recallhyx.github.io/2018/07/11/前端导出excel/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《前端导出excel》 — Recall Hyx&url=https://recallhyx.github.io/2018/07/11/前端导出excel/&via=https://recallhyx.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://recallhyx.github.io/2018/07/11/前端导出excel/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2018/07/14/webpack打包速度优化/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">webpack打包速度优化</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/06/22/解决iPhone拍照旋转/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">解决iPhone拍照旋转</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "gnMQ4bW3FRMELqY7UJSFCG2L-gzGzoHsz",
+            appKey: "8kUBso0hYLBcTE8e9h89D1Hc",
+            avatar: "mm",
+            placeholder: "Just go go",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Recall HYX &copy; 2017 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://recallhyx.github.io/2018/07/11/前端导出excel/&title=《前端导出excel》 — Recall Hyx&pic=https://recallhyx.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://recallhyx.github.io/2018/07/11/前端导出excel/&title=《前端导出excel》 — Recall Hyx&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://recallhyx.github.io/2018/07/11/前端导出excel/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《前端导出excel》 — Recall Hyx&url=https://recallhyx.github.io/2018/07/11/前端导出excel/&via=https://recallhyx.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://recallhyx.github.io/2018/07/11/前端导出excel/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACKElEQVR42u3aQW7DMAwFUd//0i7QVYHCynzSTWNxtAoMx+LTQhBJHQce5/dY//75ZP3+1Tu/n988ZMiQ8VjGuRzrUAiGhMXZl9+UIUPGAEbt02sG+T5fvhcxy5AhQwbYQGtbcGcJZMiQIYNPdrURcxJPkmXIkDGZQT7NB09WO/PKkCFjDuOuxsBf/P6H/oYMGTI+jHHeOsgSkJQ4nleGDBlbM9bJJw8rTU3JvLxJIEOGjL0Z7ynlr1NTvhCX8cuQIWMAI96hwbGPlNh4Me7FvDJkyNiaQTC1Ria/rkGWDB1eZciQsTWDp6C8rM/bkzx9bfVjZciQ8XAGSSnTVels4rVllSFDxt4MXjjjF7xqx8Hati5Dhow5jE4boP8O+VfQzpQhQ8ZGjHQ764RC/luspMmQIWNrRnoErF0jS4PjbYaDr4oMGTIey+AXsNIGQKedGW/NMmTI2JqRNh3TYyI60jVKfjJkyJjDSENJC/o83a19WYYMGRMY6YbLg65trzWeDBkyJjB48YunnWmDk19EizNsGTJkbMGohdg5jZIZg6aFDBkytmak9Ste4k/LcJ1IZMiQsSvjDEdrs8NNSr40MmTImMDo9ATTwhzfjmtvypAhY29G7YIXv4qRrmLtyChDhowJjLtC6VwsS5dbhgwZMjoHuDT5rKW1MmTIkEGC40/S4h1vncqQIWMOg1/P6h8B74LJkCFjDqNTy6qF1V+U21qYMmTI+HTGF4puaphlu8/CAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

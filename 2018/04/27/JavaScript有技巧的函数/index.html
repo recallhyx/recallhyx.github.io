@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-112417276-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>JavaScript有技巧的函数 | Recall Hyx | Your star</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#FFC107">
+    
+    
+    <meta name="keywords" content="javascript">
+    <meta name="description" content="前言JavaScript 有很多有技巧的函数，这篇文章是我自己的一个记录。 链式调用看一个例子吧，我们要实现一个函数 fun ，它有以下功能：1fun(1).add(1).min(2).num // 0 这是一个很典型的例子，用到了链式调用，其核心就是返回自己，即 return this，那么我们来实现这个函数吧：1234567891011function fun(num)&amp;#123;    th">
+<meta name="keywords" content="javascript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript有技巧的函数">
+<meta property="og:url" content="https://recallhyx.github.io/2018/04/27/JavaScript有技巧的函数/index.html">
+<meta property="og:site_name" content="Recall Hyx">
+<meta property="og:description" content="前言JavaScript 有很多有技巧的函数，这篇文章是我自己的一个记录。 链式调用看一个例子吧，我们要实现一个函数 fun ，它有以下功能：1fun(1).add(1).min(2).num // 0 这是一个很典型的例子，用到了链式调用，其核心就是返回自己，即 return this，那么我们来实现这个函数吧：1234567891011function fun(num)&amp;#123;    th">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-09-13T13:53:36.227Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JavaScript有技巧的函数">
+<meta name="twitter:description" content="前言JavaScript 有很多有技巧的函数，这篇文章是我自己的一个记录。 链式调用看一个例子吧，我们要实现一个函数 fun ，它有以下功能：1fun(1).add(1).min(2).num // 0 这是一个很典型的例子，用到了链式调用，其核心就是返回自己，即 return this，那么我们来实现这个函数吧：1234567891011function fun(num)&amp;#123;    th">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Recall HYX</h5>
+          <a href="mailto:quce.hu@qq.com" title="quce.hu@qq.com" class="mail">quce.hu@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                文章
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/recallhyx" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">JavaScript有技巧的函数</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">JavaScript有技巧的函数</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-04-27T12:56:10.000Z" itemprop="datePublished" class="page-time">
+  2018-04-27
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/前端/">前端</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#前言"><span class="post-toc-number">1.</span> <span class="post-toc-text">前言</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#链式调用"><span class="post-toc-number">2.</span> <span class="post-toc-text">链式调用</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#compose"><span class="post-toc-number">3.</span> <span class="post-toc-text">compose</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-JavaScript有技巧的函数"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">JavaScript有技巧的函数</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-04-27 20:56:10" datetime="2018-04-27T12:56:10.000Z"  itemprop="datePublished">2018-04-27</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/前端/">前端</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>JavaScript 有很多有技巧的函数，这篇文章是我自己的一个记录。</p>
+<h1 id="链式调用"><a href="#链式调用" class="headerlink" title="链式调用"></a>链式调用</h1><p>看一个例子吧，我们要实现一个函数 <code>fun</code> ，它有以下功能：<br><figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span>(1).<span class="title">add</span></span>(<span class="number">1</span>).min(<span class="number">2</span>).num /<span class="regexp">/ 0</span></span><br></pre></td></tr></table></figure></p>
+<p>这是一个很典型的例子，用到了链式调用，其核心就是返回自己，即 <code>return this</code>，那么我们来实现这个函数吧：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">function <span class="function"><span class="title">fun</span><span class="params">(num)</span></span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.num = num;</span><br><span class="line">    <span class="keyword">this</span>.add = function(num)&#123;</span><br><span class="line">        <span class="keyword">this</span>.num+=num;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>; <span class="comment">// 核心</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">this</span>.min = function (num)&#123;</span><br><span class="line">        <span class="keyword">this</span>.num-=num;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>; <span class="comment">// 核心</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>然后我们要怎么用这个函数呢？如果我们直接链式调用：<br><figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span>(1).<span class="title">add</span></span>(<span class="number">1</span>).min(<span class="number">2</span>);</span><br><span class="line">/<span class="regexp">/ Uncaught TypeError: Cannot read property 'add' of undefined</span></span><br></pre></td></tr></table></figure></p>
+<p>只有对象才能链式调用，jquery的 <code>$</code> 其实是返回一个对象：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">  a:&#123;</span><br><span class="line">    b:&#123;</span><br><span class="line">      <span class="function"><span class="keyword">fun</span> :<span class="title">function</span><span class="params">()</span></span>&#123;console.log(<span class="string">'b'</span>);&#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">obj.a.b.<span class="keyword">fun</span>(); <span class="comment">// b</span></span><br></pre></td></tr></table></figure></p>
+<p>既然如此，那么我们就 <code>new</code> 一下：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">function <span class="function"><span class="title">fun</span><span class="params">(num)</span></span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.num = num;</span><br><span class="line">    <span class="keyword">this</span>.add = function(num)&#123;</span><br><span class="line">        <span class="keyword">this</span>.num+=num;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>; <span class="comment">// 核心</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">this</span>.min = function (num)&#123;</span><br><span class="line">        <span class="keyword">this</span>.num-=num;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>; <span class="comment">// 核心</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> <span class="function"><span class="keyword">fun</span> = new <span class="title">fun</span><span class="params">(<span class="number">1</span>)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">fun</span>.<span class="title">add</span><span class="params">(<span class="number">1</span>)</span></span>.min(<span class="number">2</span>).num; <span class="comment">// 0</span></span><br></pre></td></tr></table></figure></p>
+<p>这样和我们一开始 <code>fun(1).add(1).min(2).num</code> 的调用方式差了一点，既然是要用对象，那我们用一个函数包起来不就行了嘛：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">function Fun(num)&#123;</span><br><span class="line">    <span class="keyword">this</span>.num = num;</span><br><span class="line">    <span class="keyword">this</span>.add = function(num)&#123;</span><br><span class="line">        <span class="keyword">this</span>.num+=num;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>; <span class="comment">// 核心</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">this</span>.min = function (num)&#123;</span><br><span class="line">        <span class="keyword">this</span>.num-=num;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>; <span class="comment">// 核心</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">function <span class="function"><span class="title">fun</span><span class="params">(num)</span></span>&#123;</span><br><span class="line">  <span class="keyword">return</span> new Fun(num);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="title">fun</span><span class="params">(<span class="number">1</span>)</span></span>.add(<span class="number">1</span>).min(<span class="number">2</span>).num; <span class="comment">// 0</span></span><br></pre></td></tr></table></figure></p>
+<p>这就是完整版的代码了。</p>
+<h1 id="compose"><a href="#compose" class="headerlink" title="compose"></a>compose</h1><p>还是来看一道题 ：<br><figure class="highlight llvm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">实现一个 compose 函数，它接受任意多个函数作为参数（这些函数都只接受一个参数），然后 compose 返回的也是一个函数，达到以下的效果：</span><br><span class="line">const operate = compose(div<span class="number">2</span>, <span class="keyword">mul</span><span class="number">3</span>, <span class="keyword">add</span><span class="number">1</span>, <span class="keyword">add</span><span class="number">1</span>)</span><br><span class="line">operate(<span class="number">0</span>) // =&gt; 相当于 div<span class="number">2</span>(<span class="keyword">mul</span><span class="number">3</span>(<span class="keyword">add</span><span class="number">1</span>(<span class="keyword">add</span><span class="number">1</span>(<span class="number">0</span>))))</span><br><span class="line">operate(<span class="number">2</span>) // =&gt; 相当于 div<span class="number">2</span>(<span class="keyword">mul</span><span class="number">3</span>(<span class="keyword">add</span><span class="number">1</span>(<span class="keyword">add</span><span class="number">1</span>(<span class="number">2</span>))))</span><br></pre></td></tr></table></figure></p>
+<p>我们直接看怎么实现的：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> compose = <span class="function">(<span class="params">...fns</span>) =&gt;</span> fns.reduce(<span class="function">(<span class="params">f, g</span>) =&gt;</span> (...args) =&gt; f(g(...args)));</span><br><span class="line"><span class="keyword">var</span> add1 = <span class="function"><span class="params">x</span> =&gt;</span> x+<span class="number">1</span>;</span><br><span class="line"><span class="keyword">var</span> mul3  = <span class="function"><span class="params">x</span>=&gt;</span> x*<span class="number">3</span>;</span><br><span class="line"><span class="keyword">var</span> div2 = <span class="function"><span class="params">x</span>=&gt;</span> x/<span class="number">2</span>;</span><br><span class="line"><span class="keyword">var</span> operate = compose(div2,mul3,add1,add1);</span><br><span class="line">operate(<span class="number">0</span>); <span class="comment">// 3</span></span><br><span class="line">operate(<span class="number">2</span>); <span class="comment">// 6</span></span><br></pre></td></tr></table></figure></p>
+<p>使用 <code>Array.reduce()</code> 和 ES6 的 <code>rest</code>参数，执行从右向左的函数组合。最后一个 (最右边) 的函数可以接受一个或多个参数，其余的函数必须是一元的。<br>如果觉得很难看懂的话，我们把箭头函数改成 <code>function</code>：<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> compose2 = <span class="function"><span class="keyword">function</span> <span class="params">(<span class="rest_arg">...fns</span>)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> fns.reduce(<span class="function"><span class="keyword">function</span> <span class="params">(f,g)</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="function"><span class="keyword">function</span><span class="params">(<span class="rest_arg">...args</span>)</span></span>&#123;</span><br><span class="line">            <span class="keyword">return</span> f(g(...args));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> add1 = x =&gt; x+<span class="number">1</span>;</span><br><span class="line"><span class="keyword">var</span> mul3  = x=&gt; x*<span class="number">3</span>;</span><br><span class="line"><span class="keyword">var</span> div2 = x=&gt; x/<span class="number">2</span>;</span><br><span class="line"><span class="keyword">var</span> operate = compose(div2,mul3,add1,add1);</span><br><span class="line">operate(<span class="number">0</span>); <span class="comment">// 3</span></span><br></pre></td></tr></table></figure></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <footer>
+        <a href="https://recallhyx.github.io">
+            <img src="/img/avatar.jpg" alt="Recall HYX">
+            Recall HYX
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://recallhyx.github.io/2018/04/27/JavaScript有技巧的函数/&title=《JavaScript有技巧的函数》 — Recall Hyx&pic=https://recallhyx.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://recallhyx.github.io/2018/04/27/JavaScript有技巧的函数/&title=《JavaScript有技巧的函数》 — Recall Hyx&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://recallhyx.github.io/2018/04/27/JavaScript有技巧的函数/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JavaScript有技巧的函数》 — Recall Hyx&url=https://recallhyx.github.io/2018/04/27/JavaScript有技巧的函数/&via=https://recallhyx.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://recallhyx.github.io/2018/04/27/JavaScript有技巧的函数/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2018/05/14/nextTick/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">理解nextTick</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/04/19/JavaScript一些思考/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">JavaScript一些思考</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "gnMQ4bW3FRMELqY7UJSFCG2L-gzGzoHsz",
+            appKey: "8kUBso0hYLBcTE8e9h89D1Hc",
+            avatar: "mm",
+            placeholder: "Just go go",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Recall HYX &copy; 2017 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://recallhyx.github.io/2018/04/27/JavaScript有技巧的函数/&title=《JavaScript有技巧的函数》 — Recall Hyx&pic=https://recallhyx.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://recallhyx.github.io/2018/04/27/JavaScript有技巧的函数/&title=《JavaScript有技巧的函数》 — Recall Hyx&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://recallhyx.github.io/2018/04/27/JavaScript有技巧的函数/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JavaScript有技巧的函数》 — Recall Hyx&url=https://recallhyx.github.io/2018/04/27/JavaScript有技巧的函数/&via=https://recallhyx.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://recallhyx.github.io/2018/04/27/JavaScript有技巧的函数/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACsUlEQVR42u3awW4iQQwE0Pz/T2evK2WZVNndgpUeJxQY6NdIPU7ZX1/x4/uvx8+/v3r/z2tfvX/27cceeHh4eIuLXy3leYnJO9u/tOt5uQV4eHh413j54Z4c1s8bkVz7/Gn5tXh4eHifw7txbc7Gw8PD+794+dec2iA8PDy8z+Ql//znGWkby+bRw8WsBQ8PDy/m5V2kz3l+pb+Hh4eHt+6q71tQeWibHOv1OvHw8PAu8PL20iyweD7i9+0xPDw8vHfx8qbULHTYfPImOMbDw8O7wWvbV8nzvLDOl74KI/Dw8PAu8GYhQr6g5KaSF9B5MIGHh4d3g9cOObVBw2yMoN2+6LaBh4eHd4jXhq1tqT17ddY8K2a78PDw8Ba8WWsqP9Dzz2lXUt8e8PDw8A7xNjeG9ovzQ78dLBjORODh4eEd4s0igP1SroQXeHh4eNd4eclbZ8NlZ39zKyqaXnh4eHhHebNm2H4Cqm1uDccF8PDw8A7x2gBiH1jM2mx5If6PmTI8PDy8a7yzza22BM+vjQYR8PDw8C7wNotOCujZIFf+vUWhj4eHh3eIl8cK+ZBBEjokUUL76i+/GB4eHt413j4+aOPafKPbiAQPDw/vBi+JA9o21YFFjJpeUemPh4eHt+bNFp1ErnlRfmpThpMReHh4eJOzvR4/ncUN90a4it8QDw8Pb83Ly9bnLZg1+Nt22jBrwcPDwzvKuzfw1IbCs7ZcvUN4eHh4a953+WhHrPJtmq32lyIbDw8P7wJvX9TOItp2NKHdRDw8PLzbvM3IVDun0JbL+8AXDw8P7x6vHSDYBLKzcHbWEsPDw8N7L28fKCTH/SwWebkqPDw8vLfy2jig3aB8lKEIcPHw8PCu8ZIwIjma2+J7trn5yvHw8PBu8GZZ6AbTtsE2QTMeHh7eUd4fLxK7YEp/9BgAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

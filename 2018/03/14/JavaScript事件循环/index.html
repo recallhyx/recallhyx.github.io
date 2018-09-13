@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-112417276-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>JavaScript事件循环 | Recall Hyx | Your star</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#FFC107">
+    
+    
+    <meta name="keywords" content="javascript">
+    <meta name="description" content="引入例子先来个例子：123456setTimeout(function () &amp;#123;    console.log(1);&amp;#125;, 0);console.log(2);//2//1 我们都知道，调用 setTimeout 时，会把函数参数，放到事件队列中，等主程序运行完，再调用。所以会先输出2再输出1。不过 setTimeout 第二个参数是延迟多少秒，都会放到事件队列。 那我们再来看">
+<meta name="keywords" content="javascript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript事件循环">
+<meta property="og:url" content="https://recallhyx.github.io/2018/03/14/JavaScript事件循环/index.html">
+<meta property="og:site_name" content="Recall Hyx">
+<meta property="og:description" content="引入例子先来个例子：123456setTimeout(function () &amp;#123;    console.log(1);&amp;#125;, 0);console.log(2);//2//1 我们都知道，调用 setTimeout 时，会把函数参数，放到事件队列中，等主程序运行完，再调用。所以会先输出2再输出1。不过 setTimeout 第二个参数是延迟多少秒，都会放到事件队列。 那我们再来看">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5834506-2482a71f0144a75b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-09-13T13:53:36.226Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JavaScript事件循环">
+<meta name="twitter:description" content="引入例子先来个例子：123456setTimeout(function () &amp;#123;    console.log(1);&amp;#125;, 0);console.log(2);//2//1 我们都知道，调用 setTimeout 时，会把函数参数，放到事件队列中，等主程序运行完，再调用。所以会先输出2再输出1。不过 setTimeout 第二个参数是延迟多少秒，都会放到事件队列。 那我们再来看">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/5834506-2482a71f0144a75b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Recall HYX</h5>
+          <a href="mailto:quce.hu@qq.com" title="quce.hu@qq.com" class="mail">quce.hu@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                文章
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/recallhyx" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">JavaScript事件循环</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">JavaScript事件循环</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-03-14T07:48:33.000Z" itemprop="datePublished" class="page-time">
+  2018-03-14
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/前端/">前端</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#引入例子"><span class="post-toc-number">1.</span> <span class="post-toc-text">引入例子</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#事件循环"><span class="post-toc-number">2.</span> <span class="post-toc-text">事件循环</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#事件循环（Event-Loop）-规范"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">事件循环（Event Loop） 规范</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#工作和工作队列（Jobs-and-Job-Queues）-规范"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">工作和工作队列（Jobs and Job Queues） 规范</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#task（macro-task）和micro-task"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">task（macro-task）和micro-task</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#解释"><span class="post-toc-number">3.</span> <span class="post-toc-text">解释</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-JavaScript事件循环"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">JavaScript事件循环</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-03-14 15:48:33" datetime="2018-03-14T07:48:33.000Z"  itemprop="datePublished">2018-03-14</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/前端/">前端</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="引入例子"><a href="#引入例子" class="headerlink" title="引入例子"></a>引入例子</h2><p>先来个例子：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">setTimeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">1</span>);</span><br><span class="line">&#125;, <span class="number">0</span>);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">2</span>);</span><br><span class="line"><span class="comment">//2</span></span><br><span class="line"><span class="comment">//1</span></span><br></pre></td></tr></table></figure></p>
+<p>我们都知道，调用 <code>setTimeout</code> 时，会把函数参数，放到事件队列中，等主程序运行完，再调用。所以会先输出<code>2</code>再输出<code>1</code>。不过 <code>setTimeout</code> 第二个参数是延迟多少秒，都会放到事件队列。</p>
+<p>那我们再来看一个例子：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> promise = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve, reject</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'Promise'</span>);</span><br><span class="line">  resolve();</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">promise.then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'resolved.'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'Hi!'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//Promise</span></span><br><span class="line"><span class="comment">//Hi!</span></span><br><span class="line"><span class="comment">//resolved.</span></span><br></pre></td></tr></table></figure></p>
+<p>可以看到，先是输出了 <code>Promise</code>，再输出 <code>Hi!</code>，最后才输出 <code>resolved.</code>。这是因为，<code>Promise</code> 在声明的时候就会执行，而它的方法 <code>then</code> 指定的回调函数，将在当前脚本所有同步任务执行完才会执行，所以resolved最后输出。 当然了，如果把<code>Promise</code> 中的 <code>resolve()</code> 这个函数去掉，将不会改变 <code>Promise</code>的状态，也不会触发 <code>then</code> 方法，也就不会输出 <code>resolved</code>。</p>
+<p>如果我们将两个例子结合起来，会怎么样呢。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">setTimeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">1</span>);</span><br><span class="line">&#125;, <span class="number">0</span>);</span><br><span class="line"><span class="keyword">let</span> promise = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve, reject</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'2'</span>);</span><br><span class="line">  resolve();</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">promise.then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'3'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'4'</span>);</span><br></pre></td></tr></table></figure></p>
+<p>答案是输出<code>2 4 3 1</code>。有几个我们在上面的例子可以确定，因为 <code>Promise</code>一创建就会运行，所以会先输出<code>2</code>，<code>setTimeout</code> 和 <code>then</code>都是异步操作，就会放到事件队列，主线程输出<code>4</code>。那么问题来了，<code>setTimeout</code> 和 <code>then</code> 哪个先输出呢，这就引出了事件循环的概念。</p>
+<h2 id="事件循环"><a href="#事件循环" class="headerlink" title="事件循环"></a>事件循环</h2><p>浏览器（或者说JS引擎）执行JS的机制是基于事件循环。<br>由于JS是单线程，所以同一时间只能执行一个任务，其他任务就得排队，后续任务必须等到前一个任务结束才能开始执行。<br>为了避免因为某些长时间任务造成的无意义等待，JS引入了异步的概念，用另一个线程来管理异步任务。<br>同步任务直接在主线程队列中顺序执行，而异步任务会进入另一个任务队列，不会阻塞主线程。等到主线程队列空了（执行完了）的时候，就会去异步队列查询是否有可执行的异步任务了（异步任务通常进入异步队列之后还要等一些条件才能执行，如ajax请求、文件读写），如果某个异步任务可以执行了便加入主线程队列，以此循环。</p>
+<h3 id="事件循环（Event-Loop）-规范"><a href="#事件循环（Event-Loop）-规范" class="headerlink" title="事件循环（Event Loop） 规范"></a>事件循环（Event Loop） 规范</h3><p>1、每个浏览器环境，至多有一个<code>event loop</code>。<br>2、一个 <code>event loop</code> 可以有1个或多个任务队列（<code>task queue</code>） 。<br>3、一个 <code>task queue</code> 是一列有序的任务（<code>task</code>），用来做以下工作： <code>Events task</code>， <code>Parsing task</code>， <code>Callbacks task</code>， <code>Using a resource task</code>， <code>Reacting to DOM manipulation task</code> 等。<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://upload-images.jianshu.io/upload_images/5834506-2482a71f0144a75b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure></p>
+<p>每个 <code>task</code> 都有自己相关的文档（ <code>document</code>），比如一个 <code>task 在某个元素（</code>element<code>）的上下文中进入队列，那么它的</code>document<code>就是这个</code>element<code>的</code>document`。</p>
+<p>每个 <code>task</code> 定义时都有一个任务源（<code>task source</code>），从同一个 <code>task source</code> 来的 <code>task</code>必须放到同一个 <code>task queue</code>，从不同源来的则被添加到不同队列。</p>
+<p>每个(<code>task source</code>对应的) <code>task queue</code> 都保证自己队列的先进先出的执行顺序，但<code>event loop</code> 的每个循环（<code>turn</code>），是由浏览器决定从哪个<code>task source</code>挑选<code>task</code>。这允许浏览器为不同的<code>task source</code>设置不同的优先级，比如为用户交互设置更高优先级来使用户感觉流畅。</p>
+<h3 id="工作和工作队列（Jobs-and-Job-Queues）-规范"><a href="#工作和工作队列（Jobs-and-Job-Queues）-规范" class="headerlink" title="工作和工作队列（Jobs and Job Queues） 规范"></a>工作和工作队列（Jobs and Job Queues） 规范</h3><p>ES6规范里，新增了 <code>Jobs and Job Queues</code> 这一概念，它有点类似于上面提到的任务队列（<code>task queue</code>）<br>一个 Job Queue 是一个先进先出的队列。一个ECMAScript实现必须至少包含以下两个 Job Queue ：</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ScriptJobs</td>
+<td>Jobs that validate and evaluate ECMAScript Script and Module source text. See clauses 10 and 15.</td>
+</tr>
+<tr>
+<td>PromiseJobs</td>
+<td>Jobs that are responses to the settlement of a Promise (see 25.4).</td>
+</tr>
+</tbody>
+</table>
+<p>单个 <code>Job Queue</code> 中的 <code>PendingJob</code> 总是按序（先进先出）执行，但多个 <code>Job Queue</code> 可能会交错执行。<br>跟随PromiseJobs到25.4章节，可以看到 <a href="http://ecma-international.org/ecma-262/6.0/index.html#sec-performpromisethen" target="_blank" rel="noopener">PerformPromiseThen ( promise, onFulfilled, onRejected, resultCapability )</a> ：</p>
+<p>这里我们看到， <code>promise.then</code> 的执行其实是向 <code>PromiseJobs</code> 添加Job。</p>
+<h3 id="task（macro-task）和micro-task"><a href="#task（macro-task）和micro-task" class="headerlink" title="task（macro-task）和micro-task"></a>task（macro-task）和micro-task</h3><p><code>micro-task</code> 在 ES6 规范中称为 <code>Job</code>。 其次，<code>macro-task</code> 代指 <code>task</code>。</p>
+<p>有一个事件循环，但是任务队列可以有多个。<br>整个 script 代码，放在了 <code>macro-task queue</code> 中，<code>setTimeout</code> 也放入<code>macro-task queue</code>。<br>但是，<code>promise.then</code> 放到了另一个任务队列 <code>micro-task queue</code>中。<br>这两个任务队列执行顺序如下，取1个<code>macro-task queue</code> 中的 <code>task</code>，执行之。<br>然后把所有 <code>micro-task queue</code> 顺序执行完，再取 <code>macro-task queue</code> 中的下一个任务。</p>
+<h2 id="解释"><a href="#解释" class="headerlink" title="解释"></a>解释</h2><p>代码一开始执行时，所有这些代码在<code>macro-task queue</code> 中，取出来执行之。<br>后面遇到了 <code>setTimeout</code> ，又加入到<code>macro-task queue</code> 中，然后，遇到了 <code>Promise</code>新建后立即执行输出<code>2</code>, 然后，遇到了 <code>promise.then</code>，放入到了另一个队列<code>micro-task queue</code>，然后代码继续执行，输出 <code>4</code> 。<br>等整个 <code>execution context stack</code> 执行完后，下一步该取的是<code>micro-task queue</code> 中的任务了。<br>取出 <code>promise.then</code>，执行，输出<code>3</code>，<code>micro-task queue</code>为空，下一步取出 <code>marco-task queue</code> 中的 <code>setTimeout</code>，执行，输出 <code>1</code><br>所以最终的结果是 <code>2 4 3 1</code>。</p>
+<p>推荐一个视频<a href="https://2014.jsconf.eu/speakers/philip-roberts-what-the-heck-is-the-event-loop-anyway.html" target="_blank" rel="noopener">what-the-heck-is-the-event-loop-anyway</a></p>
+<p>里面讲的很详细，从同步讲到异步，还有图文讲解，英文的，要翻墙的。</p>
+<blockquote>
+<p>参考：<br><a href="https://www.zhihu.com/question/36972010" target="_blank" rel="noopener">Promise的队列与setTimeout的队列有何关联？</a><br><a href="https://segmentfault.com/q/1010000009811652" target="_blank" rel="noopener">promise和setTimeout执行顺序的疑惑</a><br><a href="https://www.tuicool.com/articles/MnY7N3a" target="_blank" rel="noopener">从Promise来看JavaScript中的Event Loop、Tasks和Microtasks</a></p>
+</blockquote>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <footer>
+        <a href="https://recallhyx.github.io">
+            <img src="/img/avatar.jpg" alt="Recall HYX">
+            Recall HYX
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://recallhyx.github.io/2018/03/14/JavaScript事件循环/&title=《JavaScript事件循环》 — Recall Hyx&pic=https://recallhyx.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://recallhyx.github.io/2018/03/14/JavaScript事件循环/&title=《JavaScript事件循环》 — Recall Hyx&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://recallhyx.github.io/2018/03/14/JavaScript事件循环/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JavaScript事件循环》 — Recall Hyx&url=https://recallhyx.github.io/2018/03/14/JavaScript事件循环/&via=https://recallhyx.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://recallhyx.github.io/2018/03/14/JavaScript事件循环/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2018/03/16/SCSS的一些笔记/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">SCSS的一些笔记</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/03/11/Vue-loader入门/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Vue-loader入门</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "gnMQ4bW3FRMELqY7UJSFCG2L-gzGzoHsz",
+            appKey: "8kUBso0hYLBcTE8e9h89D1Hc",
+            avatar: "mm",
+            placeholder: "Just go go",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Recall HYX &copy; 2017 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://recallhyx.github.io/2018/03/14/JavaScript事件循环/&title=《JavaScript事件循环》 — Recall Hyx&pic=https://recallhyx.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://recallhyx.github.io/2018/03/14/JavaScript事件循环/&title=《JavaScript事件循环》 — Recall Hyx&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://recallhyx.github.io/2018/03/14/JavaScript事件循环/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JavaScript事件循环》 — Recall Hyx&url=https://recallhyx.github.io/2018/03/14/JavaScript事件循环/&via=https://recallhyx.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://recallhyx.github.io/2018/03/14/JavaScript事件循环/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACMElEQVR42u3aS64iMRAEQO5/aWbLBpNZ5o2EHb1C0LgdvSi5Po9HfD1frvb+9b9ef22fUl8YGBg/y3gur3cPSDb6LK817MMTMTAwLmAkoTAhrUNnDs73hoGBgfHunjVy/a8kTGNgYGDsB9z8GJe8iHXgxsDAwGgTy1myOivP/UkujoGB8YOMvOr+/z//SX8DAwPjpxg7hftZoX+W6H54CgYGxtGMPMDNkEnKOgu4GBgY9zCS5LAOfBuFs7bx+UjqfBgYGEcwdlqPbcKZNxKKgQ8MDIwLGG1Lcn3P7EUUrcrkuIuBgXEQ41tbyQPo+vUNxywwMDCOZrQJZF4Im5X4Z0EZAwPjBkbbhmwf2a4WdTNe18HAwLiMkS/dbjoqnJXHVgwMjBsYeaZbL5SX9YNRjCT4YmBgnM1omwE7WWQ+KFbfiYGBcSijPa4lwxmzRLRlFzMjGBgYRzBmrcQZph0di5JnDAyMoxmz4+AsvCZFtzZAF+dTDAyMIxg7RflZKW3newwMjJsZs2GLr6Wj8TBHVHTDwMA4jpGU2JJwnL+OWUnuQ8DFwMA4mrHzOR/FmPGi8Q4MDIxDGc/ymg115VscUjEwMI5mtG3F2XbzpHQW6DEwMG5g5EF2/8HJaEVSsIvKbRgYGMcxvjXylTcGZse+t+tjYGBgbDcM8hXyw2gxM4KBgYFRhtR25aQYh4GBcQMjbwa0wxBtAtyOpmFgYNzAyFPH/QbkeqPfKuFhYGAcxPgH+l/wLkVwGE4AAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

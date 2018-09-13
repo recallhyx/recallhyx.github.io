@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-112417276-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>SCSS的一些笔记 | Recall Hyx | Your star</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#FFC107">
+    
+    
+    <meta name="keywords" content="css">
+    <meta name="description" content="安装基于webpack如果是在 vue-cli 项目中，可以使用以下命令安装12npm install node-sass --save-devnpm install sass-loader --save-dev vue-cli生成的项目，已经默认加入了处理sass的loader只需要在需要的地方加入lang=scss即可123&amp;lt;style lang=&apos;scss&apos; scope&amp;gt;...&amp;">
+<meta name="keywords" content="css">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SCSS的一些笔记">
+<meta property="og:url" content="https://recallhyx.github.io/2018/03/16/SCSS的一些笔记/index.html">
+<meta property="og:site_name" content="Recall Hyx">
+<meta property="og:description" content="安装基于webpack如果是在 vue-cli 项目中，可以使用以下命令安装12npm install node-sass --save-devnpm install sass-loader --save-dev vue-cli生成的项目，已经默认加入了处理sass的loader只需要在需要的地方加入lang=scss即可123&amp;lt;style lang=&apos;scss&apos; scope&amp;gt;...&amp;">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5834506-e887e3e9ca227aa9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5834506-9d0c210043e1aaaf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5834506-919d412a5ab58a0d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-09-13T13:53:36.229Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SCSS的一些笔记">
+<meta name="twitter:description" content="安装基于webpack如果是在 vue-cli 项目中，可以使用以下命令安装12npm install node-sass --save-devnpm install sass-loader --save-dev vue-cli生成的项目，已经默认加入了处理sass的loader只需要在需要的地方加入lang=scss即可123&amp;lt;style lang=&apos;scss&apos; scope&amp;gt;...&amp;">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/5834506-e887e3e9ca227aa9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Recall HYX</h5>
+          <a href="mailto:quce.hu@qq.com" title="quce.hu@qq.com" class="mail">quce.hu@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                文章
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/recallhyx" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">SCSS的一些笔记</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">SCSS的一些笔记</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-03-16T06:34:56.000Z" itemprop="datePublished" class="page-time">
+  2018-03-16
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/前端/">前端</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#安装"><span class="post-toc-number">1.</span> <span class="post-toc-text">安装</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#基于webpack"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">基于webpack</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#不是基于webpack"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">不是基于webpack</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#SCSS-介绍"><span class="post-toc-number">2.</span> <span class="post-toc-text">SCSS 介绍</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#SCSS-特性"><span class="post-toc-number">3.</span> <span class="post-toc-text">SCSS 特性</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#变量"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">变量</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#嵌套"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">嵌套</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#混合器"><span class="post-toc-number">3.3.</span> <span class="post-toc-text">混合器</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#继承"><span class="post-toc-number">3.4.</span> <span class="post-toc-text">继承</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#导入SCSS"><span class="post-toc-number">3.5.</span> <span class="post-toc-text">导入SCSS</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-SCSS的一些笔记"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">SCSS的一些笔记</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-03-16 14:34:56" datetime="2018-03-16T06:34:56.000Z"  itemprop="datePublished">2018-03-16</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/前端/">前端</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="基于webpack"><a href="#基于webpack" class="headerlink" title="基于webpack"></a>基于webpack</h3><p>如果是在 vue-cli 项目中，可以使用以下命令安装<br><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install <span class="keyword">node</span><span class="title">-sass</span> --save-dev</span><br><span class="line">npm install sass-loader --save-dev</span><br></pre></td></tr></table></figure></p>
+<p>vue-cli生成的项目，已经默认加入了处理sass的loader<br>只需要在需要的地方加入<code>lang=scss</code>即可<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">lang</span>=<span class="string">'scss'</span> <span class="attr">scope</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">...</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="不是基于webpack"><a href="#不是基于webpack" class="headerlink" title="不是基于webpack"></a>不是基于webpack</h3><p>按照(官网教程)[<a href="https://www.sass.hk/install/]，手动把" target="_blank" rel="noopener">https://www.sass.hk/install/]，手动把</a> <code>scss</code> 编译成 <code>css</code> 文件，然后自己引入。</p>
+<h2 id="SCSS-介绍"><a href="#SCSS-介绍" class="headerlink" title="SCSS 介绍"></a>SCSS 介绍</h2><p>Sass 有两种语法规则(<code>syntaxes</code>),目前新的语法规则（从 Sass 3开始）被称为 “SCSS”( 时髦的css（Sassy CSS）),它是 css3 语法的的拓展级，就是说每一个语法正确的 CSS3 文件也是合法的 SCSS 文件，SCSS 文件使用 <code>.scss</code> 作为拓展名。第二种语法别成为缩进语法（或者 Sass），它受到了 Haml 的简洁精炼的启发，它是为了人们可以用和 css 相近的但是更精简的方式来书写 css 而诞生的。它没有括号，分号，它使用 行缩进 的方式来指定 css 块，虽然 sass 不是最原始的语法，但是缩进语法将继续被支持，在缩进语法的文件以 <code>.sass</code> 为拓展名。<br>所以 SCSS 是 Sass 的其中一种语法规则而已，即 SCSS 是 Sass 的子集</p>
+<h2 id="SCSS-特性"><a href="#SCSS-特性" class="headerlink" title="SCSS 特性"></a>SCSS 特性</h2><p>SCSS 加入了很多特性，例如，变量，嵌套，类似函数，继承，混合器，一切都是为了在写 css 的时候，不大量重复代码，注意，这只是在写的时候省去了重复的工作，滥用 SCSS ，会导致编译后的 css 文件过大，降低网站加载速度。下面介绍一下 SCSS 的特性。</p>
+<h3 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h3><p>声明一个变量：<code>$div-color:#F90</code> 以<code>$</code>符开头，后面是变量名，之后跟一个 <code>:</code> ，然后赋值，我们甚至可以用空格隔开多个值，就像我们原本写 css 那样：<code>$div-border:1px solid black</code>。然后我们就可以使用这个变量了<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$div</span>-<span class="attribute">color</span>:<span class="number">#F90</span></span><br><span class="line"><span class="selector-tag">div</span> &#123;</span><br><span class="line">  <span class="attribute">color</span>: <span class="variable">$div</span>-color;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>与 CSS 属性不同，变量可以在 css 规则块定义之外存在。当变量定义在 css 规则块内，那么该变量只能在此规则块内使用。<br><figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$nav-color</span>: <span class="number">#F90</span>;</span><br><span class="line"><span class="selector-tag">nav</span> &#123;</span><br><span class="line">  <span class="variable">$width</span>: <span class="number">100px</span>;</span><br><span class="line">  <span class="attribute">width</span>: <span class="variable">$width</span>;</span><br><span class="line">  <span class="attribute">color</span>: <span class="variable">$nav-color</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//编译后</span></span><br><span class="line"><span class="selector-tag">nav</span> &#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">100px</span>;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#F90</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在这段代码中，<code>$nav-color</code> 这个变量定义在了规则块外边，所以在这个样式表中都可以像 <code>nav</code> 规则块那样引用它。<code>$width</code> 这个变量定义在了 <code>nav</code> 的 <code>{ }</code> 规则块内，所以它只能在 <code>nav</code> 规则块 内使用。这意味着是你可以在样式表的其他地方定义和使用 <code>$width</code> 变量，不会对这里造成影响。<br>我们完全可以嵌套定义一个变量：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$highlight</span>-<span class="attribute">color</span>: <span class="number">#F90</span>;</span><br><span class="line"><span class="variable">$highlight</span>-<span class="attribute">border</span>: <span class="number">1px</span> solid <span class="variable">$highlight</span>-color;</span><br><span class="line"><span class="selector-class">.selected</span> &#123;</span><br><span class="line">  <span class="attribute">border</span>: <span class="variable">$highlight</span>-border;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//编译后</span></span><br><span class="line"><span class="selector-class">.selected</span> &#123;</span><br><span class="line">  <span class="attribute">border</span>: <span class="number">1px</span> solid <span class="number">#F90</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这里，<code>$highlight-border</code> 变量的声明中使用了 <code>$highlight-color</code> 这个变量。产生的效 果就跟你直接为 <code>border</code> 属性设置了一个 <code>1px $highlight-color solid</code> 的值是一样的。<br>对于变量名，推荐用 <code>-</code> 连接符而不是 <code>_</code>，虽然这两个东西 SCSS 都会认为是同一个东西：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$link</span>-<span class="attribute">color</span>: blue;</span><br><span class="line"><span class="selector-tag">a</span> &#123;</span><br><span class="line">  <span class="attribute">color</span>: <span class="variable">$link_color</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//编译后</span></span><br><span class="line"><span class="selector-tag">a</span> &#123;</span><br><span class="line">  <span class="attribute">color</span>: blue;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>但是用 <code>-</code> 连接符连接更接近我们原本的 CSS 写法。</p>
+<h3 id="嵌套"><a href="#嵌套" class="headerlink" title="嵌套"></a>嵌套</h3><p>有了嵌套，我们可以不用重复大段代码，而且可读性更高了：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#content</span> &#123;</span><br><span class="line">  <span class="selector-tag">article</span> &#123;</span><br><span class="line">    <span class="selector-tag">h1</span> &#123; <span class="attribute">color</span>: <span class="number">#333</span> &#125;</span><br><span class="line">    <span class="selector-tag">p</span> &#123; <span class="attribute">margin-bottom</span>: <span class="number">1.4em</span> &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="selector-tag">aside</span> &#123; <span class="attribute">background-color</span>: <span class="number">#EEE</span> &#125;</span><br><span class="line">&#125;</span><br><span class="line"> <span class="comment">/* 编译后 */</span></span><br><span class="line"><span class="selector-id">#content</span> <span class="selector-tag">article</span> <span class="selector-tag">h1</span> &#123; <span class="attribute">color</span>: <span class="number">#333</span> &#125;</span><br><span class="line"><span class="selector-id">#content</span> <span class="selector-tag">article</span> <span class="selector-tag">p</span> &#123; <span class="attribute">margin-bottom</span>: <span class="number">1.4em</span> &#125;</span><br><span class="line"><span class="selector-id">#content</span> <span class="selector-tag">aside</span> &#123; <span class="attribute">background-color</span>: <span class="number">#EEE</span> &#125;</span><br></pre></td></tr></table></figure></p>
+<p>SCSS 会一层一层解开嵌套，首先，把 <code>#content</code>（父级）这个 <code>id</code> 放到 <code>article</code> 选择器（子级）和 <code>aside</code> 选择器（子级）的前边：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#content</span> &#123;</span><br><span class="line">  <span class="selector-tag">article</span> &#123;</span><br><span class="line">    <span class="selector-tag">h1</span> &#123; <span class="attribute">color</span>: <span class="number">#333</span> &#125;</span><br><span class="line">    <span class="selector-tag">p</span> &#123; <span class="attribute">margin-bottom</span>: <span class="number">1.4em</span> &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="selector-id">#content</span> <span class="selector-tag">aside</span> &#123; <span class="attribute">background-color</span>: <span class="number">#EEE</span> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>然后，<code>#content article</code> 里边还有嵌套的规则，SCSS 重复一遍上边的步骤，把新的选择器添加到内嵌的选择器前边。<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">/* 编译后 */</span></span><br><span class="line"><span class="selector-id">#content</span> <span class="selector-tag">article</span> <span class="selector-tag">h1</span> &#123; <span class="attribute">color</span>: <span class="number">#333</span> &#125;</span><br><span class="line"><span class="selector-id">#content</span> <span class="selector-tag">article</span> <span class="selector-tag">p</span> &#123; <span class="attribute">margin-bottom</span>: <span class="number">1.4em</span> &#125;</span><br><span class="line"><span class="selector-id">#content</span> <span class="selector-tag">aside</span> &#123; <span class="attribute">background-color</span>: <span class="number">#EEE</span> &#125;</span><br></pre></td></tr></table></figure></p>
+<p>我们可以嵌套任意的 CSS，但是当我们想用伪类例如<code>:hover</code>时，就会出现一种情况<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">div</span> <span class="selector-tag">a</span> &#123;</span><br><span class="line">  <span class="attribute">color</span>: blue;</span><br><span class="line">  :hover &#123; <span class="attribute">color</span>: red &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这种嵌套，让 SCSS 解析后，会得到这样的结果：<code>color: red</code> 这条规则将会被应用到选择器 <code>div a :hover</code>，<code>div</code> 元素内链接的所有子元素在被 <code>hover</code> 时都会变成红色。<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://upload-images.jianshu.io/upload_images/5834506-e887e3e9ca227aa9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="鼠标悬浮在span标签" title="">
+                </div>
+                <div class="image-caption">鼠标悬浮在span标签</div>
+            </figure><br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://upload-images.jianshu.io/upload_images/5834506-9d0c210043e1aaaf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="鼠标悬浮在a标签" title="">
+                </div>
+                <div class="image-caption">鼠标悬浮在a标签</div>
+            </figure><br>这不是我们想要的结果，怎么办呢？解决之道为使用一个特殊的 SCSS 选择器，即父选择器。在使用嵌套规则时，父选择器能对于嵌套规则如何解开提供更好的控制。它就是一个简单的 <code>&amp;</code> 符号，且可以放在任何一个选择器可出现的地方。<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">div</span> <span class="selector-tag">a</span> &#123;</span><br><span class="line">  <span class="attribute">color</span>: blue;</span><br><span class="line">  &amp;:hover &#123; <span class="attribute">color</span>: red &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>当包含父选择器标识符的嵌套规则被打开时，它不会像后代选择器那样进行拼接，而是 <code>&amp;</code> 被父选择器直接替换：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">div</span> <span class="selector-tag">a</span> &#123; <span class="attribute">color</span>: blue &#125;</span><br><span class="line"><span class="selector-tag">div</span> <span class="selector-tag">a</span>:hover &#123; <span class="attribute">color</span>: red &#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://upload-images.jianshu.io/upload_images/5834506-919d412a5ab58a0d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>这样，整个链接都会匹配到规则。<br>父选择器标识符还有另外一种用法，你可以在父选择器之前添加选择器。举例来说，当用户在使用IE浏览器时，你会通过JavaScript在 <code>&lt;body&gt;</code> 标签上添加一个<code>ie</code>的类名，为这种情况编写特殊的样式如下：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#content</span> <span class="selector-tag">aside</span> &#123;</span><br><span class="line">  <span class="attribute">color</span>: red;</span><br><span class="line">  <span class="selector-tag">body</span><span class="selector-class">.ie</span> &amp; &#123; <span class="attribute">color</span>: green &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/*编译后*/</span></span><br><span class="line"><span class="selector-id">#content</span> <span class="selector-tag">aside</span> &#123;<span class="attribute">color</span>: red&#125;;</span><br><span class="line"><span class="selector-tag">body</span><span class="selector-class">.ie</span> <span class="selector-id">#content</span> <span class="selector-tag">aside</span> &#123; <span class="attribute">color</span>: green &#125;</span><br></pre></td></tr></table></figure></p>
+<p>当我们使用群组选择器的时候，用 css 语法，重复的代码就会变多<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.container</span> <span class="selector-tag">h1</span>, <span class="selector-class">.container</span> <span class="selector-tag">h2</span>, <span class="selector-class">.container</span> <span class="selector-tag">h3</span> &#123; <span class="attribute">margin-bottom</span>: .<span class="number">8em</span> &#125;</span><br></pre></td></tr></table></figure></p>
+<p>这时我们可以用 SCSS 的嵌套：<br><figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.<span class="class">container </span>&#123;</span><br><span class="line">  h1, h2, <span class="class">h3 </span>&#123;margin-bottom: <span class="number">.8</span>em&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>当我们使用子组合选择器和同层组合选择器：<code>&gt;</code> 、<code>+</code> 和 <code>~</code>的时候，也可以用嵌套的方式：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">article</span> &#123;</span><br><span class="line">  ~ <span class="selector-tag">article</span> &#123; <span class="attribute">border-top</span>: <span class="number">1px</span> dashed <span class="number">#ccc</span> &#125;</span><br><span class="line">  &gt; <span class="selector-tag">section</span> &#123; <span class="attribute">background</span>: <span class="number">#eee</span> &#125;</span><br><span class="line">  <span class="selector-tag">dl</span> &gt; &#123;</span><br><span class="line">    <span class="selector-tag">dt</span> &#123; <span class="attribute">color</span>: <span class="number">#333</span> &#125;</span><br><span class="line">    <span class="selector-tag">dd</span> &#123; <span class="attribute">color</span>: <span class="number">#555</span> &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="selector-tag">nav</span> + &amp; &#123; <span class="attribute">margin-top</span>: <span class="number">0</span> &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/*编译后*/</span></span><br><span class="line"><span class="selector-tag">article</span> ~ <span class="selector-tag">article</span> &#123; <span class="attribute">border-top</span>: <span class="number">1px</span> dashed <span class="number">#ccc</span> &#125;</span><br><span class="line"><span class="selector-tag">article</span> &gt; <span class="selector-tag">footer</span> &#123; <span class="attribute">background</span>: <span class="number">#eee</span> &#125;</span><br><span class="line"><span class="selector-tag">article</span> <span class="selector-tag">dl</span> &gt; <span class="selector-tag">dt</span> &#123; <span class="attribute">color</span>: <span class="number">#333</span> &#125;</span><br><span class="line"><span class="selector-tag">article</span> <span class="selector-tag">dl</span> &gt; <span class="selector-tag">dd</span> &#123; <span class="attribute">color</span>: <span class="number">#555</span> &#125;</span><br><span class="line"><span class="selector-tag">nav</span> + <span class="selector-tag">article</span> &#123; <span class="attribute">margin-top</span>: <span class="number">0</span> &#125;</span><br></pre></td></tr></table></figure></p>
+<p>在 SCSS 中，除了 CSS 选择器，属性也可以进行嵌套。尽管编写属性涉及的重复不像编写选择器那么糟糕，但是要反复写<code>border-style</code> <code>border-width</code> <code>border-color</code> 以及<code>border-*</code> 等也是非常烦人的。在 SCSS 中，你只需敲写一遍<code>border</code>：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">nav</span> &#123;</span><br><span class="line">  <span class="attribute">border</span>: &#123;</span><br><span class="line">  style: solid;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">1px</span>;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#ccc</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>嵌套属性的规则是这样的：把属性名从中划线-的地方断开，在根属性后边添加一个冒号<code>:</code>，紧跟一个 <code>{ }</code> 块，把子属性部分写在这个 <code>{ }</code> 块中。就像 css 选择器嵌套一样，SCSS 会把你的子属性一一解开，把根属性和子属性部分通过中划线 <code>-</code> 连接起来，最后生成的效果与你手动一遍遍写的css样式一样：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">nav</span> &#123;</span><br><span class="line">  <span class="attribute">border-style</span>: solid;</span><br><span class="line">  <span class="attribute">border-width</span>: <span class="number">1px</span>;</span><br><span class="line">  <span class="attribute">border-color</span>: <span class="number">#ccc</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="混合器"><a href="#混合器" class="headerlink" title="混合器"></a>混合器</h3><p>如果你的整个网站中有几处小小的样式类似（例如一致的颜色和字体），那么使用变量来统一处理这种情况是非常不错的选择。但是当你的样式变得越来越复杂，你需要大段大段的重用样式的代码，独立的变量就没办法应付这种情况了。你可以通过 SCSS 的混合器实现大段样式的重用。<br>混合器使用 <code>@mixin</code> 标识符定义。看上去很像其他的CSS <code>@</code>标识符，比如说<code>@media</code> 或者 <code>@font-face</code> 。这个标识符给一大段样式赋予一个名字，这样你就可以轻易地通过引用这个名字重用这段样式。下边的这段 SCSS 代码，定义了一个非常简单的混合器，目的是添加跨浏览器的圆角边框。<br><figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@<span class="keyword">mixin</span> rounded-corners &#123;</span><br><span class="line">  -moz-<span class="attribute">border-radius</span>: <span class="number">5px</span>;</span><br><span class="line">  -webkit-<span class="attribute">border-radius</span>: <span class="number">5px</span>;</span><br><span class="line">  <span class="attribute">border-radius</span>: <span class="number">5px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>然后就可以在你的样式表中通过 <code>@include</code> 来使用这个混合器，放在你希望的任何地方。<code>@include</code> 调用会把混合器中的所有样式提取出来放在 <code>@include</code> 被调用的地方。如果像下边这样写：<br><figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">notice &#123;</span><br><span class="line">  <span class="attribute">background-color</span>: green;</span><br><span class="line">  <span class="attribute">border</span>: <span class="number">2px</span> solid <span class="number">#00aa00</span>;</span><br><span class="line">  @<span class="keyword">include</span> rounded-corners;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//sass最终生成：</span></span><br><span class="line"><span class="selector-class">.notice</span> &#123;</span><br><span class="line">  <span class="attribute">background-color</span>: green;</span><br><span class="line">  <span class="attribute">border</span>: <span class="number">2px</span> solid <span class="number">#00aa00</span>;</span><br><span class="line">  -moz-<span class="attribute">border-radius</span>: <span class="number">5px</span>;</span><br><span class="line">  -webkit-<span class="attribute">border-radius</span>: <span class="number">5px</span>;</span><br><span class="line">  <span class="attribute">border-radius</span>: <span class="number">5px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在<code>.notice</code> 中的属性 <code>border-radius</code> <code>-moz-border-radius</code> 和<code>-webkit-border-radius</code>全部来自 <code>rounded-corners</code> 这个混合器。<br>正如我们一开始所说的，使用 SCSS 虽然会减少我们写代码的重复性工作，但是滥用 SCSS 会造成编译后的 CSS 文件过大，混合器就是一个很好的例子，它只是将代码引入，如果我们在哪里都用混合器，看起来我们写的文件小，其实编译后的文件比我们想象的还要大，这个时候我们就要知道何时使用混合器。</p>
+<blockquote>
+<p>判断一组属性是否应该组合成一个混合器，一条经验法则就是你能否为这个混合器想出一个好的名字。如果你能找到一个很好的短名字来描述这些属性修饰的样式，比如<code>rounded-corners</code> <code>fancy-font</code>或者<code>no-bullets</code>，那么往往能够构造一个合适的混合器。如果你找不到，这时候构造一个混合器可能并不合适。</p>
+</blockquote>
+<p>混合器并不一定总得生成相同的样式。可以通过在 <code>@include</code> 混合器时给混合器传参，来定制混合器生成的精确样式。当 <code>@include</code> 混合器时，参数其实就是可以赋值给css属性值的变量。如果你写过 <code>JavaScript</code> ，这种方式跟 <code>JavaScript</code> 的<code>function</code> 很像：<br><figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@<span class="keyword">mixin</span> link-colors(<span class="variable">$normal</span>, <span class="variable">$hover</span>, <span class="variable">$visited</span>) &#123;</span><br><span class="line">  <span class="attribute">color</span>: <span class="variable">$normal</span>;</span><br><span class="line">  &amp;:hover &#123; <span class="attribute">color</span>: <span class="variable">$hover</span>; &#125;</span><br><span class="line">  &amp;:visited &#123; <span class="attribute">color</span>: <span class="variable">$visited</span>; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>当混合器被 <code>@include</code> 时，你可以把它当作一个 css 函数来传参。如果你像下边这样写：<br><figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">a</span> &#123;</span><br><span class="line">  @<span class="keyword">include</span> link-colors(blue, red, green);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//Sass最终生成的是：</span></span><br><span class="line"><span class="selector-tag">a</span> &#123; <span class="attribute">color</span>: blue; &#125;</span><br><span class="line"><span class="selector-tag">a</span>:hover &#123; <span class="attribute">color</span>: red; &#125;</span><br><span class="line"><span class="selector-tag">a</span>:visited &#123; <span class="attribute">color</span>: green; &#125;</span><br></pre></td></tr></table></figure></p>
+<p>当你 <code>@include</code> 混合器时，有时候可能会很难区分每个参数是什么意思，参数之间是一个什么样的顺序。为了解决这个问题，SCSS 允许通过语法 <code>$name: value</code>的形式指定每个参数的值。这种形式的传参，参数顺序就不必再在乎了，只需要保证没有漏掉参数即可：<br><figure class="highlight puppet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">a</span> &#123;</span><br><span class="line">    @<span class="literal">include</span> <span class="literal">link</span>-colors(</span><br><span class="line">      <span class="variable">$normal</span>: blue,</span><br><span class="line">      <span class="variable">$visited</span>: green,</span><br><span class="line">      <span class="variable">$hover</span>: red</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>尽管给混合器加参数来实现定制很好，但是有时有些参数我们没有定制的需要，这时候也需要赋值一个变量就变成很痛苦的事情了。所以 SCSS 允许混合器声明时给参数赋默认值。<br>为了在 <code>@include</code> 混合器时不必传入所有的参数，我们可以给参数指定一个默认值。参数默认值使用 <code>$name: default-value</code>的声明形式，默认值可以是任何有效的css 属性值，甚至是其他参数的引用，如下代码：<br><figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">@<span class="keyword">mixin</span> link-colors(</span><br><span class="line">    <span class="variable">$normal</span>,</span><br><span class="line">    <span class="variable">$hover</span>: <span class="variable">$normal</span>,</span><br><span class="line">    <span class="variable">$visited</span>: <span class="variable">$normal</span></span><br><span class="line">  )</span><br><span class="line">&#123;</span><br><span class="line">  <span class="attribute">color</span>: <span class="variable">$normal</span>;</span><br><span class="line">  &amp;:hover &#123; <span class="attribute">color</span>: <span class="variable">$hover</span>; &#125;</span><br><span class="line">  &amp;:visited &#123; <span class="attribute">color</span>: <span class="variable">$visited</span>; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>如果像下边这样调用：<code>@include link-colors(red)</code> ， <code>$hover</code> 和 <code>$visited</code> 也会被自动赋值为<code>red</code>。</p>
+<h3 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h3><p>使用 SCSS 的时候，最后一个减少重复的主要特性就是选择器继承。基于Nicole Sullivan 面向对象的 css 的理念，选择器继承是说一个选择器可以继承为另一个选择器定义的所有样式。这个通过 <code>@extend</code> 语法实现，如下代码：<br><figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//通过选择器继承继承样式</span></span><br><span class="line"><span class="selector-class">.error</span> &#123;</span><br><span class="line">  <span class="attribute">border</span>: <span class="number">1px</span> solid red;</span><br><span class="line">  <span class="attribute">background-color</span>: <span class="number">#fdd</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.seriousError</span> &#123;</span><br><span class="line">  @<span class="keyword">extend</span> .error;</span><br><span class="line">  <span class="attribute">border-width</span>: <span class="number">3px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在上边的代码中，<code>.seriousError</code> 将会继承样式表中任何位置处为 <code>.error</code> 定义的所有样式。以 <code>class=&quot;seriousError&quot;</code>  修饰的 html元素最终的展示效果就好像是<code>class=&quot;seriousError error&quot;</code>。相关元素不仅会拥有一个 <code>3px</code> 宽的边框，而且这个边框将变成红色的，这个元素同时还会有一个浅红色的背景，因为这些都是在 <code>.error</code> 里边定义的样式。</p>
+<p><code>.seriousError</code> 不仅会继承 <code>.error</code> 自身的所有样式，任何跟 <code>.error</code> 有关的组合选择器样式也会被 <code>.seriousError</code>以组合选择器的形式继承，如下代码:<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//.seriousError从.error继承样式</span></span><br><span class="line"><span class="selector-class">.error</span> a&#123;  <span class="comment">//应用到.seriousError a</span></span><br><span class="line">  <span class="attribute">color</span>: red;</span><br><span class="line">  <span class="attribute">font-weight</span>: <span class="number">100</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-tag">h1</span><span class="selector-class">.error</span> &#123; <span class="comment">//应用到hl.seriousError</span></span><br><span class="line">  <span class="attribute">font-size</span>: <span class="number">1.2rem</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>如上所示，在<code>class=&quot;seriousError&quot;</code>的 <code>html</code> 元素内的超链接也会变成红色和粗体。</p>
+<p>那我们应该在什么时候使用继承呢？</p>
+<blockquote>
+<p>混合器主要用于展示性样式的重用，而类名用于语义化样式的重用。因为继承是基于类的（有时是基于其他类型的选择器），所以继承应该是建立在语义化的关系上。当一个元素拥有的类（比如说 <code>.seriousError</code>）表明它属于另一个类（比如说 <code>.error</code>），这时使用继承再合适不过了。</p>
+</blockquote>
+<p>关于 <code>@extend</code> 有两个要点你应该知道。</p>
+<ul>
+<li>跟混合器相比，继承生成的 css 代码相对更少。因为继承仅仅是重复选择器，而不会重复属性，所以使用继承往往比混合器生成的 css 体积更小。如果你非常关心你站点的速度，请牢记这一点。</li>
+<li>继承遵从 css 层叠的规则。当两个不同的 css 规则应用到同一个 html 元素上时，并且这两个不同的 css 规则对同一属性的修饰存在不同的值， css 层叠规则会决定应用哪个样式。相当直观：通常权重更高的选择器胜出，如果权重相同，定义在后边的规则胜出。</li>
+</ul>
+<p>混合器本身不会引起 css 层叠的问题，因为混合器把样式直接放到了 css 规则中，而继承存在样式层叠的问题。被继承的样式会保持原有定义位置和选择器权重不变。通常来说这并不会引起什么问题，但是知道这点总没有坏处。</p>
+<p>即使我们说继承相比混合器生成的 css 代码相对更少，但是我们也要小心一种情况：<br><figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">.foo .<span class="keyword">bar </span>&#123; @<span class="keyword">extend </span>.<span class="keyword">baz; </span>&#125;</span><br><span class="line">.<span class="keyword">bip </span>.<span class="keyword">baz </span>&#123; a: <span class="keyword">b; </span>&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在上边的例子中，SCSS 必须保证应用到 <code>.baz</code> 的样式同时也要应用到 <code>.foo .bar</code>（位于 <code>class=&quot;foo&quot;</code> 的元素内的 <code>class=&quot;bar&quot;</code> 的元素）。例子中有一条应用到<code>.bip .baz</code>（位于 <code>class=&quot;bip&quot;</code> 的元素内的 <code>class=&quot;baz&quot;</code> 的元素）的 css 规则。当这条规则应用到 <code>.foo .bar</code>时，可能存在三种情况，如下代码:<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 继承可能迅速变复杂 --&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- Case 1 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"foo"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"bip"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"bar"</span>&gt;</span>...<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- Case 2 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"bip"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"foo"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"bar"</span>&gt;</span>...<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- Case 3 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"foo bip"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"bar"</span>&gt;</span>...<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>为了应付这些情况，SCSS 必须生成三种选择器组合（仅仅是<code>.bip</code> <code>.foo</code> <code>.bar</code> 不能覆盖所有情况）。如果任何一条规则里边的后代选择器再长一点，sass需要考虑的情况就会更多。实际上sass并不总是会生成所有可能的选择器组合，即使是这样，选择器的个数依然可能会变得相当大，所以如果允许，尽可能避免这种用法。</p>
+<p>值得一提的是，只要你想，你完全可以放心地继承有后代选择器修饰规则的选择器，不管后代选择器多长，但有一个前提就是，不要用后代选择器去继承。</p>
+<h3 id="导入SCSS"><a href="#导入SCSS" class="headerlink" title="导入SCSS"></a>导入SCSS</h3><p>css有一个特别不常用的特性，即 <code>@import</code>规则，它允许在一个 css 文件中导入其他 css 文件。然而，后果是只有执行到 <code>@import</code> 时，浏览器才会去下载其他 css 文件，这导致页面加载起来特别慢。</p>
+<p>sass也有一个 <code>@import</code> 规则，但不同的是，sass的<code>@import</code> 规则在生成 css 文件时就把相关文件导入进来。这意味着所有相关的样式被归纳到了同一个 css 文件中，而无需发起额外的下载请求。另外，所有在被导入文件中定义的变量和混合器均可在导入文件中使用。</p>
+<p>当通过 <code>@import</code> 把 sass 样式分散到多个文件时，你通常只想生成少数几个 css 文件。那些专门为 <code>@import</code> 命令而编写的 sass 文件，并不需要生成对应的独立css文件，这样的 sass 文件称为局部文件。对此， sass 有一个特殊的约定来命名这些文件。</p>
+<p>此约定即，sass 局部文件的文件名以下划线开头。这样，sass 就不会在编译时单独编译这个文件输出 css ，而只把这个文件用作导入。当你 <code>@import</code> 一个局部文件时，还可以不写文件的全名，即省略文件名开头的下划线。举例来说，你想导入<code>themes/_night-sky.scss</code> 这个局部文件里的变量，你只需在样式表中写 <code>@import &quot;themes/night-sky&quot;;</code> 。</p>
+<p>局部文件可以被多个不同的文件引用。当一些样式需要在多个页面甚至多个项目中使用时，这非常有用。</p>
+<p>由于sass兼容原生的css，所以它也支持原生的CSS <code>@import</code> 。尽管通常在 sass 中使用 <code>@import</code> 时，sass 会尝试找到对应的 sass 文件并导入进来，但在下列三种情况下会生成原生的 CSS <code>@import</code>，尽管这会造成浏览器解析 css 时的额外下载：</p>
+<ul>
+<li>被导入文件的名字以 <code>.css</code> 结尾；</li>
+<li>被导入文件的名字是一个URL地址（比如<a href="http://www.sass.hk/css/css.css），由此可用谷歌字体API提供的相应服务；" target="_blank" rel="noopener">http://www.sass.hk/css/css.css），由此可用谷歌字体API提供的相应服务；</a></li>
+<li>被导入文件的名字是CSS的url()值。<br>这就是说，你不能用sass的 <code>@import</code> 直接导入一个原始的 css 文件，因为 sass 会认为你想用css原生的 <code>@import</code> 。但是，因为sass的语法完全兼容css，所以你可以把原始的css文件改名为.scss后缀，即可直接导入了。</li>
+</ul>
+<p>更多用法可以参考<a href="https://www.sass.hk/docs/" target="_blank" rel="noopener">官网</a></p>
+<blockquote>
+<p>参考：<a href="https://www.sass.hk/guide/" target="_blank" rel="noopener">Sass 中文网</a></p>
+</blockquote>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <footer>
+        <a href="https://recallhyx.github.io">
+            <img src="/img/avatar.jpg" alt="Recall HYX">
+            Recall HYX
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/css/">css</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://recallhyx.github.io/2018/03/16/SCSS的一些笔记/&title=《SCSS的一些笔记》 — Recall Hyx&pic=https://recallhyx.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://recallhyx.github.io/2018/03/16/SCSS的一些笔记/&title=《SCSS的一些笔记》 — Recall Hyx&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://recallhyx.github.io/2018/03/16/SCSS的一些笔记/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《SCSS的一些笔记》 — Recall Hyx&url=https://recallhyx.github.io/2018/03/16/SCSS的一些笔记/&via=https://recallhyx.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://recallhyx.github.io/2018/03/16/SCSS的一些笔记/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2018/03/18/前端三大框架数据流动和原理/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">前端三大框架数据流动和原理</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/03/14/JavaScript事件循环/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">JavaScript事件循环</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "gnMQ4bW3FRMELqY7UJSFCG2L-gzGzoHsz",
+            appKey: "8kUBso0hYLBcTE8e9h89D1Hc",
+            avatar: "mm",
+            placeholder: "Just go go",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Recall HYX &copy; 2017 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://recallhyx.github.io/2018/03/16/SCSS的一些笔记/&title=《SCSS的一些笔记》 — Recall Hyx&pic=https://recallhyx.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://recallhyx.github.io/2018/03/16/SCSS的一些笔记/&title=《SCSS的一些笔记》 — Recall Hyx&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://recallhyx.github.io/2018/03/16/SCSS的一些笔记/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《SCSS的一些笔记》 — Recall Hyx&url=https://recallhyx.github.io/2018/03/16/SCSS的一些笔记/&via=https://recallhyx.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://recallhyx.github.io/2018/03/16/SCSS的一些笔记/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACKElEQVR42u3aQW7DIBAF0Nz/0q7UVaXK9M9AohoeKytBNo/FNwN+veJ2fbef17/buOf4l7t/FzcMDIzHMq5hyx9/d8+7PlXY3dgwMDDOYVRDdoypXo+fO+6DgYGBkUTqOArzPhgYGBhrGXmZWu2PgYGBMVPEripQk2h+Yy2OgYHxQEbvYOAz128/38DAwPj3jKvYqoea1YOE5qgwMDC2ZuSb/kkZmfRPJiVP1+gBGBgYD2dUP7PIB7oqlKNyFwMD4wBGLzRXhXLviRgYGGcyqkHZ28qvLhALJxsYGBgHMHoBmk/BuJKubswteG9gYGA8hJGH3aqSNZmCpJTFwMA4k9HbXMs/0Vi1lotKaAwMjO0YvVIzX8DljF5Zi4GBsTcj/8Rh/mCgukBMohkDA+MExnwU9grd/J7V4MbAwNiPkQfu2iPJ6sSVvxnBwMDYjlEd3Ax7ZuF4e08MDIwDGPk2WT7ovDStTlxUi2NgYGzESOKvGoK97bleqYyBgXECoxqRM4Vr9TghPyjFwMA4h5EMdFx25oOrBnf0rsDAwNiUkZSm1RDsFcNJz+rEYWBg7MG4im0mKJPYrW7eYWBgnMCYWV9Ve1aPM5OSGAMD4xxGXr4mv+fHolXwHwtTDAyMAxi9kO1tus28AW57YmBgYLRCsHec2TvgxMDAwJj5/Kv6QUZ1PBgYGOcw8iI2X8D1JqJXTmNgYOzNmCkd82BN7pBs4TUBGBgYT2V8AdyNhJolURS+AAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

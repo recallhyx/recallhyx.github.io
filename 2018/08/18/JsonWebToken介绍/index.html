@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-112417276-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>JsonWebToken介绍 | Recall Hyx | Your star</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#FFC107">
+    
+    
+    <meta name="keywords" content="jwt">
+    <meta name="description" content="前言一开始了解这个东西以为挺厉害的，后来和 delveshal 针对很多场景聊过，对 jwt 有更深刻的认识。 JWT 是什么 JSON Web Token（JWT）是一个开放标准（RFC 7519），它定义了一种紧凑且独立的方式，可以在各方之间作为JSON对象安全地传输信息。此信息可以通过数字签名进行验证和信任。JWT可以使用秘密（使用HMAC算法）或使用RSA或ECDSA的公钥/私钥对进行签名">
+<meta name="keywords" content="jwt">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JsonWebToken介绍">
+<meta property="og:url" content="https://recallhyx.github.io/2018/08/18/JsonWebToken介绍/index.html">
+<meta property="og:site_name" content="Recall Hyx">
+<meta property="og:description" content="前言一开始了解这个东西以为挺厉害的，后来和 delveshal 针对很多场景聊过，对 jwt 有更深刻的认识。 JWT 是什么 JSON Web Token（JWT）是一个开放标准（RFC 7519），它定义了一种紧凑且独立的方式，可以在各方之间作为JSON对象安全地传输信息。此信息可以通过数字签名进行验证和信任。JWT可以使用秘密（使用HMAC算法）或使用RSA或ECDSA的公钥/私钥对进行签名">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5834506-18f7e6719dde507f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-09-13T13:53:36.228Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JsonWebToken介绍">
+<meta name="twitter:description" content="前言一开始了解这个东西以为挺厉害的，后来和 delveshal 针对很多场景聊过，对 jwt 有更深刻的认识。 JWT 是什么 JSON Web Token（JWT）是一个开放标准（RFC 7519），它定义了一种紧凑且独立的方式，可以在各方之间作为JSON对象安全地传输信息。此信息可以通过数字签名进行验证和信任。JWT可以使用秘密（使用HMAC算法）或使用RSA或ECDSA的公钥/私钥对进行签名">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/5834506-18f7e6719dde507f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Recall HYX</h5>
+          <a href="mailto:quce.hu@qq.com" title="quce.hu@qq.com" class="mail">quce.hu@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                文章
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/recallhyx" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">JsonWebToken介绍</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">JsonWebToken介绍</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-08-18T14:47:52.000Z" itemprop="datePublished" class="page-time">
+  2018-08-18
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/前端/">前端</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#前言"><span class="post-toc-number">1.</span> <span class="post-toc-text">前言</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#JWT-是什么"><span class="post-toc-number">2.</span> <span class="post-toc-text">JWT 是什么</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#结构"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">结构</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#头"><span class="post-toc-number">2.1.1.</span> <span class="post-toc-text">头</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#载荷"><span class="post-toc-number">2.1.2.</span> <span class="post-toc-text">载荷</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#签名"><span class="post-toc-number">2.1.3.</span> <span class="post-toc-text">签名</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#合在一起"><span class="post-toc-number">2.1.4.</span> <span class="post-toc-text">合在一起</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#JWT-怎么使用"><span class="post-toc-number">3.</span> <span class="post-toc-text">JWT 怎么使用</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#JWT-使用场景"><span class="post-toc-number">4.</span> <span class="post-toc-text">JWT 使用场景</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#优点"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">优点</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#缺点"><span class="post-toc-number">4.2.</span> <span class="post-toc-text">缺点</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-JsonWebToken介绍"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">JsonWebToken介绍</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-08-18 22:47:52" datetime="2018-08-18T14:47:52.000Z"  itemprop="datePublished">2018-08-18</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/前端/">前端</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>一开始了解这个东西以为挺厉害的，后来和 <a href="delveshal.github.io">delveshal</a> 针对很多场景聊过，对 jwt 有更深刻的认识。</p>
+<h1 id="JWT-是什么"><a href="#JWT-是什么" class="headerlink" title="JWT 是什么"></a>JWT 是什么</h1><blockquote>
+<p>JSON Web Token（JWT）是一个开放标准（<a href="https://tools.ietf.org/html/rfc7519" target="_blank" rel="noopener">RFC 7519</a>），它定义了一种紧凑且独立的方式，可以在各方之间作为JSON对象安全地传输信息。此信息可以通过数字签名进行验证和信任。JWT可以使用秘密（使用<strong>HMAC</strong>算法）或使用<strong>RSA</strong>或<strong>ECDSA</strong>的公钥/私钥对进行<strong>签名</strong>。</p>
+</blockquote>
+<h2 id="结构"><a href="#结构" class="headerlink" title="结构"></a>结构</h2><p>JWT 由三个部分组成（由点（.）分隔，它们是：</p>
+<ul>
+<li>头(header)</li>
+<li>载荷(payload)</li>
+<li>签名(signature)</li>
+</ul>
+<p>因此，JWT 通常如下所示。<br><code>xxxxx.yyyyy.zzzzz</code></p>
+<h3 id="头"><a href="#头" class="headerlink" title="头"></a>头</h3><p>通常由两部分组成：令牌的类型，即 JWT，以及正在使用的散列算法，例如 HMAC SHA256 或 RSA。<br>例如：<br> <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"alg"</span>: <span class="string">"HS256"</span>,</span><br><span class="line">  <span class="attr">"typ"</span>: <span class="string">"JWT"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>然后，这个JSON 被编码为 Base64Url，形成 JWT 的第一部分。</p>
+<h3 id="载荷"><a href="#载荷" class="headerlink" title="载荷"></a>载荷</h3><p>令牌的第二部分是载荷，其中包含声明。声明是关于实体（通常是用户）和其他数据的声明(claim)。JWT 规定了7个官方字段：<br><figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">iss</span> <span class="params">(issuer)</span>：签发人</span></span><br><span class="line"><span class="function"><span class="title">exp</span> <span class="params">(expiration time)</span>：过期时间</span></span><br><span class="line"><span class="function"><span class="title">sub</span> <span class="params">(subject)</span>：主题</span></span><br><span class="line"><span class="function"><span class="title">aud</span> <span class="params">(audience)</span>：受众</span></span><br><span class="line"><span class="function"><span class="title">nbf</span> <span class="params">(Not Before)</span>：生效时间</span></span><br><span class="line"><span class="function"><span class="title">iat</span> <span class="params">(Issued At)</span>：签发时间</span></span><br><span class="line"><span class="function"><span class="title">jti</span> <span class="params">(JWT ID)</span>：编号</span></span><br></pre></td></tr></table></figure></p>
+<p>除了官方字段，你还可以在这个部分定义私有字段：<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"sub"</span>: <span class="string">"1234567890"</span>,</span><br><span class="line">  <span class="attr">"name"</span>: <span class="string">"John Doe"</span>,</span><br><span class="line">  <span class="attr">"admin"</span>: <span class="literal">true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>然后，载荷经过 Base64Url 编码，形成 JWT 的第二部分。</p>
+<p>请注意，对于签名令牌，此信息虽然可以防止被篡改，但任何人都可以读取。除非加密，否则不要将秘密信息放在 JWT 的有效负载或头元素中。</p>
+<h3 id="签名"><a href="#签名" class="headerlink" title="签名"></a>签名</h3><p>要创建签名部分，必须采用编码标头，编码的载荷，秘钥(secret)，标头中指定的算法，并对其进行签名。</p>
+<p>例如，如果要使用 HMAC SHA256 算法，将按以下方式创建签名：<br><figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">HMACSHA256(</span><br><span class="line">  base64UrlEncode(<span class="name">header</span>) + <span class="string">"."</span> +</span><br><span class="line">  base64UrlEncode(<span class="name">payload</span>),</span><br><span class="line">  secret)</span><br></pre></td></tr></table></figure></p>
+<p>签名用于验证消息在此过程中未被更改，并且，在使用私钥签名的令牌的情况下，它还可以验证 JWT 的发件人是否是它所声称的人。</p>
+<h3 id="合在一起"><a href="#合在一起" class="headerlink" title="合在一起"></a>合在一起</h3><p>按照 <code>头.载荷.签名</code>，用 <code>.</code> 串联起来形成这种形式，最终是以下格式：<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://upload-images.jianshu.io/upload_images/5834506-18f7e6719dde507f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure></p>
+<p>当然，实际中没有分行，都是一行，只是为了容易看才写成这种形式。</p>
+<h1 id="JWT-怎么使用"><a href="#JWT-怎么使用" class="headerlink" title="JWT 怎么使用"></a>JWT 怎么使用</h1><p>在身份验证中，当用户使用其凭据成功登录时，将返回 JWT 。由于令牌是凭证，因此必须非常小心以防止出现安全问题。一般情况下，不应该将令牌保留的时间超过要求。</p>
+<p>每当用户想要访问受保护的路由或资源时，用户代理应该使用承载模式发送 JWT ，通常在  <code>Authorization</code> 头中。http 头的内容应如下所示：<br><code>Authorization: Bearer &lt;token&gt;</code><br>在某些情况下，这可以是无状态授权机制。服务器的受保护路由将检查 <code>Authorization</code> 标头中的有效 JWT ，如果存在，则允许用户访问受保护资源。如果 JWT 包含必要的数据，则可以减少查询数据库以进行某些操作的需要，尽管可能并非总是如此。</p>
+<p>如果在 <code>Authorization</code> 头中发送令牌，则跨域资源共享（<code>CORS</code>）将不会成为问题，因为它不使用 <code>cookie</code>。</p>
+<p>另一种做法是，跨域的时候，JWT 就放在 POST 请求的数据体里面。</p>
+<h1 id="JWT-使用场景"><a href="#JWT-使用场景" class="headerlink" title="JWT 使用场景"></a>JWT 使用场景</h1><p>要讲使用场景，就要从它的优缺点讲起</p>
+<h2 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h2><ul>
+<li>体积小，因而传输速度快</li>
+<li>传输方式多样，可以通过URL/POST参数/HTTP头部等方式传输</li>
+<li>严格的结构化。它自身（在 payload 中）就包含了所有与用户相关的验证消息，如用户可访问路由、访问有效期等信息，服务器无需再去连接数据库验证信息的有效性，并且 payload 支持为你的应用而定制化。</li>
+<li>支持跨域验证，可以应用于单点登录。</li>
+</ul>
+<h2 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h2><ul>
+<li>Token有长度限制</li>
+<li>Token不能撤销</li>
+<li>需要token有失效时间限制(exp)</li>
+</ul>
+<p>有了以上的优点缺点的对比，就知道 JWT 使用场景：它适合用作单次使用授权令牌。</p>
+<p>例如，您可以运行文件托管服务，用户必须通过身份验证才能下载其文件，但文件本身由单独的无状态“下载服务器”提供。在这种情况下，您可能希望让应用程序服务器（服务器A）发出一次性的“下载令牌”，客户端然后可以使用它从下载服务器（服务器B）下载文件。</p>
+<p>当以这种方式使用 JWT 时，有一些特定的属性：</p>
+<ul>
+<li><p>令牌是短时间的。他们只需要有效的几分钟，让客户端启动下载。</p>
+</li>
+<li><p>令牌只能预期使用一次。应用程序服务器将为每次下载发出一个新的令牌，因此任何一个令牌仅用于请求一次文件，然后丢弃。根本没有持续的状态。</p>
+</li>
+<li><p>应用程序服务器仍然使用会话。这只是使用令牌授权单个下载的下载服务器，因为它不需要持久状态。</p>
+</li>
+</ul>
+<p>正如你可以看到的，组合会话和JWT令牌是完全合理的 - 它们都有自己的目的，有时候需要两者。只需不要使用JWT持久的长寿命数据。</p>
+<blockquote>
+<p>参考<br><a href="http://www.ruanyifeng.com/blog/2018/07/json_web_token-tutorial.html" target="_blank" rel="noopener">JSON Web Token 入门教程</a><br><a href="https://jwt.io/introduction/" target="_blank" rel="noopener">JWT官网</a><br><a href="https://juejin.im/post/5a437441f265da43294e54c3#heading-3" target="_blank" rel="noopener">聊一聊JWT与session</a><br><a href="https://www.jianshu.com/p/cbe253281d26" target="_blank" rel="noopener">cookie-session机制与JWT机制对比</a><br><a href="https://mp.weixin.qq.com/s/gUgh_kmMu0Hmobeah7wNLQ" target="_blank" rel="noopener">理解JWT（JSON Web Token）认证及实践</a><br><a href="https://www.zcfy.cc/article/stop-using-jwt-for-sessions-joepie91s-ramblings" target="_blank" rel="noopener">请停止使用 JWT 认证</a></p>
+</blockquote>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <footer>
+        <a href="https://recallhyx.github.io">
+            <img src="/img/avatar.jpg" alt="Recall HYX">
+            Recall HYX
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jwt/">jwt</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://recallhyx.github.io/2018/08/18/JsonWebToken介绍/&title=《JsonWebToken介绍》 — Recall Hyx&pic=https://recallhyx.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://recallhyx.github.io/2018/08/18/JsonWebToken介绍/&title=《JsonWebToken介绍》 — Recall Hyx&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://recallhyx.github.io/2018/08/18/JsonWebToken介绍/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JsonWebToken介绍》 — Recall Hyx&url=https://recallhyx.github.io/2018/08/18/JsonWebToken介绍/&via=https://recallhyx.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://recallhyx.github.io/2018/08/18/JsonWebToken介绍/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2018/09/13/无限滚动/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">无限滚动</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/08/05/webpack多页面配置/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">webpack多页面配置</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "gnMQ4bW3FRMELqY7UJSFCG2L-gzGzoHsz",
+            appKey: "8kUBso0hYLBcTE8e9h89D1Hc",
+            avatar: "mm",
+            placeholder: "Just go go",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Recall HYX &copy; 2017 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://recallhyx.github.io/2018/08/18/JsonWebToken介绍/&title=《JsonWebToken介绍》 — Recall Hyx&pic=https://recallhyx.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://recallhyx.github.io/2018/08/18/JsonWebToken介绍/&title=《JsonWebToken介绍》 — Recall Hyx&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://recallhyx.github.io/2018/08/18/JsonWebToken介绍/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JsonWebToken介绍》 — Recall Hyx&url=https://recallhyx.github.io/2018/08/18/JsonWebToken介绍/&via=https://recallhyx.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://recallhyx.github.io/2018/08/18/JsonWebToken介绍/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACKUlEQVR42u3aS27DMAwFwNz/0inQVYsiySPpFDE9Whn5yBotCInk7RaP+/f4+ZyM5//9O/+jbw8bGBgYp2VUl1KF5VszmhkDA+MCjPw1eazL35Jv38PPMTAwMIIwmgfuaijHwMDAmATcZEFzNgYGBsYkUCYXzgRQnRMDA+NqjF5h4H+e317fwMDA+HjGfTAmJclktsJKMDAwVjOSq2YS5ZJU2oQaBWIMDIzVjKQY0GNUZ560a2BgYOxm5In4PDhWG8h6m9isY2BgYJyQ0Tu69S6rveR+4fcYGBjrGNVE2KQJ4zm1d2T8lTXEwMBYyqi+uBqCewvttWVgYGDsZhyQpYvTcHnYLSfsMDAwVjOSm+Cxh8LqMbFQzsTAwLgMY3K5zS+c1UaK5iUWAwPj5IzJ4iYtZfMjY3S2xcDAWMTopbcm6bnJ8wElTAwMjBMy5sE0T9XlLRflPhEMDIyljOdht1oYyENkvn0H5AsxMDBWMPKw2GubyJeS/CsquGJgYKxjJK9p7kq8uHwLyl0eGBgY6xjVkmQOqJY8y4dUDAyM1YxJ6TFfbh4h86zaCIOBgXESxr04kkJjnmjLA/GLd2FgYKxmVINsvpRJqM1bLjAwMK7D6F0mq8fBJKROjowYGBhXYOS33l6TxDxl9mJmDAwMjEGCvvebPEBjYGBg5E0S1f6H6gUYAwMDo9euWk2TvfEoiYGBsZpxVGEgD5fPZ8iLoG+pb2BgYHwW4wui80HPCXvb2wAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

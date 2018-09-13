@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-112417276-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>Nuxt入门 | Recall Hyx | Your star</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#FFC107">
+    
+    
+    <meta name="keywords" content="nuxt">
+    <meta name="description" content="什么是Nuxt简单来说，Nuxt 就是基于 Vue 的服务端渲染框架（SSR），使用 Nuxt 能够让我们更快速的完成开发。  服务端渲染的好处都有啥？我们用框架（Angular2，React，Vue）开发 SPA 应用，都会面临一个问题就是首屏加载速度慢的问题。对于 SSR 来说，服务器返回的是（结构相对完整的）HTML文件，（通过解析HTML文件），浏览器就能渲染出页面。而对 CSR 来说，浏">
+<meta name="keywords" content="nuxt">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Nuxt入门">
+<meta property="og:url" content="https://recallhyx.github.io/2018/05/16/Nuxt入门/index.html">
+<meta property="og:site_name" content="Recall Hyx">
+<meta property="og:description" content="什么是Nuxt简单来说，Nuxt 就是基于 Vue 的服务端渲染框架（SSR），使用 Nuxt 能够让我们更快速的完成开发。  服务端渲染的好处都有啥？我们用框架（Angular2，React，Vue）开发 SPA 应用，都会面临一个问题就是首屏加载速度慢的问题。对于 SSR 来说，服务器返回的是（结构相对完整的）HTML文件，（通过解析HTML文件），浏览器就能渲染出页面。而对 CSR 来说，浏">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5834506-6aaaef3687f949c6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5834506-8b5f5a8969f11b2a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5834506-39d1c41fb0249642.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5834506-0935a1b31e4d38ad.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5834506-79a18701fcf60707.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5834506-fb441e054522d0c8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5834506-1a6388e0a9293b19.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5834506-8aa4256b4eeb6cf2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5834506-e3b543c3eacaab6a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5834506-63cbec15235bc2bb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-09-13T13:53:36.228Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Nuxt入门">
+<meta name="twitter:description" content="什么是Nuxt简单来说，Nuxt 就是基于 Vue 的服务端渲染框架（SSR），使用 Nuxt 能够让我们更快速的完成开发。  服务端渲染的好处都有啥？我们用框架（Angular2，React，Vue）开发 SPA 应用，都会面临一个问题就是首屏加载速度慢的问题。对于 SSR 来说，服务器返回的是（结构相对完整的）HTML文件，（通过解析HTML文件），浏览器就能渲染出页面。而对 CSR 来说，浏">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/5834506-6aaaef3687f949c6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Recall HYX</h5>
+          <a href="mailto:quce.hu@qq.com" title="quce.hu@qq.com" class="mail">quce.hu@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                文章
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/recallhyx" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Nuxt入门</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Nuxt入门</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-05-16T02:04:48.000Z" itemprop="datePublished" class="page-time">
+  2018-05-16
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/前端/">前端</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#什么是Nuxt"><span class="post-toc-number">1.</span> <span class="post-toc-text">什么是Nuxt</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#安装使用"><span class="post-toc-number">2.</span> <span class="post-toc-text">安装使用</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#目录结构"><span class="post-toc-number">3.</span> <span class="post-toc-text">目录结构</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#小例子"><span class="post-toc-number">4.</span> <span class="post-toc-text">小例子</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#资源引入问题"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">资源引入问题</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-Nuxt入门"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Nuxt入门</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-05-16 10:04:48" datetime="2018-05-16T02:04:48.000Z"  itemprop="datePublished">2018-05-16</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/前端/">前端</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="什么是Nuxt"><a href="#什么是Nuxt" class="headerlink" title="什么是Nuxt"></a>什么是Nuxt</h1><p>简单来说，Nuxt 就是基于 Vue 的服务端渲染框架（SSR），使用 Nuxt 能够让我们更快速的完成开发。</p>
+<blockquote>
+<p>服务端渲染的好处都有啥？<br>我们用框架（Angular2，React，Vue）开发 SPA 应用，都会面临一个问题就是首屏加载速度慢的问题。对于 SSR 来说，服务器返回的是（结构相对完整的）HTML文件，（通过解析HTML文件），浏览器就能渲染出页面。而对 CSR 来说，浏览器拿到的只是包含 JavaScript 代码的 HTML 文件，（换句话，在浏览器渲开始渲染出页面之前，需要动态创建 HTML 标签）。这也就意味着，SSR 可以让浏览器在边下载 JavaScript 文件的同时边渲染 HTML 页面，换句话说，浏览器再也不需要等到所有的 JavaScript 文件下载并执行完之后才去渲染页面。</p>
+</blockquote>
+<h1 id="安装使用"><a href="#安装使用" class="headerlink" title="安装使用"></a>安装使用</h1><p>需要提前安装 vue-cli：<br><code>npm install -g vue-cli</code><br>然后利用 vue-cli 安装使用：<br><code>vue init nuxt-community/starter-template &lt;project-name&gt;</code><br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://upload-images.jianshu.io/upload_images/5834506-6aaaef3687f949c6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure><br>最后在项目目录下安装依赖：<br><code>npm install</code><br>等到安装完毕，<code>npm run dev</code> 就能启动项目，在浏览器输入 <code>http://localhost:3000</code> 就能看到项目<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://upload-images.jianshu.io/upload_images/5834506-8b5f5a8969f11b2a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure></p>
+<h1 id="目录结构"><a href="#目录结构" class="headerlink" title="目录结构"></a>目录结构</h1><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://upload-images.jianshu.io/upload_images/5834506-39d1c41fb0249642.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>注意两个东西： <code>pages</code> 文件夹和 <code>components</code> 文件夹，这两个文件夹下都是 <code>*.vue</code>文件 ，但是Nuxt.js 会依据 <code>pages</code> 目录中的所有 <code>*.vue</code> 文件生成应用的路由配置，而 <code>components</code> 只是用于组织应用的 Vue.js 组件，Nuxt.js 不会扩展增强该目录下 Vue.js 组件，即这些组件不会像页面组件那样有 <code>asyncData</code> 方法的特性。</p>
+<blockquote>
+<p>asyncData方法会在组件（限于页面组件）每次加载之前被调用。它可以在服务端或路由更新之前被调用。你可以利用 asyncData 方法来获取数据，Nuxt.js 会将 asyncData 返回的数据融合组件 data 方法返回的数据一并返回给当前组件。</p>
+</blockquote>
+<p>还有 <code>assets</code> 文件夹和 <code>static</code> 文件夹，对于不需要通过 Webpack 处理的静态资源文件，可以放置在 <code>static</code> 目录中。而资源目录 <code>assets</code> 用于组织未编译的静态资源如 <code>LESS</code> 、<code>SASS</code> 或 <code>JavaScript</code> 。</p>
+<h1 id="小例子"><a href="#小例子" class="headerlink" title="小例子"></a>小例子</h1><h2 id="资源引入问题"><a href="#资源引入问题" class="headerlink" title="资源引入问题"></a>资源引入问题</h2><p>我要使用 <code>vuetify</code> 这个框架，看到需要在 <code>index.js</code> 或 <code>main.js</code> 引入，但是 nuxt 并没有这两个文件，怎么办？重点就是 <code>plugins</code> 文件夹，我们在该文件夹目录下新建一个文件夹 <code>vuetify.js</code>，当然，我们需要先下载 <code>vuetify</code>：<code>npm install vuetify --save</code>：<br><figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">'vue'</span></span><br><span class="line"><span class="keyword">import</span> Vuetify <span class="keyword">from</span> <span class="string">'vuetify'</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">'vuetify/dist/vuetify.min.css'</span></span><br><span class="line">Vue.use(Vuetify)</span><br></pre></td></tr></table></figure></p>
+<p>然后, 在 <code>nuxt.config.js</code> 内配置 <code>plugins</code> 如下：<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">module.exports</span> <span class="string">=</span> <span class="string">&#123;</span></span><br><span class="line"><span class="attr">  build:</span> <span class="string">&#123;</span></span><br><span class="line"><span class="attr">    vendor:</span> <span class="string">['~/plugins/vuetify']</span></span><br><span class="line">  <span class="string">&#125;,</span></span><br><span class="line"><span class="attr">  plugins:</span> <span class="string">[</span></span><br><span class="line">    <span class="string">&#123;src:</span> <span class="string">'~/plugins/vuetify'</span><span class="string">,</span> <span class="attr">ssr:</span> <span class="literal">false</span><span class="string">&#125;</span></span><br><span class="line">  <span class="string">]</span></span><br><span class="line"><span class="string">&#125;</span></span><br></pre></td></tr></table></figure></p>
+<p>其实只需要配置 <code>plugins</code> 就可以跑起来了，实际上， <code>vuetify</code> 会被打包至应用的脚本代码里， 但是它属于第三方库，我们理应将它打包至库文件里以获得更好的缓存效果，所以需要在 <code>build</code> 里面配置 <code>vendor</code>。（应用代码比库文件修改频繁，应尽量将第三方库打包至单独的文件中去）。<br>至于后面的 <code>ssr:false</code> ，因为我们的插件只在浏览器端使用，所以用 <code>ssr: false</code> 变量来配置插件只从客户端还是服务端运行。<br>但是还没完，我们还需要引入谷歌的字体，如果我们直接使用 CDN 的话，只需要在 <code>nuxt.config.js</code> 里面的 <code>head</code> 中的 <code>link</code> 添加谷歌字体 CDN ：<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">link:</span> [</span><br><span class="line">      &#123; <span class="string">rel:</span> <span class="string">'icon'</span>, <span class="string">type:</span> <span class="string">'image/x-icon'</span>, <span class="string">href:</span> <span class="string">'/favicon.ico'</span> &#125;,</span><br><span class="line">      &#123; <span class="string">rel:</span> <span class="string">'stylesheet'</span>, <span class="string">href:</span> <span class="string">'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons'</span> &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure></p>
+<p>但是你懂得，谷歌在墙外，所以要下载谷歌字体下来很慢很慢，所以我们就只能抛弃 CDN ，直接文件引入。我们先打开谷歌 CDN 这个链接看看有啥：<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://upload-images.jianshu.io/upload_images/5834506-0935a1b31e4d38ad.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure><br>一大堆东西，都是不同的字体，我们只需要选择一种字体下载并导入即可<br>我们在 <code>assets</code> 目录新建一个目录 <code>style</code>并创建 <code>app.css</code> 文件：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* app.css*/</span></span><br><span class="line">@<span class="keyword">font-face</span> &#123;</span><br><span class="line">  <span class="attribute">font-family</span>: <span class="string">'Material Icons'</span>;</span><br><span class="line">  <span class="attribute">font-style</span>: normal;</span><br><span class="line">  <span class="attribute">font-weight</span>: <span class="number">400</span>;</span><br><span class="line">  <span class="attribute">src</span>: <span class="built_in">local</span>(<span class="string">'Material Icons'</span>), <span class="built_in">local</span>(<span class="string">'MaterialIcons-Regular'</span>), <span class="built_in">url</span>(../font/materialfont.woff2) <span class="built_in">format</span>(<span class="string">'woff2'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.material-icons</span> &#123;</span><br><span class="line">  <span class="attribute">font-family</span>: <span class="string">'Material Icons'</span>;</span><br><span class="line">  <span class="attribute">font-weight</span>: normal;</span><br><span class="line">  <span class="attribute">font-style</span>: normal;</span><br><span class="line">  <span class="attribute">font-size</span>: <span class="number">24px</span>;</span><br><span class="line">  <span class="attribute">line-height</span>: <span class="number">1</span>;</span><br><span class="line">  <span class="attribute">letter-spacing</span>: normal;</span><br><span class="line">  <span class="attribute">text-transform</span>: none;</span><br><span class="line">  <span class="attribute">display</span>: inline-block;</span><br><span class="line">  <span class="attribute">white-space</span>: nowrap;</span><br><span class="line">  <span class="attribute">word-wrap</span>: normal;</span><br><span class="line">  <span class="attribute">direction</span>: ltr;</span><br><span class="line">  <span class="attribute">-webkit-font-feature-settings</span>: <span class="string">'liga'</span>;</span><br><span class="line">  <span class="attribute">-webkit-font-smoothing</span>: antialiased;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>然后在 <code>assets</code> 目录创建一个 <code>font</code> 文件夹放我们的字体文件：<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://upload-images.jianshu.io/upload_images/5834506-79a18701fcf60707.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure></p>
+<p>接下来我们实验一下能不能成功，在 <code>components</code> 新建一个 <code>expansion.vue</code> 文件，然后从 <code>vuetify</code> 官网复制的例子：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">// expansion.vue</span><br><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">v-app</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">v-expansion-panel</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">v-expansion-panel-content</span> <span class="attr">v-for</span>=<span class="string">"(item,i) in 5"</span> <span class="attr">:key</span>=<span class="string">"i"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">slot</span>=<span class="string">"header"</span>&gt;</span>Item<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">v-card</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">v-card-text</span>&gt;</span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.<span class="tag">&lt;/<span class="name">v-card-text</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">v-card</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">v-expansion-panel-content</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">v-expansion-panel</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">v-app</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>在 <code>pages</code> 的 <code>index.vue</code> 文件中引入我们的组件：<br><figure class="highlight dust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="xml">// index.vue</span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">expansion</span>&gt;</span><span class="tag">&lt;/<span class="name">expansion</span>&gt;</span></span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span></span><br><span class="line"><span class="xml">import Expansion from '~/components/expansion.vue'</span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml">export default </span><span class="template-variable">&#123;</span></span><br><span class="line"><span class="template-variable">  components: &#123;</span></span><br><span class="line"><span class="template-variable">    Expansion</span></span><br><span class="line"><span class="template-variable">  &#125;</span><span class="xml"></span></span><br><span class="line"><span class="xml">&#125;</span></span><br><span class="line"><span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span></span><br></pre></td></tr></table></figure></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://upload-images.jianshu.io/upload_images/5834506-fb441e054522d0c8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>嗯，很好的工作了，接下来我们打包放到服务器上看看<br>执行：<code>npm generate</code> 就会打包成文件夹 <code>dist</code>，里面放着我们的静态文件<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://upload-images.jianshu.io/upload_images/5834506-1a6388e0a9293b19.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure><br>把这个文件夹整个放到服务器上<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://upload-images.jianshu.io/upload_images/5834506-8aa4256b4eeb6cf2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure><br>怎么了，我们的图标怎么不见了？ F12 打开看一下<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://upload-images.jianshu.io/upload_images/5834506-e3b543c3eacaab6a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure></p>
+<p>报错没有找到资源，我们仔细看看，发现，路径是以 <code>http://recallhy.xin:8080/_nuxt/</code> 开头的，我们把资源放到的是 <code>dist</code> 目录下，而不是根目录下，当然会找不到资源了，所以我们要修改一下路径，在 <code>nuxt.config.js</code> 里，加入一段代码：<br><figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span>.exports = &#123;</span><br><span class="line">  ...</span><br><span class="line">  router:&#123;</span><br><span class="line">    base: <span class="string">'./'</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>然后我们再把 <code>npm generate</code> 生成的东西放到服务器<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://upload-images.jianshu.io/upload_images/5834506-63cbec15235bc2bb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure><br>可以看到我们的资源可以找到了。</p>
+<p>其实 <code>vuetify</code> 官方已经配好了 <code>nuxt</code> 的框架，直接就可以使用组件不用这么麻烦的配置，具体请看 <a href="https://github.com/vuetifyjs/nuxt" target="_blank" rel="noopener">官方github</a>，但是我们配其他框架套路也是一样的。</p>
+<p>暂时就是这样，以后在使用 <code>nuxt</code> 的过程中遇到问题会持续记录。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <footer>
+        <a href="https://recallhyx.github.io">
+            <img src="/img/avatar.jpg" alt="Recall HYX">
+            Recall HYX
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nuxt/">nuxt</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://recallhyx.github.io/2018/05/16/Nuxt入门/&title=《Nuxt入门》 — Recall Hyx&pic=https://recallhyx.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://recallhyx.github.io/2018/05/16/Nuxt入门/&title=《Nuxt入门》 — Recall Hyx&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://recallhyx.github.io/2018/05/16/Nuxt入门/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Nuxt入门》 — Recall Hyx&url=https://recallhyx.github.io/2018/05/16/Nuxt入门/&via=https://recallhyx.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://recallhyx.github.io/2018/05/16/Nuxt入门/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2018/05/25/Vue-cli引入问题/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Vue-cli引入问题</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/05/14/nextTick/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">理解nextTick</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "gnMQ4bW3FRMELqY7UJSFCG2L-gzGzoHsz",
+            appKey: "8kUBso0hYLBcTE8e9h89D1Hc",
+            avatar: "mm",
+            placeholder: "Just go go",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Recall HYX &copy; 2017 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://recallhyx.github.io/2018/05/16/Nuxt入门/&title=《Nuxt入门》 — Recall Hyx&pic=https://recallhyx.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://recallhyx.github.io/2018/05/16/Nuxt入门/&title=《Nuxt入门》 — Recall Hyx&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://recallhyx.github.io/2018/05/16/Nuxt入门/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Nuxt入门》 — Recall Hyx&url=https://recallhyx.github.io/2018/05/16/Nuxt入门/&via=https://recallhyx.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://recallhyx.github.io/2018/05/16/Nuxt入门/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACIElEQVR42u3aOY7DMAwFUN//0k6bRs4nZQew9FQFM170XBBcdBzxOr/W6L/59aN787uaCwMD47WM83KNXpC8cnT9iJ3cNXwvBgbGBoxkE9eke7eb7w0DAwPj+neeOOYhGwMDA2OeUd1oLw3FwMDAmHn0Xelg0tR7pBbHwMB4ISPvuv//9yPzDQwMjFcxzuLqpYb5X3oLAwNjbUYe4KqkPO3rBVwMDIx9GHkr/7o0zQ9J9I6F/YBhYGAszeg14pN2f+/5vcMZGBgYazPyJKw6sKw29wujyt5FGBgYr2X0tlXdaHKMLE8HhzAMDIxFGdWWfS9898YGSXGLgYGxD6Nww0T6OH+0YhiUMTAwNmDkzbVe0y0ZDCRJZLndhoGBsQSj2g7LE8ckyM4UscNSFgMDYzlGrxHWK1kLqV71SgwMjKUZvTLyieMUVXYUdjEwMBZi5ME3b8nNDxJ6HxQDA2MHRt4a6xXA82PLwjgTAwNjIUb1hmqhW23STRWxGBgY2zDuSv6qxzKSAP2jd4iBgbEBI39E9fhFzmuGeAwMjG0YvfCaHFTt8ZLPjYGBsTbjLK57h5rJeDJ6DgYGxtKMXrArxPJ4i8knqJbZGBgYKzHyMWSeJs6PAcoJKwYGxgaMe+N3Asi3Gz0ZAwMDI263zQfivDw+8viNgYGB0TpCcX1v+RNgYGBswEiK2DxB/M+VGBgY+zDy0nGmyHxuPICBgbE04wO2G507ojUsWwAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

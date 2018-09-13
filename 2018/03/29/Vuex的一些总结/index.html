@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-112417276-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>Vuex的一些总结 | Recall Hyx | Your star</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#FFC107">
+    
+    
+    <meta name="keywords" content="vue">
+    <meta name="description" content="前言最近在学 Vue 全家桶，遇到 Vuex 这个东西，记录一下学习过程及遇到的不懂的地方和一些坑。 Vuex 是个啥 Vuex 是一个专为 Vue.js 应用程序开发的状态管理模式。它采用集中式存储管理应用的所有组件的状态，并以相应的规则保证状态以一种可预测的方式发生变化。Vuex 也集成到 Vue 的官方调试工具 devtools extension，提供了诸如零配置的 time-travel">
+<meta name="keywords" content="vue">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vuex的一些总结">
+<meta property="og:url" content="https://recallhyx.github.io/2018/03/29/Vuex的一些总结/index.html">
+<meta property="og:site_name" content="Recall Hyx">
+<meta property="og:description" content="前言最近在学 Vue 全家桶，遇到 Vuex 这个东西，记录一下学习过程及遇到的不懂的地方和一些坑。 Vuex 是个啥 Vuex 是一个专为 Vue.js 应用程序开发的状态管理模式。它采用集中式存储管理应用的所有组件的状态，并以相应的规则保证状态以一种可预测的方式发生变化。Vuex 也集成到 Vue 的官方调试工具 devtools extension，提供了诸如零配置的 time-travel">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5834506-1e95c37b37ccbb7c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5834506-4b1cb38856bcaec6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5834506-e3a2182e9cfabbe5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5834506-b9b2c67c3dfc8f8c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5834506-eb842e21aabaf21a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-09-13T13:53:36.230Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Vuex的一些总结">
+<meta name="twitter:description" content="前言最近在学 Vue 全家桶，遇到 Vuex 这个东西，记录一下学习过程及遇到的不懂的地方和一些坑。 Vuex 是个啥 Vuex 是一个专为 Vue.js 应用程序开发的状态管理模式。它采用集中式存储管理应用的所有组件的状态，并以相应的规则保证状态以一种可预测的方式发生变化。Vuex 也集成到 Vue 的官方调试工具 devtools extension，提供了诸如零配置的 time-travel">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/5834506-1e95c37b37ccbb7c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Recall HYX</h5>
+          <a href="mailto:quce.hu@qq.com" title="quce.hu@qq.com" class="mail">quce.hu@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                文章
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/recallhyx" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Vuex的一些总结</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Vuex的一些总结</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-03-29T08:41:57.000Z" itemprop="datePublished" class="page-time">
+  2018-03-29
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/前端/">前端</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#前言"><span class="post-toc-number">1.</span> <span class="post-toc-text">前言</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Vuex-是个啥"><span class="post-toc-number">2.</span> <span class="post-toc-text">Vuex 是个啥</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Vuex-安装"><span class="post-toc-number">3.</span> <span class="post-toc-text">Vuex 安装</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Vuex-使用"><span class="post-toc-number">4.</span> <span class="post-toc-text">Vuex 使用</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#挂载"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">挂载</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#hello-模块"><span class="post-toc-number">4.2.</span> <span class="post-toc-text">hello 模块</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#组件"><span class="post-toc-number">4.3.</span> <span class="post-toc-text">组件</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#最终效果"><span class="post-toc-number">4.4.</span> <span class="post-toc-text">最终效果</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-Vuex的一些总结"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Vuex的一些总结</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-03-29 16:41:57" datetime="2018-03-29T08:41:57.000Z"  itemprop="datePublished">2018-03-29</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/前端/">前端</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近在学 Vue 全家桶，遇到 Vuex 这个东西，记录一下学习过程及遇到的不懂的地方和一些坑。</p>
+<h1 id="Vuex-是个啥"><a href="#Vuex-是个啥" class="headerlink" title="Vuex 是个啥"></a>Vuex 是个啥</h1><blockquote>
+<p>Vuex 是一个专为 Vue.js 应用程序开发的<strong>状态管理模式</strong>。它采用集中式存储管理应用的所有组件的状态，并以相应的规则保证状态以一种可预测的方式发生变化。Vuex 也集成到 Vue 的官方调试工具 <a href="https://github.com/vuejs/vue-devtools" target="_blank" rel="noopener">devtools extension</a>，提供了诸如零配置的 time-travel 调试、状态快照导入导出等高级调试功能。</p>
+</blockquote>
+<p>举个例子，父组件和子组件嵌套，父组件能通过 <code>props</code> 传递参数给子组件，这个在只嵌套一层子组件的情况下是推荐使用的，但是如果子组件又嵌套子组件，这样我们最里层的孙子组件，要获取状态只能子组件通过 <code>props</code> 传递，这样要写多几次 <code>props</code>，而且到后期嵌套的组件越多都不知道哪个 <code>props</code> 是从哪里传进来的。</p>
+<p>Vuex就是把组件的共享状态抽取出来，以一个全局单例模式管理。在这种模式下，我们的组件树构成了一个巨大的“视图”，不管在树的哪个位置，任何组件都能获取状态或者触发行为。</p>
+<p>对于中大型应用，才有使用 Vuex 的必要，如果是小型的应用，完全不需要使其复杂化。</p>
+<h1 id="Vuex-安装"><a href="#Vuex-安装" class="headerlink" title="Vuex 安装"></a>Vuex 安装</h1><p>我是在 vue-cli 基础上进行学习的，不知道 vue-cli 的可以看一下我之前的文章 <a href="https://recallhyx.github.io/2018/03/11/Vue-loader%E5%85%A5%E9%97%A8/">Vue-loader 入门</a><br>首先我们安装 Vuex<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm <span class="keyword">install</span> vuex <span class="comment">--save</span></span><br></pre></td></tr></table></figure></p>
+<p>如果成功，我们可以在 <code>package.json</code> 文件中看到：<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://upload-images.jianshu.io/upload_images/5834506-1e95c37b37ccbb7c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure></p>
+<h1 id="Vuex-使用"><a href="#Vuex-使用" class="headerlink" title="Vuex 使用"></a>Vuex 使用</h1><p>首先，我们要在 <code>src</code> 目录下新建一个文件夹 <code>store</code> ，然后在里面新建一个叫 <code>index.js</code> 的文件，这是我们组装模块并导出 <code>store</code> 的地方。<br>然后我们再分别新建 <code>mutations.js</code> 和 <code>actions.js</code> 这两个文件，作为根级别的 <code>mutation</code> 和 根级别的 <code>action</code> ，就是抽出来公用的部分。<br>最后我们新建一个文件夹 <code>modules</code>，里面放着我们的模块，然后我们在 <code>modules</code> 里面新建我们的模块 <code>hello.js</code> 。<br>当然，我们还可以新建一个 <code>mutation-types.js</code> 的文件，直接在<code>mutations.js</code> 中映射相关的方法过来使用，这个文件是为了多人合作的时候方便管理。<br>全部完成后的 <code>store</code> 目录如下：<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://upload-images.jianshu.io/upload_images/5834506-4b1cb38856bcaec6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure></p>
+<h2 id="挂载"><a href="#挂载" class="headerlink" title="挂载"></a>挂载</h2><p>接下来我们就要将 Vuex 挂载到 Vue 上，在 <code>index.js</code>文件中：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// index.js</span></span><br><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">'vue'</span>;</span><br><span class="line"><span class="keyword">import</span> Vuex <span class="keyword">from</span> <span class="string">'vuex'</span>;</span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> actions <span class="keyword">from</span> <span class="string">'./actions'</span>;</span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> mutations <span class="keyword">from</span> <span class="string">'./mutations'</span>;</span><br><span class="line"><span class="keyword">import</span> hello <span class="keyword">from</span> <span class="string">'./modules/hello'</span></span><br><span class="line"></span><br><span class="line">Vue.use(Vuex);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> store = <span class="keyword">new</span> Vuex.Store(&#123;</span><br><span class="line">  actions,</span><br><span class="line">  mutations,</span><br><span class="line">  modules:&#123;</span><br><span class="line">    hello</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> store;</span><br></pre></td></tr></table></figure></p>
+<p>然后我们在 <code>main.js</code> 里面，将我们的 <code>store</code> 引入：<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// main.js</span></span><br><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">'vue'</span></span><br><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">'./App'</span></span><br><span class="line"><span class="keyword">import</span> router <span class="keyword">from</span> <span class="string">'./router'</span></span><br><span class="line"><span class="keyword">import</span> store <span class="keyword">from</span> <span class="string">'./store/index'</span></span><br><span class="line">Vue.config.productionTip = <span class="keyword">false</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* eslint-disable no-new */</span></span><br><span class="line"><span class="keyword">new</span> Vue(&#123;</span><br><span class="line">  el: <span class="string">'#app'</span>,</span><br><span class="line">  router,</span><br><span class="line">  store,<span class="comment">// 将store引入</span></span><br><span class="line">  components: &#123; App &#125;,</span><br><span class="line">  template: <span class="string">'&lt;App/&gt;'</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<h2 id="hello-模块"><a href="#hello-模块" class="headerlink" title="hello 模块"></a>hello 模块</h2><p>接下来我们跳过 <code>mutations.js</code> 和 <code>actions.js</code>，因为我们这个只是示例，没有需要抽出来的公共的部分，将注意放在我们的 module 模块。当然，模块里面也可以再分 <code>state.js</code>，<code>getters.js</code>，<code>mutations.js</code> 和 <code>actions.js</code> ，然后在模块中引入，但是这就分的太细了。我们先定义 <code>state</code>，<code>getters</code>，<code>mutations</code> 和 <code>actions</code>：<br><figure class="highlight pf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// hello.js</span><br><span class="line">const <span class="keyword">state</span> = &#123;&#125;;</span><br><span class="line">const getters = &#123;&#125;;</span><br><span class="line">const mutations = &#123;&#125;;</span><br><span class="line">const actions = &#123;&#125;;</span><br><span class="line"></span><br><span class="line">export <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="keyword">state</span>,</span><br><span class="line">  getters,</span><br><span class="line">  mutations,</span><br><span class="line">  actions</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>我们的原始 <code>state</code> 就一个 <code>msg</code> 属性：<br><figure class="highlight pf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">const <span class="keyword">state</span> = &#123;</span><br><span class="line">  msg: 'hello world',</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>然后我们在 <code>getters</code> 里面定义一个方法，返回这个 <code>msg</code>：<br><figure class="highlight pf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">const getters = &#123;</span><br><span class="line">  getMsg: <span class="keyword">state</span> =&gt; <span class="keyword">state</span>.msg,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>为了能够清楚的知道我们定义了什么 <code>mutations</code> 方法，我们可以在 <code>mutation-types.js</code>中定义方法名：<br><figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// mutation-types.js</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> SET_MSG = <span class="string">'SET_MSG'</span>;</span><br></pre></td></tr></table></figure></p>
+<p>然后在 <code>hello.js</code> 导入这个文件：<br><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// hello.js</span><br><span class="line">import * as type from '../mutation-types'</span><br><span class="line">...</span><br><span class="line">const mutations = &#123;</span><br><span class="line">  [<span class="string">type.SET_MSG</span>](<span class="link">state,msg</span>)&#123;</span><br><span class="line"><span class="code">    state.msg = msg;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>这种做法是基于 ES6的 <a href="http://es6.ruanyifeng.com/#docs/object#属性名表达式" target="_blank" rel="noopener">对象可计算属性名</a><br>最后我们用 <code>axios</code> 来进行异步操作，在 <code>actions</code> 里面定义一个方法：<br><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> actions = &#123;</span><br><span class="line">  changeMsg(&#123;commit&#125;)&#123;</span><br><span class="line">    axios.get(<span class="string">'http://127.0.0.1:8888'</span>)</span><br><span class="line">      .then(<span class="function"><span class="params">res</span>=&gt;</span>&#123;</span><br><span class="line">        commit([<span class="keyword">type</span>.SET_MSG],res.data);</span><br><span class="line">      &#125;)</span><br><span class="line">      .catch(<span class="function"><span class="params">err</span>=&gt;</span>&#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(err);</span><br><span class="line">      &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>这里我自己用 node 写了个小小的后端用来获取数据：<br><figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// example.js</span></span><br><span class="line"><span class="keyword">const</span> http = require(<span class="string">'http'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> hostname = <span class="string">'127.0.0.1'</span>;</span><br><span class="line"><span class="keyword">const</span> port = <span class="string">'6666'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> server = http.createServer((req,res)=&gt;&#123;</span><br><span class="line">    res.statusCode = <span class="number">200</span>;</span><br><span class="line">    res.setHeader(<span class="string">'Content-Type'</span>,<span class="string">'text/plain'</span>);</span><br><span class="line">    res.setHeader(<span class="string">'Access-Control-Allow-Origin'</span>,<span class="string">'*'</span>)<span class="comment">// 解决跨域</span></span><br><span class="line">    res.<span class="built_in">write</span>(<span class="string">'你好'</span>)</span><br><span class="line">    res.<span class="built_in">end</span>();</span><br><span class="line">&#125;).<span class="built_in">listen</span>(<span class="number">8888</span>);</span><br></pre></td></tr></table></figure></p>
+<p>在命令行用 <code>node example.js</code> 就可以开启后端并监听 <code>8888</code> 端口。<br>至此，我们的 <code>hello.js</code> 模块就完成了，让我们看一下完整的代码：<br><figure class="highlight pf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">import * as type <span class="keyword">from</span> '../mutation-types'</span><br><span class="line">import axios <span class="keyword">from</span> 'axios';</span><br><span class="line"></span><br><span class="line">const <span class="keyword">state</span> = &#123;</span><br><span class="line">  msg: 'hello world',</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">const getters = &#123;</span><br><span class="line">  getMsg: <span class="keyword">state</span> =&gt; <span class="keyword">state</span>.msg,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">const mutations = &#123;</span><br><span class="line">  [type.SET_MSG](<span class="keyword">state</span>,msg)&#123;</span><br><span class="line">    <span class="keyword">state</span>.msg = msg;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">const actions = &#123;</span><br><span class="line">  changeMsg(&#123;commit&#125;)&#123;</span><br><span class="line">    axios.get('http://<span class="number">127.0</span>.<span class="number">0.1</span>:<span class="number">8888</span>')</span><br><span class="line">      .then(res=&gt;&#123;</span><br><span class="line">        commit(type.SET_MSG,res.data);</span><br><span class="line">      &#125;)</span><br><span class="line">      .catch(err=&gt;&#123;</span><br><span class="line">        throw new Error(err);</span><br><span class="line">      &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">export <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="keyword">state</span>,</span><br><span class="line">  getters,</span><br><span class="line">  mutations,</span><br><span class="line">  actions</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="组件"><a href="#组件" class="headerlink" title="组件"></a>组件</h2><p>我们就在 vue-cli 生成的 <code>HelloWorld.vue</code>这个文件中，应用我们的 <code>hello.js</code> 模块<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://upload-images.jianshu.io/upload_images/5834506-e3a2182e9cfabbe5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure><br><figure class="highlight dust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="xml">// Hello</span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span>我是HelloWorld组件<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">"changeMsg"</span>&gt;</span>改变Msg<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>目前Msg是:</span><span class="template-variable">&#123;&#123;getMsg&#125;</span><span class="xml">&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span></span><br><span class="line"><span class="xml">import </span><span class="template-variable">&#123;mapGetters&#125;</span><span class="xml"> from 'vuex';</span></span><br><span class="line"><span class="xml">import </span><span class="template-variable">&#123;mapActions&#125;</span><span class="xml"> from 'vuex';</span></span><br><span class="line"><span class="xml">export default </span><span class="template-variable">&#123;</span></span><br><span class="line"><span class="template-variable">  name: 'HelloWorld',</span></span><br><span class="line"><span class="template-variable">  computed:&#123;</span></span><br><span class="line"><span class="template-variable">    ...mapGetters(['getMsg'])</span></span><br><span class="line"><span class="template-variable">  &#125;</span><span class="xml">,</span></span><br><span class="line"><span class="xml">  methods:</span><span class="template-variable">&#123;</span></span><br><span class="line"><span class="template-variable">    ...mapActions(['changeMsg'])</span></span><br><span class="line"><span class="template-variable">  &#125;</span><span class="xml">,</span></span><br><span class="line"><span class="xml">&#125;</span></span><br><span class="line"><span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml"><span class="comment">&lt;!-- Add "scoped" attribute to limit CSS to this component only --&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">style</span> <span class="attr">lang</span>=<span class="string">"scss"</span> <span class="attr">scoped</span> &gt;</span><span class="undefined"></span></span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span></span><br></pre></td></tr></table></figure></p>
+<p>这里用到了两个辅助函数 <code>mapGetters</code> 和 <code>mapActions</code>，辅助函数将组件中的 getters 或 actions 映射为 store.commit 调用（需要在根节点注入 store）即直接使用函数如 <code>&lt;p&gt;目前Msg是:&lt;/p&gt;</code> 里面的 <code>getMsg</code>，否则我们就要多写几个字：<code>&lt;p&gt;目前Msg是:&lt;/p&gt;</code>。当然也有另外两个辅助行数 <code>mapState</code> 和 <code>mapMutations</code>，用法也都是一样的。而 <code>...mapGetters</code> 前面的 <code>...</code> 则是对象展开运算符，如果我们有多个 <code>getters</code> ，我们就可以这样写：<br><figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">computed:&#123;</span><br><span class="line">    ...mapGetters([</span><br><span class="line">      <span class="string">'getMsg'</span>,</span><br><span class="line">      <span class="string">'getAnotherMsg'</span>,<span class="comment">// 其他的getter</span></span><br><span class="line">    ])</span><br><span class="line">  &#125;,</span><br></pre></td></tr></table></figure></p>
+<h2 id="最终效果"><a href="#最终效果" class="headerlink" title="最终效果"></a>最终效果</h2><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://upload-images.jianshu.io/upload_images/5834506-b9b2c67c3dfc8f8c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="未点击按钮" title="">
+                </div>
+                <div class="image-caption">未点击按钮</div>
+            </figure>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://upload-images.jianshu.io/upload_images/5834506-eb842e21aabaf21a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="点击按钮后" title="">
+                </div>
+                <div class="image-caption">点击按钮后</div>
+            </figure>
+<p>加载完成后从 <code>getMsg</code> 这个 <code>getter</code> 方法获取<code>state</code>的状态 <code>msg</code> 并显示在屏幕上，点击按钮后，触发函数 <code>changeMsg</code> 这个 <code>action</code> 方法请求本地数据并且提交 <code>mutation</code> 最终 <code>SET_MSG</code> 这个 <code>mutation</code> 方法将传入的数据赋值给 <code>msg</code>。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <footer>
+        <a href="https://recallhyx.github.io">
+            <img src="/img/avatar.jpg" alt="Recall HYX">
+            Recall HYX
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vue/">vue</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://recallhyx.github.io/2018/03/29/Vuex的一些总结/&title=《Vuex的一些总结》 — Recall Hyx&pic=https://recallhyx.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://recallhyx.github.io/2018/03/29/Vuex的一些总结/&title=《Vuex的一些总结》 — Recall Hyx&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://recallhyx.github.io/2018/03/29/Vuex的一些总结/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Vuex的一些总结》 — Recall Hyx&url=https://recallhyx.github.io/2018/03/29/Vuex的一些总结/&via=https://recallhyx.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://recallhyx.github.io/2018/03/29/Vuex的一些总结/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2018/03/30/JavaScript关于判断的一些奇怪结果/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">JavaScript关于判断的一些奇怪结果</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/03/28/JavaScript千位分隔符/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">JavaScript千位分隔符</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "gnMQ4bW3FRMELqY7UJSFCG2L-gzGzoHsz",
+            appKey: "8kUBso0hYLBcTE8e9h89D1Hc",
+            avatar: "mm",
+            placeholder: "Just go go",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Recall HYX &copy; 2017 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://recallhyx.github.io/2018/03/29/Vuex的一些总结/&title=《Vuex的一些总结》 — Recall Hyx&pic=https://recallhyx.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://recallhyx.github.io/2018/03/29/Vuex的一些总结/&title=《Vuex的一些总结》 — Recall Hyx&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://recallhyx.github.io/2018/03/29/Vuex的一些总结/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Vuex的一些总结》 — Recall Hyx&url=https://recallhyx.github.io/2018/03/29/Vuex的一些总结/&via=https://recallhyx.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://recallhyx.github.io/2018/03/29/Vuex的一些总结/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACMUlEQVR42u3aS27DMAxF0ex/0+60QGvlPtIJIOp6FASOpeMBw49eL3xdv66779f3rL9Zr/LYJUOGjG0Z1/L6uzDfNMff3U/2JkOGjHMYdxFsvQCB1QI335sMGTJkkFC4/hX5TO6UIUOGDMLgCeU6+NbwMmTIkEGKWJIO8idwxsO1uAwZMjZk8K779z9/ZL4hQ4aMrRhX6UrL3WeHAf88R4YMGaMZnabYs2G6llzKkCHjTAY57NUpWddrpbnfiz9ahgwZmzPSMpK09XkzLn1Zb3YoQ4aMoQx+3KGzoX7yF8w3ZMiQMYjRaaLVkry0PEavWIYMGQcwamlfumRaJAeNPxkyZBzG4EVsrUxNV0H3y5AhYzSjlg7ycrSW6nFe0DuUIUPGtgy+iU8E0DS43744GTJkHMCoNf3TAjVt7a2fGZw+kyFDxjhGbUiQBuW00H3zlyBDhowDGPxB/YqZhPU0TZQhQ8ZsRjrI5BsiKSM/qIHWkiFDxlAGaZyl6R1vk5GgjGYaMmTIGM2ohcvaEbHavwEfjsqQIWMqo1U0gnNZtd/GzT4ZMmSMZvCSlRei6dEKEppRe06GDBlDGVd4dZJCHoLjxpwMGTJGM9LkrBaaawz+WYYMGScwOkG2Nh7gLbbgcIYMGTIOYPQDX9pie6qRJ0OGDBm8cE3HA7XiOR5kypAh4zBGZ2y5HiQ80G6TIUPGAYxOOZqmieQ58aBUhgwZoxnpwazaI2qjx/66MmTI2JzxAwIrW9GcuDNbAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

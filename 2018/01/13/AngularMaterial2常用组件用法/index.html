@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-112417276-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>Angular Material2 常用组件用法 | Recall Hyx | Your star</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#FFC107">
+    
+    
+    <meta name="keywords" content="angular2">
+    <meta name="description" content="（时隔2个多月终于有时间来写博文了）先总结一下，11月接到一个项目，做到12月然后停工准备考试，到1月才重新开始工作，把一些收尾工作做了，这个项目也是第一次用 Angular Material2 组件，其中还是有一些坑的，就记录一下这是Angular Material官网 一、安装Angular Material首先根据官网的指导Get Start安装Material坑1： 安装完的 Angula">
+<meta name="keywords" content="angular2">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Angular Material2 常用组件用法">
+<meta property="og:url" content="https://recallhyx.github.io/2018/01/13/AngularMaterial2常用组件用法/index.html">
+<meta property="og:site_name" content="Recall Hyx">
+<meta property="og:description" content="（时隔2个多月终于有时间来写博文了）先总结一下，11月接到一个项目，做到12月然后停工准备考试，到1月才重新开始工作，把一些收尾工作做了，这个项目也是第一次用 Angular Material2 组件，其中还是有一些坑的，就记录一下这是Angular Material官网 一、安装Angular Material首先根据官网的指导Get Start安装Material坑1： 安装完的 Angula">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5834506-d205620390122a95.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5834506-ff28bdb21ec7ed75.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5834506-7a7ce56b8de53d0b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5834506-01a1eb82bcad1d38.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5834506-8211570a66aa25e6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5834506-cf6564f179a8f4fe.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5834506-ff0a5a3de829f200.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5834506-963e263c65ee9bcb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-09-13T13:53:36.221Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Angular Material2 常用组件用法">
+<meta name="twitter:description" content="（时隔2个多月终于有时间来写博文了）先总结一下，11月接到一个项目，做到12月然后停工准备考试，到1月才重新开始工作，把一些收尾工作做了，这个项目也是第一次用 Angular Material2 组件，其中还是有一些坑的，就记录一下这是Angular Material官网 一、安装Angular Material首先根据官网的指导Get Start安装Material坑1： 安装完的 Angula">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/5834506-d205620390122a95.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Recall HYX</h5>
+          <a href="mailto:quce.hu@qq.com" title="quce.hu@qq.com" class="mail">quce.hu@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                文章
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/recallhyx" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Angular Material2 常用组件用法</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Angular Material2 常用组件用法</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-01-13T02:42:31.000Z" itemprop="datePublished" class="page-time">
+  2018-01-13
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/前端/">前端</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#一、安装Angular-Material"><span class="post-toc-number">1.</span> <span class="post-toc-text">一、安装Angular Material</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#二、使用Angular-Material"><span class="post-toc-number">2.</span> <span class="post-toc-text">二、使用Angular Material</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#三、常用组件用法"><span class="post-toc-number">3.</span> <span class="post-toc-text">三、常用组件用法</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-AngularMaterial2常用组件用法"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Angular Material2 常用组件用法</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-01-13 10:42:31" datetime="2018-01-13T02:42:31.000Z"  itemprop="datePublished">2018-01-13</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/前端/">前端</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>（<del>时隔2个多月终于有时间来写博文了</del>）<br>先总结一下，11月接到一个项目，做到12月然后停工准备考试，到1月才重新开始工作，把一些收尾工作做了，这个项目也是第一次用 Angular Material2 组件，其中还是有一些坑的，就记录一下<br><strong>这是<a href="https://material.angular.io/" target="_blank" rel="noopener">Angular Material官网</a></strong></p>
+<h2 id="一、安装Angular-Material"><a href="#一、安装Angular-Material" class="headerlink" title="一、安装Angular Material"></a>一、安装Angular Material</h2><p>首先根据官网的指导<code>Get Start</code>安装Material<br><strong>坑1：</strong> 安装完的 Angular Material，有时候不能 <code>AOT预编译</code>，这个时候要看依赖包文件，我是用 <a href="https://github.com/gdi2290/angular-starter" target="_blank" rel="noopener">webpack</a> 这个框架，所以看<code>package.json</code>就可以看到所有依赖包<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/5834506-d205620390122a95.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="依赖包" title="">
+                </div>
+                <div class="image-caption">依赖包</div>
+            </figure><br>可以看到，除了<code>&quot;@angular/material&quot;: &quot;^5.0.0-rc0&quot;</code>为5.0.0之外，还有其他包也要升级，至少要升级到5.0.0<br><strong>坑2：</strong>即使你已经升级到最新版，还有可能不能<code>AOT编译</code>，当初这个问题搞了我好久，（<del>也不久，就一个晚上</del>），然后就有种直觉是框架的问题，第二天果断换框架，其实也就是升级框架，之前用的是 <code>webpack6</code>，看了<code>github</code>发现 <code>webpack</code> 已经有7了，果断换成<code>webpack7</code>，然后就能 <code>AOT预编译</code>了<br><strong>总结：</strong>一开始遇到问题是很正常的，这还是第一步，所以第一步不好好解决的话，后面的工作会很难开展的，幸好是项目一开始就发现不能<code>AOT预编译</code>的问题，不然到后期大改就很麻烦了</p>
+<h2 id="二、使用Angular-Material"><a href="#二、使用Angular-Material" class="headerlink" title="二、使用Angular Material"></a>二、使用Angular Material</h2><p>关于怎么使用 Angular Material 官网并没有说明怎么用，一开始我以为引入组件就能用的，其实并不是，看了官网的例子也没有说，之后通过官网<code>在线编辑</code>，才发现玄机<br><figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">import &#123;</span><br><span class="line"><span class="built_in">  MatAutocompleteModule,</span></span><br><span class="line"><span class="built_in">  MatButtonModule,</span></span><br><span class="line"><span class="built_in">  MatButtonToggleModule,</span></span><br><span class="line"><span class="built_in">  MatCardModule,</span></span><br><span class="line"><span class="built_in">  MatCheckboxModule,</span></span><br><span class="line"><span class="built_in">  MatChipsModule,</span></span><br><span class="line"><span class="built_in">  MatDatepickerModule,</span></span><br><span class="line"><span class="built_in">  MatDialogModule,</span></span><br><span class="line"><span class="built_in">  MatExpansionModule,</span></span><br><span class="line"><span class="built_in">  MatGridListModule,</span></span><br><span class="line"><span class="built_in">  MatIconModule,</span></span><br><span class="line"><span class="built_in">  MatInputModule,</span></span><br><span class="line"><span class="built_in">  MatListModule,</span></span><br><span class="line"><span class="built_in">  MatMenuModule,</span></span><br><span class="line"><span class="built_in">  MatNativeDateModule,</span></span><br><span class="line"><span class="built_in">  MatPaginatorModule,</span></span><br><span class="line"><span class="built_in">  MatProgressBarModule,</span></span><br><span class="line"><span class="built_in">  MatProgressSpinnerModule,</span></span><br><span class="line"><span class="built_in">  MatRadioModule,</span></span><br><span class="line"><span class="built_in">  MatRippleModule,</span></span><br><span class="line"><span class="built_in">  MatSelectModule,</span></span><br><span class="line"><span class="built_in">  MatSidenavModule,</span></span><br><span class="line"><span class="built_in">  MatSliderModule,</span></span><br><span class="line"><span class="built_in">  MatSlideToggleModule,</span></span><br><span class="line"><span class="built_in">  MatSnackBarModule,</span></span><br><span class="line"><span class="built_in">  MatSortModule,</span></span><br><span class="line"><span class="built_in">  MatTableModule,</span></span><br><span class="line"><span class="built_in">  MatTabsModule,</span></span><br><span class="line"><span class="built_in">  MatToolbarModule,</span></span><br><span class="line"><span class="built_in">  MatTooltipModule,</span></span><br><span class="line"><span class="built_in">  MatStepperModule,</span></span><br><span class="line">&#125; from '@angular/material'<span class="comment">;</span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">import &#123;CdkTableModule&#125; from '@angular/cdk/table'<span class="comment">;</span></span><br><span class="line"></span><br><span class="line">@NgModule(&#123;</span><br><span class="line"><span class="symbol">  exports:</span> [</span><br><span class="line"><span class="built_in">    CdkTableModule,</span></span><br><span class="line"><span class="built_in">    MatAutocompleteModule,</span></span><br><span class="line"><span class="built_in">    MatButtonModule,</span></span><br><span class="line"><span class="built_in">    MatButtonToggleModule,</span></span><br><span class="line"><span class="built_in">    MatCardModule,</span></span><br><span class="line"><span class="built_in">    MatCheckboxModule,</span></span><br><span class="line"><span class="built_in">    MatChipsModule,</span></span><br><span class="line"><span class="built_in">    MatStepperModule,</span></span><br><span class="line"><span class="built_in">    MatDatepickerModule,</span></span><br><span class="line"><span class="built_in">    MatDialogModule,</span></span><br><span class="line"><span class="built_in">    MatExpansionModule,</span></span><br><span class="line"><span class="built_in">    MatGridListModule,</span></span><br><span class="line"><span class="built_in">    MatIconModule,</span></span><br><span class="line"><span class="built_in">    MatInputModule,</span></span><br><span class="line"><span class="built_in">    MatListModule,</span></span><br><span class="line"><span class="built_in">    MatMenuModule,</span></span><br><span class="line"><span class="built_in">    MatNativeDateModule,</span></span><br><span class="line"><span class="built_in">    MatPaginatorModule,</span></span><br><span class="line"><span class="built_in">    MatProgressBarModule,</span></span><br><span class="line"><span class="built_in">    MatProgressSpinnerModule,</span></span><br><span class="line"><span class="built_in">    MatRadioModule,</span></span><br><span class="line"><span class="built_in">    MatRippleModule,</span></span><br><span class="line"><span class="built_in">    MatSelectModule,</span></span><br><span class="line"><span class="built_in">    MatSidenavModule,</span></span><br><span class="line"><span class="built_in">    MatSliderModule,</span></span><br><span class="line"><span class="built_in">    MatSlideToggleModule,</span></span><br><span class="line"><span class="built_in">    MatSnackBarModule,</span></span><br><span class="line"><span class="built_in">    MatSortModule,</span></span><br><span class="line"><span class="built_in">    MatTableModule,</span></span><br><span class="line"><span class="built_in">    MatTabsModule,</span></span><br><span class="line"><span class="built_in">    MatToolbarModule,</span></span><br><span class="line"><span class="built_in">    MatTooltipModule,</span></span><br><span class="line">  ]</span><br><span class="line">&#125;)</span><br><span class="line">export class DemoMaterialModule &#123;&#125;</span><br></pre></td></tr></table></figure>
+<p>在官网的<code>在线编辑</code>的<code>main.ts（或者app.module.ts）</code>里面，是有以上两段代码的，这就是把所有的material组件作为一个<code>module</code>，然后再把这个<code>module</code>放到整个项目内唯一一个AppModule里面，就像官网做的那样<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/5834506-ff28bdb21ec7ed75.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure><br>这样就能成功引用组件了</p>
+<h2 id="三、常用组件用法"><a href="#三、常用组件用法" class="headerlink" title="三、常用组件用法"></a>三、常用组件用法</h2><p><strong>1、button</strong><br>button是最基础的组件，最常用的就是提交表单的时候，这里用一个验证码的例子来说明button怎么用<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/5834506-7a7ce56b8de53d0b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure></p>
+<p>这里点击<code>获取验证码</code>后就<code>disable</code>使按钮不可点击，然后再根据后端返回值，来进行倒数<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/5834506-01a1eb82bcad1d38.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure><br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/5834506-8211570a66aa25e6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure><br>倒计时代码如下：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//倒计时</span></span><br><span class="line">countdown = <span class="number">30</span>;</span><br><span class="line">setTime(obj)&#123;</span><br><span class="line">  <span class="keyword">if</span>(<span class="keyword">this</span>.countdown==<span class="number">0</span>)&#123;</span><br><span class="line">    <span class="keyword">this</span>.disablebtn = <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">this</span>.tipstring = <span class="string">"获取验证码"</span>;</span><br><span class="line">    <span class="keyword">this</span>.countdown = <span class="number">30</span>;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.disablebtn = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">this</span>.tipstring = <span class="string">"（"</span>+<span class="keyword">this</span>.countdown+<span class="string">"s）"</span>;</span><br><span class="line">    <span class="keyword">this</span>.countdown--;</span><br><span class="line">  &#125;</span><br><span class="line">  setTimeout(()=&gt;&#123;</span><br><span class="line">    <span class="keyword">this</span>.setTime(obj);</span><br><span class="line">  &#125;,<span class="number">1000</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这样，要一个变量控制是否<code>disable</code>按钮，然后根据业务逻辑自己调整即可<br><strong>2、tabs</strong><br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/5834506-cf6564f179a8f4fe.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="tabs" title="">
+                </div>
+                <div class="image-caption">tabs</div>
+            </figure><br>这里主要讲 tabs的事件怎么用<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- html --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">mat-tab-group</span> (<span class="attr">selectedTabChange</span>)=<span class="string">"select($event)"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">mat-tab</span> <span class="attr">label</span>=<span class="string">"Tab 1"</span>&gt;</span>Content 1<span class="tag">&lt;/<span class="name">mat-tab</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">mat-tab</span> <span class="attr">label</span>=<span class="string">"Tab 2"</span>&gt;</span>Content 2<span class="tag">&lt;/<span class="name">mat-tab</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">mat-tab-group</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight glsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//ts</span></span><br><span class="line">select = (tabChangeEvent: MatTabChangeEvent): <span class="type">void</span> =&gt; &#123;</span><br><span class="line">    console.<span class="built_in">log</span>(tabChangeEvent.<span class="keyword">index</span>);</span><br><span class="line">    <span class="keyword">switch</span> (tabChangeEvent.<span class="keyword">index</span>) &#123;</span><br><span class="line">      <span class="keyword">case</span> <span class="number">0</span>: &#123;</span><br><span class="line">          ...</span><br><span class="line">      &#125; <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">case</span> <span class="number">1</span>: &#123;</span><br><span class="line">          ...</span><br><span class="line">      &#125; <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br></pre></td></tr></table></figure>
+<p>上面的 <code>tabChangeEvent.index</code>就是你现在选中的tab，根据不同的tab可以做不同的事情<br><strong>3、snackbar</strong><br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/5834506-ff0a5a3de829f200.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="snackbar" title="">
+                </div>
+                <div class="image-caption">snackbar</div>
+            </figure><br>snackbar 就相当于 Android 的 toast，为了提醒用户一些信息的<br>snackbar 不难，重点在于它可以复用 ，它有一个属性<code>data</code>可以用来传值<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/5834506-963e263c65ee9bcb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="传值" title="">
+                </div>
+                <div class="image-caption">传值</div>
+            </figure><br>之后只需要在snackbar组件中就可以用 <code>data</code>属性了<br><strong>4、dialog</strong><br>对话框是一个很重要的交互方式，它可以用于提醒用户信息，也可以用来进行一些输入，这里给出一个复用的例子，用于通知用户一些信息<br><figure class="highlight django"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="xml"><span class="comment">&lt;!-- html --&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">h1</span> <span class="attr">mat-dialog-title</span>&gt;</span></span><span class="template-variable">&#123;&#123;data.title&#125;&#125;</span><span class="xml"><span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">mat-dialog-content</span>&gt;</span></span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;<span class="name">p</span>&gt;</span></span><span class="template-variable">&#123;&#123;data.content&#125;&#125;</span><span class="xml"><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">mat-dialog-actions</span> <span class="attr">align</span>=<span class="string">"center"</span>&gt;</span></span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;<span class="name">button</span> *<span class="attr">ngIf</span>=<span class="string">"data.isOkButton"</span> <span class="attr">mat-button</span> (<span class="attr">click</span>)=<span class="string">"data.OkEvent()"</span> <span class="attr">tabindex</span>=<span class="string">"2"</span>&gt;</span></span><span class="template-variable">&#123;&#123;data.OkButtonContent&#125;&#125;</span><span class="xml"><span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;<span class="name">button</span> *<span class="attr">ngIf</span>=<span class="string">"data.isNoButton"</span> <span class="attr">mat-button</span> (<span class="attr">click</span>)=<span class="string">"data.NoEvent()"</span> <span class="attr">tabindex</span>=<span class="string">"1"</span>&gt;</span></span><span class="template-variable">&#123;&#123;data.NoButtonContent&#125;&#125;</span><span class="xml"><span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">export</span> <span class="selector-tag">class</span> <span class="selector-tag">CustomDialogNoticeComponent</span>&#123;</span><br><span class="line">  <span class="selector-tag">constructor</span>(</span><br><span class="line">    public <span class="attribute">dialogRef</span>: MatDialogRef&lt;CustomDialogNoticeComponent&gt;,</span><br><span class="line">    <span class="variable">@Inject</span>(MAT_DIALOG_DATA) public <span class="attribute">data</span>: any) &#123;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-tag">export</span> <span class="selector-tag">interface</span> <span class="selector-tag">CustomDialogData</span>&#123;</span><br><span class="line">  <span class="attribute">title</span>:string;</span><br><span class="line">  <span class="attribute">content</span>:string;</span><br><span class="line">  <span class="attribute">isOkButton</span>:boolean;</span><br><span class="line">  <span class="attribute">isNoButton</span>:boolean;</span><br><span class="line">  <span class="selector-tag">OkEvent</span>?<span class="selector-pseudo">:Function</span>;</span><br><span class="line">  <span class="selector-tag">NoEvent</span>?<span class="selector-pseudo">:Function</span>;</span><br><span class="line">  <span class="selector-tag">OkButtonContent</span>?<span class="selector-pseudo">:string</span>;</span><br><span class="line">  <span class="selector-tag">NoButtonContent</span>?<span class="selector-pseudo">:string</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样，就可以在打开这个对话框的时候，传一个 <code>CustomDialogData</code>的对象，就能根据这些信息配置对话框<br><strong>5、datepicker</strong><br>这里主要讲怎么换成中文，因为默认是按照老美那边的标识的，所以要用在我们这边，就需要做一些改动<br>首先，安装 <a href="http://momentjs.cn/" target="_blank" rel="noopener">momentjs</a></p>
+<blockquote>
+<p>momentjs: JavaScript 日期处理类库</p>
+</blockquote>
+<p><code>npm install moment --save</code><br>然后按照官网的例子<br><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">@Component</span>(&#123;</span><br><span class="line">  ...</span><br><span class="line">  <span class="attribute">providers</span>: [</span><br><span class="line">    <span class="comment">// The locale would typically be provided on the root module of your application. We do it at</span></span><br><span class="line">    <span class="comment">// the component level here, due to limitations of our example generation script.</span></span><br><span class="line">    &#123; <span class="attribute">provide</span>: MAT_DATE_LOCALE, <span class="attribute">useValue</span>: <span class="string">'zh-cn'</span> &#125;,</span><br><span class="line"></span><br><span class="line">    <span class="comment">// `MomentDateAdapter` and `MAT_MOMENT_DATE_FORMATS` can be automatically provided by importing</span></span><br><span class="line">    <span class="comment">// `MatMomentDateModule` in your applications root module. We provide it at the component level</span></span><br><span class="line">    <span class="comment">// here, due to limitations of our example generation script.</span></span><br><span class="line">    &#123; <span class="attribute">provide</span>: DateAdapter, <span class="attribute">useClass</span>: MomentDateAdapter, <span class="attribute">deps</span>: [MAT_DATE_LOCALE] &#125;,</span><br><span class="line">    &#123; <span class="attribute">provide</span>: MAT_DATE_FORMATS, <span class="attribute">useValue</span>: MAT_MOMENT_DATE_FORMATS &#125;,</span><br><span class="line">  ],</span><br><span class="line">&#125;)</span><br><span class="line">  ...</span><br></pre></td></tr></table></figure></p>
+<p>将<code>{ provide: MAT_DATE_LOCALE, useValue: &#39;zh-cn&#39; },</code>的<code>useValue</code>改成<code>&#39;zh-cn</code>就是中文了，<a href="https://github.com/moment/moment/tree/develop/locale" target="_blank" rel="noopener">具体时区代号参考</a></p>
+<p>##四、总结<br>总的来说 Angular Material 组件集成了很多东西，也方便了我们的使用，适合敏捷开发，但是会带来一些依赖性的问题，比如你要为了使用 Angular Material 而改变接口的格式或者和后端的一些对接问题。但是 Angular Material 可以更加复用，我只是很低程度的复用而已</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <footer>
+        <a href="https://recallhyx.github.io">
+            <img src="/img/avatar.jpg" alt="Recall HYX">
+            Recall HYX
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/angular2/">angular2</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://recallhyx.github.io/2018/01/13/AngularMaterial2常用组件用法/&title=《Angular Material2 常用组件用法》 — Recall Hyx&pic=https://recallhyx.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://recallhyx.github.io/2018/01/13/AngularMaterial2常用组件用法/&title=《Angular Material2 常用组件用法》 — Recall Hyx&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://recallhyx.github.io/2018/01/13/AngularMaterial2常用组件用法/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Angular Material2 常用组件用法》 — Recall Hyx&url=https://recallhyx.github.io/2018/01/13/AngularMaterial2常用组件用法/&via=https://recallhyx.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://recallhyx.github.io/2018/01/13/AngularMaterial2常用组件用法/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2018/01/19/安全工具介绍（一）/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">安全工具介绍（一）</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2017/10/19/配置Jenkins/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">配置Jenkins</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "gnMQ4bW3FRMELqY7UJSFCG2L-gzGzoHsz",
+            appKey: "8kUBso0hYLBcTE8e9h89D1Hc",
+            avatar: "mm",
+            placeholder: "Just go go",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Recall HYX &copy; 2017 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://recallhyx.github.io/2018/01/13/AngularMaterial2常用组件用法/&title=《Angular Material2 常用组件用法》 — Recall Hyx&pic=https://recallhyx.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://recallhyx.github.io/2018/01/13/AngularMaterial2常用组件用法/&title=《Angular Material2 常用组件用法》 — Recall Hyx&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://recallhyx.github.io/2018/01/13/AngularMaterial2常用组件用法/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Angular Material2 常用组件用法》 — Recall Hyx&url=https://recallhyx.github.io/2018/01/13/AngularMaterial2常用组件用法/&via=https://recallhyx.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://recallhyx.github.io/2018/01/13/AngularMaterial2常用组件用法/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACsUlEQVR42u3aQY7CMAwFUO5/aWYzi5EQ5duOUUd6XSGgbV6REvPjxyM+ni9H9f3r4+9Zr1d4/fTwgYeHhzce+vVwE9jr9a9fT8bz7jt4eHh427x3t0mm7OT9ZLrPr5yMGQ8PD+8+vKTAzamTR4yHh4f3X3jzxzH/Jh4eHt4deL2ANb9Ncs18mVnJWvDw8PBiXr6LdJ/XK/t7eHh4eONd9bNtAVH5e2icv1fGw8PDW+Dlt+nhq5teeVlfiI/x8PDwFnjXEcNkcp8EENf4cvGNh4eHd5SXkPKiufrOfJH4UL7j4eHhHeX1gtR8CeltTR2LP/Dw8PAWePPiOJ/0o8ig9WiiB4eHh4e3wJs0DeRnzReew61XeHh4eEd51xdKJujqctL7dNSShYeHhzfgJaf1ottJa1c1vCiHEXh4eHjT//XNorm3SVYtoKsjwcPDw9vgVUPSecmbBwe9BgI8PDy8bV4Snlan6TyG6E36zZ09PDw8vAVetVDuhRGTR9w8Cw8PD2+NlycWZ5ulJltr0X3x8PDwjvImE3reSpU3IvRarPDw8PC+z8s376tLSH5uDisEE3h4eHgLvMnt8zB30l7Qi4zx8PDwtnn5wlDOOVpNA9WlqPC74eHh4R3iTaLY5EHkjyOPGybFNx4eHt6cl0++yRSfT+K95oByqwEeHh7eGq+6WZU8pmpzQD71F4p1PDw8vDVeLyzotUb1CvdmpIuHh4d3lPcsHtV4t7qFVo2DPxTueHh4eAu8yXpSLbXnm22TUAMPDw/vLK+6GFSn5t7yUy3B34Lx8PDw1nj5pJzPutUQNinQ81IeDw8P7868aotVjsm//7a4x8PDw7sBL18A5q0GveUHDw8P7zu8+XCTQSdLTvJpIVDGw8PDW+BV//Anl6vGspPmg2P7e3h4eHifz/oBL4Ur8L02S58AAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

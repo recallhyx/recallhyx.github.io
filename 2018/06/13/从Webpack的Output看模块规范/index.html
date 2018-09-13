@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-112417276-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>从Webpack的Output看模块规范 | Recall Hyx | Your star</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#FFC107">
+    
+    
+    <meta name="keywords" content="webpack">
+    <meta name="description" content="libraryTarget从上一篇Vue组件开发流程中，我们可以看到 webpack 里面的一个设置 output ：12345678output: &amp;#123;  path: config.build.assetsRoot,  filename: &apos;vue-crop-avatar.min.js&apos;, // 输出的名字  publicPath: &apos;/dist/&apos;, // 输出的目录  library">
+<meta name="keywords" content="webpack">
+<meta property="og:type" content="article">
+<meta property="og:title" content="从Webpack的Output看模块规范">
+<meta property="og:url" content="https://recallhyx.github.io/2018/06/13/从Webpack的Output看模块规范/index.html">
+<meta property="og:site_name" content="Recall Hyx">
+<meta property="og:description" content="libraryTarget从上一篇Vue组件开发流程中，我们可以看到 webpack 里面的一个设置 output ：12345678output: &amp;#123;  path: config.build.assetsRoot,  filename: &apos;vue-crop-avatar.min.js&apos;, // 输出的名字  publicPath: &apos;/dist/&apos;, // 输出的目录  library">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-09-13T13:53:36.241Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="从Webpack的Output看模块规范">
+<meta name="twitter:description" content="libraryTarget从上一篇Vue组件开发流程中，我们可以看到 webpack 里面的一个设置 output ：12345678output: &amp;#123;  path: config.build.assetsRoot,  filename: &apos;vue-crop-avatar.min.js&apos;, // 输出的名字  publicPath: &apos;/dist/&apos;, // 输出的目录  library">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Recall HYX</h5>
+          <a href="mailto:quce.hu@qq.com" title="quce.hu@qq.com" class="mail">quce.hu@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                文章
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/recallhyx" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">从Webpack的Output看模块规范</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">从Webpack的Output看模块规范</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-06-13T13:55:27.000Z" itemprop="datePublished" class="page-time">
+  2018-06-13
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/前端/">前端</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#libraryTarget"><span class="post-toc-number">1.</span> <span class="post-toc-text">libraryTarget</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#var-暴露为一个变量"><span class="post-toc-number">2.</span> <span class="post-toc-text">var-暴露为一个变量</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#this-通过在对象上赋值暴露"><span class="post-toc-number">3.</span> <span class="post-toc-text">this-通过在对象上赋值暴露</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#模块定义系统"><span class="post-toc-number">4.</span> <span class="post-toc-text">模块定义系统</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#commonjs"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">commonjs</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#commonjs2"><span class="post-toc-number">4.2.</span> <span class="post-toc-text">commonjs2</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#commonjs-和-commonjs2"><span class="post-toc-number">4.3.</span> <span class="post-toc-text">commonjs 和 commonjs2</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#amd"><span class="post-toc-number">4.4.</span> <span class="post-toc-text">amd</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#amd-和-commonjs"><span class="post-toc-number">4.5.</span> <span class="post-toc-text">amd 和 commonjs</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#umd"><span class="post-toc-number">4.6.</span> <span class="post-toc-text">umd</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#其他规范"><span class="post-toc-number">5.</span> <span class="post-toc-text">其他规范</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#ES6-Module-和-CommonJS"><span class="post-toc-number">5.1.</span> <span class="post-toc-text">ES6 Module 和 CommonJS</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-从Webpack的Output看模块规范"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">从Webpack的Output看模块规范</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-06-13 21:55:27" datetime="2018-06-13T13:55:27.000Z"  itemprop="datePublished">2018-06-13</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/前端/">前端</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="libraryTarget"><a href="#libraryTarget" class="headerlink" title="libraryTarget"></a>libraryTarget</h1><p>从上一篇<a href="https://recallhyx.github.io/2018/06/12/Vue%E7%BB%84%E4%BB%B6%E5%BC%80%E5%8F%91%E6%B5%81%E7%A8%8B/">Vue组件开发流程</a>中，我们可以看到 webpack 里面的一个设置 <code>output</code> ：<br><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">output</span>: &#123;</span><br><span class="line">  <span class="attribute">path</span>: config.build.assetsRoot,</span><br><span class="line">  <span class="attribute">filename</span>: <span class="string">'vue-crop-avatar.min.js'</span>, <span class="comment">// 输出的名字</span></span><br><span class="line">  <span class="attribute">publicPath</span>: <span class="string">'/dist/'</span>, <span class="comment">// 输出的目录</span></span><br><span class="line">  <span class="attribute">library</span>: <span class="string">'vue-crop-avatar'</span>, <span class="comment">// 引入组件时的名字</span></span><br><span class="line">  <span class="attribute">libraryTarget</span>: <span class="string">'umd'</span>,   <span class="comment">// 输出格式</span></span><br><span class="line">  <span class="attribute">umdNamedDefine</span>: true    <span class="comment">// 是否将模块名称作为 AMD 输出的命名空间</span></span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure></p>
+<p>其中，<code>libraryTarget</code> 可选的值有以下几个：</p>
+<ul>
+<li><code>var</code></li>
+<li><code>this</code></li>
+<li><code>commonjs</code></li>
+<li><code>commonjs2</code></li>
+<li><code>amd</code></li>
+<li><code>umd</code></li>
+</ul>
+<p><code>libraryTarget</code> 就是选择怎么暴露 <code>library</code> ，即打包后的代码以什么格式输出</p>
+<h1 id="var-暴露为一个变量"><a href="#var-暴露为一个变量" class="headerlink" title="var-暴露为一个变量"></a>var-暴露为一个变量</h1><p><code>var</code> 是 <code>libraryTarget</code> 的默认值，如果要用 <code>var</code> ，就一定要设置 <code>library</code> 的值，因为打包后会是这种形式：<br><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">var MyLibrary</span> = _entry_return_;</span><br></pre></td></tr></table></figure></p>
+<p>其中，<code>MyLibrary</code> 就是 <code>library</code> 的值，如果没有这个值，就会出错。<code>_entry_return_</code> 是由 webpack 生成的，是一个函数。<br>使用方法：<br><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 另外的脚本里</span></span><br><span class="line"><span class="selector-tag">MyLibrary</span><span class="selector-class">.doSomething</span>()</span><br></pre></td></tr></table></figure></p>
+<h1 id="this-通过在对象上赋值暴露"><a href="#this-通过在对象上赋值暴露" class="headerlink" title="this-通过在对象上赋值暴露"></a>this-通过在对象上赋值暴露</h1><p>如果要使用 <code>this</code>，推荐设置 <code>library</code> 的值，因为打包后是这种形式：<br><figure class="highlight ceylon"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>[<span class="string">"MyLibrary"</span>] = <span class="number">_</span>entry<span class="number">_</span><span class="keyword">return</span><span class="number">_</span>;</span><br></pre></td></tr></table></figure></p>
+<p>如果没有 <code>library</code> 那么所有 <code>_entry_return_</code> 的东西都会赋值给 <code>this</code><br>使用方法：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 另外的脚本里</span></span><br><span class="line"><span class="keyword">this</span>.MyLibrary.doSomething();</span><br><span class="line">MyLibrary.doSomething(); <span class="comment">// 如果 this 是 window</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="模块定义系统"><a href="#模块定义系统" class="headerlink" title="模块定义系统"></a>模块定义系统</h1><h2 id="commonjs"><a href="#commonjs" class="headerlink" title="commonjs"></a>commonjs</h2><p><code>libraryTarget: &quot;commonjs&quot;</code> 入口起点的返回值将使用 <code>output.library</code> 中定义的值，分配给 exports 对象。这个名称也意味着，模块用于 CommonJS 环境，打包后的形式：<br><figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">exports[<span class="string">"MyLibrary"</span>] = _entry_return_<span class="comment">;</span></span><br></pre></td></tr></table></figure></p>
+<p>使用方法：<br><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 另外的脚本里</span></span><br><span class="line"><span class="selector-tag">require</span>(<span class="string">"MyLibrary"</span>)<span class="selector-class">.doSomething</span>();</span><br></pre></td></tr></table></figure></p>
+<h2 id="commonjs2"><a href="#commonjs2" class="headerlink" title="commonjs2"></a>commonjs2</h2><p><code>libraryTarget: &quot;commonjs2&quot;</code>  入口起点的返回值将分配给 <code>module.exports</code> 对象。这个名称也意味着模块用于 CommonJS 环境，打包后的形式：<br><figure class="highlight ceylon"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span>.exports = <span class="number">_</span>entry<span class="number">_</span><span class="keyword">return</span><span class="number">_</span>;</span><br></pre></td></tr></table></figure></p>
+<p>使用方法：<br><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 另外的脚本里</span></span><br><span class="line"><span class="selector-tag">require</span>(<span class="string">"MyLibrary"</span>)<span class="selector-class">.doSomething</span>();</span><br></pre></td></tr></table></figure></p>
+<h2 id="commonjs-和-commonjs2"><a href="#commonjs-和-commonjs2" class="headerlink" title="commonjs 和 commonjs2"></a>commonjs 和 commonjs2</h2><p>两者在 webpack 里面没有区别，用还是那么用，从定义上讲，Commonjs 规范仅仅定义了 <code>exports</code> ，<code>module.exports</code> 是 <code>node</code> 对 Commonjs 规范的具体实现 。</p>
+<h2 id="amd"><a href="#amd" class="headerlink" title="amd"></a>amd</h2><p><code>libraryTarget: &quot;amd&quot;</code>  将你的 library 暴露为 AMD 模块。<br>生成的 output 将会使用 “MyLibrary” 作为模块名定义，即：<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">define(<span class="string">"MyLibrary"</span>, [], <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> _entry_return_; <span class="comment">// 此模块返回值，是入口 chunk 返回的值</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>使用方法：<br>可以在 <code>script</code> 标签中引入脚本，也需要 <code>requirejs</code><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">require</span>([<span class="string">'MyLibrary'</span>], <span class="function"><span class="keyword">function</span>(<span class="params">MyLibrary</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 使用 library 做一些事……</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<h2 id="amd-和-commonjs"><a href="#amd-和-commonjs" class="headerlink" title="amd 和 commonjs"></a>amd 和 commonjs</h2><p>AMD 和 CommonJS 都是模块规范，但是这两种是竞争关系。CommonJS 规范加载模块是同步的，也就是说，只有加载完成，才能执行后面的操作。AMD规范则是非同步加载模块，允许指定回调函数。由于 Node 主要用于服务器编程，模块文件一般都已经存在于本地硬盘，所以加载起来比较快，不用考虑非同步加载的方式，所以在服务端 CommonJS 规范比较适用。但是，如果是浏览器环境，要从服务器端加载模块，这时就必须采用非同步模式，因此浏览器端一般采用 AMD 规范。 </p>
+<h2 id="umd"><a href="#umd" class="headerlink" title="umd"></a>umd</h2><p><code>libraryTarget: &quot;umd&quot;</code>  将你的 library 暴露为所有的模块定义下都可运行的方式。它将在 CommonJS, AMD 环境下运行，或将模块导出到 global 下的变量。打包后的形式：<br><figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">(<span class="name">function</span> webpackUniversalModuleDefinition(<span class="name">root</span>, factory) &#123;</span><br><span class="line">  if(<span class="name">typeof</span> exports === <span class="symbol">'object</span>' &amp;&amp; typeof module === <span class="symbol">'object</span>')</span><br><span class="line">    module.exports = factory()<span class="comment">;</span></span><br><span class="line">  else if(<span class="name">typeof</span> define === <span class="symbol">'function</span>' &amp;&amp; define.amd)</span><br><span class="line">    define([], factory)<span class="comment">;</span></span><br><span class="line">  else if(<span class="name">typeof</span> exports === <span class="symbol">'object</span>')</span><br><span class="line">    exports[<span class="string">"MyLibrary"</span>] = factory()<span class="comment">;</span></span><br><span class="line">  else</span><br><span class="line">    root[<span class="string">"MyLibrary"</span>] = factory()<span class="comment">;</span></span><br><span class="line">&#125;)(<span class="name">typeof</span> self !== <span class="symbol">'undefined</span>' ? self : this, function() &#123;</span><br><span class="line">  return _entry_return_<span class="comment">; // 此模块返回值，是入口 chunk 返回的值</span></span><br><span class="line">&#125;)<span class="comment">;</span></span><br></pre></td></tr></table></figure></p>
+<p>这里的 <code>root</code> ，就是 <code>library</code> 的值，不设置的话，也会像不设置 <code>this</code> 一样，暴露到全局。<br>既然 CommonJs 和 AMD 风格一样流行，似乎缺少一个统一的规范。所以人们产生了这样的需求，希望有支持两种风格的“通用”模式，于是通用模块规范（UMD）诞生了。<br>不得不承认，这个模式略难看，但是它兼容了 AMD 和 CommonJS ，同时还支持老式的“全局”变量规范。</p>
+<h1 id="其他规范"><a href="#其他规范" class="headerlink" title="其他规范"></a>其他规范</h1><h2 id="ES6-Module-和-CommonJS"><a href="#ES6-Module-和-CommonJS" class="headerlink" title="ES6 Module 和 CommonJS"></a>ES6 Module 和 CommonJS</h2><p>ES6 Module 与 CommonJS 模块完全不同。它们有两个重大差异。</p>
+<ul>
+<li>CommonJS 模块输出的是一个值的拷贝，ES6 Module 输出的是值的引用。</li>
+<li>CommonJS 模块是运行时加载，ES6 Module 是编译时输出接口。</li>
+</ul>
+<p>CommonJS 模块输出的是值的拷贝，也就是说，一旦输出一个值，模块内部的变化就影响不到这个值。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// lib.js</span></span><br><span class="line"><span class="keyword">var</span> counter = <span class="number">3</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">incCounter</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  counter++;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  counter: counter,</span><br><span class="line">  incCounter: incCounter,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>上面代码输出内部变量 <code>counter</code> 和改写这个变量的内部方法 <code>incCounter</code>。然后，在 <code>main.js</code> 里面加载这个模块。<br><figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var <span class="built-in">mod</span> = require(<span class="string">'./lib'</span>);</span><br><span class="line"></span><br><span class="line">console.<span class="built-in">log</span>(<span class="built-in">mod</span>.counter);  <span class="comment">// 3</span></span><br><span class="line"><span class="built-in">mod</span>.incCounter();</span><br><span class="line">console.<span class="built-in">log</span>(<span class="built-in">mod</span>.counter); <span class="comment">// 3</span></span><br></pre></td></tr></table></figure></p>
+<p>上面代码说明，lib.js 模块加载以后，它的内部变化就影响不到输出的 <code>mod.counter</code> 了。这是因为<code>mod.counter</code> 是一个原始类型的值，会被缓存。除非写成一个函数，才能得到内部变动后的值。<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// lib.js</span></span><br><span class="line"><span class="keyword">var</span> counter = <span class="number">3</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">incCounter</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  counter++;</span><br><span class="line">&#125;</span><br><span class="line">module.exports = &#123;</span><br><span class="line">  <span class="keyword">get</span> counter() &#123;</span><br><span class="line">    <span class="keyword">return</span> counter</span><br><span class="line">  &#125;,</span><br><span class="line">  incCounter: incCounter,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>上面代码中，输出的 <code>counter</code> 属性实际上是一个取值器函数。现在再执行 <code>main.js</code> ，就可以正确读取内部变量 counter 的变动了。<br><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="keyword">node</span> <span class="title">main</span>.js</span><br><span class="line"><span class="number">3</span></span><br><span class="line"><span class="number">4</span></span><br></pre></td></tr></table></figure></p>
+<p>ES6 Module 的运行机制与 CommonJS 不一样。JS 引擎对脚本静态分析的时候，遇到模块加载命令 import，就会生成一个只读引用。等到脚本真正执行时，再根据这个只读引用，到被加载的那个模块里面去取值。换句话说，ES6 的 <code>import</code> 有点像 Unix 系统的“符号连接”，原始值变了， <code>import</code> 加载的值也会跟着变。因此，ES6 Module 是动态引用，并且不会缓存值，模块里面的变量绑定其所在的模块。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// lib.js</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">let</span> counter = <span class="number">3</span>;</span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">incCounter</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  counter++;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// main.js</span></span><br><span class="line"><span class="keyword">import</span> &#123; counter, incCounter &#125; <span class="keyword">from</span> <span class="string">'./lib'</span>;</span><br><span class="line"><span class="built_in">console</span>.log(counter); <span class="comment">// 3</span></span><br><span class="line">incCounter();</span><br><span class="line"><span class="built_in">console</span>.log(counter); <span class="comment">// 4</span></span><br></pre></td></tr></table></figure></p>
+<p>上面代码说明，ES6 Module 输入的变量 <code>counter</code> 是活的，完全反应其所在模块 <code>lib.js</code> 内部的变化。<br>ES6 Module 不会缓存运行结果，而是动态地去被加载的模块取值，并且变量总是绑定其所在的模块。<br>由于 ES6 输入的模块变量，只是一个“符号连接”，所以这个变量是只读的，对它进行重新赋值会报错。</p>
+<p>但是，commonjs 输出的是一个值的拷贝，仅仅在这个值是原始类型的值，即 <code>Boolean</code>，<code>Number</code>，<code>String</code>，<code>Undefined</code>，<code>Null</code>，<code>Symbol</code> 这 6 中原始类型</p>
+<p>值为 <code>Boolean</code>：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// lib.js</span></span><br><span class="line"><span class="keyword">var</span> counter = <span class="literal">true</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">change</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  counter = <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  counter: counter,</span><br><span class="line">  change: change,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//main.js</span></span><br><span class="line">var <span class="built-in">mod</span> = require(<span class="string">'./lib'</span>);</span><br><span class="line"></span><br><span class="line">console.<span class="built-in">log</span>(<span class="built-in">mod</span>.counter);  <span class="comment">// true</span></span><br><span class="line"><span class="built-in">mod</span>.change();</span><br><span class="line">console.<span class="built-in">log</span>(<span class="built-in">mod</span>.counter); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<p>值为 <code>String</code>：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// lib.js</span></span><br><span class="line"><span class="keyword">var</span> counter = <span class="string">'hello'</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">change</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  counter = <span class="string">'world'</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  counter: counter,</span><br><span class="line">  change: change,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var <span class="built-in">mod</span> = require(<span class="string">'./lib'</span>);</span><br><span class="line"></span><br><span class="line">console.<span class="built-in">log</span>(<span class="built-in">mod</span>.counter);  <span class="comment">// hello</span></span><br><span class="line"><span class="built-in">mod</span>.change();</span><br><span class="line">console.<span class="built-in">log</span>(<span class="built-in">mod</span>.counter);  <span class="comment">// hello</span></span><br></pre></td></tr></table></figure>
+<p>值为 <code>undefined</code>：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// lib.js</span></span><br><span class="line"><span class="keyword">var</span> counter = <span class="literal">undefined</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">change</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  counter = <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  counter: counter,</span><br><span class="line">  change: change,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// main.js</span></span><br><span class="line">var <span class="built-in">mod</span> = require(<span class="string">'./lib'</span>);</span><br><span class="line"></span><br><span class="line">console.<span class="built-in">log</span>(<span class="built-in">mod</span>.counter); <span class="comment">// undefined</span></span><br><span class="line"><span class="built-in">mod</span>.change();</span><br><span class="line">console.<span class="built-in">log</span>(<span class="built-in">mod</span>.counter); <span class="comment">// undefined</span></span><br></pre></td></tr></table></figure>
+<p>值为 <code>Symbol</code> ：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// lib.js</span></span><br><span class="line"><span class="keyword">var</span> counter = <span class="built_in">Symbol</span>(<span class="string">'foo'</span>);</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">change</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  counter = <span class="built_in">Symbol</span>(<span class="string">'bar'</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  counter: counter,</span><br><span class="line">  change: change,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// main.js</span></span><br><span class="line">var <span class="built-in">mod</span> = require(<span class="string">'./lib'</span>);</span><br><span class="line"></span><br><span class="line">console.<span class="built-in">log</span>(<span class="built-in">mod</span>.counter);  <span class="comment">// Symbol(foo)</span></span><br><span class="line"><span class="built-in">mod</span>.change();</span><br><span class="line">console.<span class="built-in">log</span>(<span class="built-in">mod</span>.counter);  <span class="comment">// Symbol(bar)</span></span><br></pre></td></tr></table></figure>
+<p>其他的就不做演示了，如果这个值是 <code>Object</code> 类型，那结果就会变：</p>
+<figure class="highlight delphi"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// lib.js</span></span><br><span class="line"><span class="keyword">var</span> counter = <span class="comment">&#123;&#125;</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">change</span><span class="params">()</span> <span class="comment">&#123;</span></span></span><br><span class="line"><span class="function"><span class="comment">  counter.a = 1;</span></span></span><br><span class="line"><span class="function"><span class="comment">&#125;</span></span></span><br><span class="line"><span class="function"><span class="title">module</span>.<span class="title">exports</span> = <span class="comment">&#123;</span></span></span><br><span class="line"><span class="function"><span class="comment">  counter: counter,</span></span></span><br><span class="line"><span class="function"><span class="comment">  change: change,</span></span></span><br><span class="line"><span class="function"><span class="comment">&#125;</span>;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// main.js</span></span><br><span class="line">var <span class="built-in">mod</span> = require(<span class="string">'./lib'</span>);</span><br><span class="line"></span><br><span class="line">console.<span class="built-in">log</span>(<span class="built-in">mod</span>.counter);  <span class="comment">// &#123;&#125;</span></span><br><span class="line"><span class="built-in">mod</span>.change();</span><br><span class="line">console.<span class="built-in">log</span>(<span class="built-in">mod</span>.counter);  <span class="comment">// &#123;a:1&#125;</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>参考：<br><a href="http://zhaoda.net/webpack-handbook/commonjs.html" target="_blank" rel="noopener">Webpack 中文指南</a><br><a href="http://es6.ruanyifeng.com/#docs/module-loader" target="_blank" rel="noopener">Module 的加载实现</a><br><a href="https://75team.com/post/%E8%AF%91%E7%A5%9E%E9%A9%AC%E6%98%AFamd-commonjs-umd.html" target="_blank" rel="noopener">[译]神马是AMD, CommonJS, UMD?</a></p>
+</blockquote>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <footer>
+        <a href="https://recallhyx.github.io">
+            <img src="/img/avatar.jpg" alt="Recall HYX">
+            Recall HYX
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/webpack/">webpack</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://recallhyx.github.io/2018/06/13/从Webpack的Output看模块规范/&title=《从Webpack的Output看模块规范》 — Recall Hyx&pic=https://recallhyx.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://recallhyx.github.io/2018/06/13/从Webpack的Output看模块规范/&title=《从Webpack的Output看模块规范》 — Recall Hyx&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://recallhyx.github.io/2018/06/13/从Webpack的Output看模块规范/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《从Webpack的Output看模块规范》 — Recall Hyx&url=https://recallhyx.github.io/2018/06/13/从Webpack的Output看模块规范/&via=https://recallhyx.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://recallhyx.github.io/2018/06/13/从Webpack的Output看模块规范/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2018/06/22/解决iPhone拍照旋转/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">解决iPhone拍照旋转</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/06/12/Vue组件开发流程/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Vue组件开发流程</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "gnMQ4bW3FRMELqY7UJSFCG2L-gzGzoHsz",
+            appKey: "8kUBso0hYLBcTE8e9h89D1Hc",
+            avatar: "mm",
+            placeholder: "Just go go",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Recall HYX &copy; 2017 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://recallhyx.github.io/2018/06/13/从Webpack的Output看模块规范/&title=《从Webpack的Output看模块规范》 — Recall Hyx&pic=https://recallhyx.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://recallhyx.github.io/2018/06/13/从Webpack的Output看模块规范/&title=《从Webpack的Output看模块规范》 — Recall Hyx&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://recallhyx.github.io/2018/06/13/从Webpack的Output看模块规范/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《从Webpack的Output看模块规范》 — Recall Hyx&url=https://recallhyx.github.io/2018/06/13/从Webpack的Output看模块规范/&via=https://recallhyx.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://recallhyx.github.io/2018/06/13/从Webpack的Output看模块规范/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACqUlEQVR42u3a247CMAwFQP7/p9nXlVYtx5dUaDV5QgXaTJBi4/j1isf717i/cvWt+/H3Dsn91wYeHh7eYOr3D84ndP+ZyXLkc8bDw8M7zbvaUXuve+HkcorBsy6v4+Hh4X0Nr3qlujR4eHh4/493f4de8j0JQnh4eHjP8/ICa1LkzT/T++6RWgseHh5ezMtPkb7n9ZHzPTw8PLzxqXqe+OZbfO/z79bAw8PDO8GrllB7bQHVhLiX1l8uGR4eHt4BXm+j320U2C0l4+Hh4T3Jq7alRkdQrRBSBvSycjw8PLwir3ewlKe883JDntZf/lfAw8PDW+UliW+vMJEEieQp+XzK4QEPDw+vxasedOWB5J4xL/5GYQwPDw/vEV4Cm2zrvbQ4T8qjCIaHh4c34OWNTXNGNYTsJuh4eHh4u7xqCTVvIJiEnHxxm78bHh4eXovXKxZUSw89RtK+8GHOeHh4eMd4vdtV09x50tysteDh4eEd5lWbnHqwalpfDTZ4eHh4T/ImD+ht5UnpoVnSxcPDwzvGy0uxefkgT9B7TVdR8wEeHh7e47xXMLYS62opudxThoeHh3eAlxcjkuR4t7Urb1a4PN/Dw8PDW+LlE50XJnqkJAzkS4OHh4e3y5scd1XT6Lyg0CvgFtJrPDw8vBbvQzE0PoJKJjRpuuq9i4eHh3eON9m+Jwl6NUUuhxM8PDy8x3m7E+0tUz7w8PDwTvPexdE70JoXKfJ3C5PDw8PDa/F6G27OnpR680LGQlDBw8PDK/Lyzb13TNULP9UiSFSMwMPDw1vlVRubJsWLPL3Og9blFTw8PLwv4OXpchJIyk1UxcYFPDw8vG/jTUoVyXLkSXkhbuDh4eEt8aqlgerSVDFb98fDw8M7wZv/4S8kuDFsq1SBh4eHt8r7AaSnac7W23eEAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

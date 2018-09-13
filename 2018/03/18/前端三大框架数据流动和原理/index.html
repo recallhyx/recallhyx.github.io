@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-112417276-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>前端三大框架数据流动和原理 | Recall Hyx | Your star</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#FFC107">
+    
+    
+    <meta name="keywords" content="Angular-React-Vue">
+    <meta name="description" content="前言前端三大框架：Angular2、React、Vue，都是 MVVM 框架，但是他们各自实现 ViewModel 层 数据绑定的方式都不太一样，在我学习框架的过程中，也想要知道底层实现的方法，所以写写博客记录一下。 Angular2Angular2 提供一种特殊的双向数据绑定语法：[(x)]。 [(x)] 语法结合了属性绑定的方括号 [x] 和事件绑定的圆括号 (x) 。也就是说，Angular">
+<meta name="keywords" content="Angular-React-Vue">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端三大框架数据流动和原理">
+<meta property="og:url" content="https://recallhyx.github.io/2018/03/18/前端三大框架数据流动和原理/index.html">
+<meta property="og:site_name" content="Recall Hyx">
+<meta property="og:description" content="前言前端三大框架：Angular2、React、Vue，都是 MVVM 框架，但是他们各自实现 ViewModel 层 数据绑定的方式都不太一样，在我学习框架的过程中，也想要知道底层实现的方法，所以写写博客记录一下。 Angular2Angular2 提供一种特殊的双向数据绑定语法：[(x)]。 [(x)] 语法结合了属性绑定的方括号 [x] 和事件绑定的圆括号 (x) 。也就是说，Angular">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://github.com/JTangming/tm/blob/master/images/NG-2-transelate/20160403/tumblr_njb2puhhEa1qc0howo2_1280.png?raw=true">
+<meta property="og:image" content="https://sfault-image.b0.upaiyun.com/132/184/132184689-57b310ea1804f">
+<meta property="og:image" content="https://sfault-image.b0.upaiyun.com/111/738/1117380429-57b3110440af0">
+<meta property="og:image" content="https://camo.githubusercontent.com/a32766a14f6b7fbe631475ed1a186fbd9de7f2c3/687474703a2f2f6c69766f7261732e6769746875622e696f2f626c6f672f7669727475616c2d646f6d2f636f6d706172652d696e2d6c6576656c2e706e67">
+<meta property="og:image" content="https://camo.githubusercontent.com/6cdc35026bcbb6aa0f8fb4aaca3596963192a7f3/687474703a2f2f6c69766f7261732e6769746875622e696f2f626c6f672f7669727475616c2d646f6d2f6466732d77616c6b2e706e67">
+<meta property="og:updated_time" content="2018-09-13T13:53:36.242Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="前端三大框架数据流动和原理">
+<meta name="twitter:description" content="前言前端三大框架：Angular2、React、Vue，都是 MVVM 框架，但是他们各自实现 ViewModel 层 数据绑定的方式都不太一样，在我学习框架的过程中，也想要知道底层实现的方法，所以写写博客记录一下。 Angular2Angular2 提供一种特殊的双向数据绑定语法：[(x)]。 [(x)] 语法结合了属性绑定的方括号 [x] 和事件绑定的圆括号 (x) 。也就是说，Angular">
+<meta name="twitter:image" content="https://github.com/JTangming/tm/blob/master/images/NG-2-transelate/20160403/tumblr_njb2puhhEa1qc0howo2_1280.png?raw=true">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Recall HYX</h5>
+          <a href="mailto:quce.hu@qq.com" title="quce.hu@qq.com" class="mail">quce.hu@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                文章
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/recallhyx" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">前端三大框架数据流动和原理</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">前端三大框架数据流动和原理</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-03-18T14:02:26.000Z" itemprop="datePublished" class="page-time">
+  2018-03-18
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/前端/">前端</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#前言"><span class="post-toc-number">1.</span> <span class="post-toc-text">前言</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Angular2"><span class="post-toc-number">2.</span> <span class="post-toc-text">Angular2</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#怎么知道数据变化了"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">怎么知道数据变化了</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#数据更新"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">数据更新</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#优化变化检测策略"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">优化变化检测策略</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#不可变对象（Immutable-Objects）"><span class="post-toc-number">2.3.1.</span> <span class="post-toc-text">不可变对象（Immutable Objects）</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#可观察量（Observables）"><span class="post-toc-number">2.3.2.</span> <span class="post-toc-text">可观察量（Observables）</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Vue"><span class="post-toc-number">3.</span> <span class="post-toc-text">Vue</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#怎么知道数据变化了-1"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">怎么知道数据变化了</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#vue的发布者-订阅者模式"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">vue的发布者-订阅者模式</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#实现Observer"><span class="post-toc-number">3.2.1.</span> <span class="post-toc-text">实现Observer</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#实现Compile"><span class="post-toc-number">3.2.2.</span> <span class="post-toc-text">实现Compile</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#实现Watcher"><span class="post-toc-number">3.2.3.</span> <span class="post-toc-text">实现Watcher</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#实现MVVM"><span class="post-toc-number">3.2.4.</span> <span class="post-toc-text">实现MVVM</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#React"><span class="post-toc-number">4.</span> <span class="post-toc-text">React</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#怎么知道数据变化了-2"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">怎么知道数据变化了</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#数据更新-1"><span class="post-toc-number">4.2.</span> <span class="post-toc-text">数据更新</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#什么是Virtual-DOM"><span class="post-toc-number">4.2.1.</span> <span class="post-toc-text">什么是Virtual DOM</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#为什么要用-Virtual-DOM"><span class="post-toc-number">4.2.2.</span> <span class="post-toc-text">为什么要用 Virtual DOM</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#为什么-Virtual-DOM-可以提高网页性能"><span class="post-toc-number">4.2.3.</span> <span class="post-toc-text">为什么 Virtual DOM 可以提高网页性能</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#diff算法"><span class="post-toc-number">4.2.4.</span> <span class="post-toc-text">diff算法</span></a></li></ol></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-前端三大框架数据流动和原理"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">前端三大框架数据流动和原理</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-03-18 22:02:26" datetime="2018-03-18T14:02:26.000Z"  itemprop="datePublished">2018-03-18</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/前端/">前端</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>前端三大框架：Angular2、React、Vue，都是 MVVM 框架，但是他们各自实现 ViewModel 层 数据绑定的方式都不太一样，在我学习框架的过程中，也想要知道底层实现的方法，所以写写博客记录一下。</p>
+<h1 id="Angular2"><a href="#Angular2" class="headerlink" title="Angular2"></a>Angular2</h1><p>Angular2 提供一种特殊的双向数据绑定语法：<code>[(x)]</code>。 <code>[(x)]</code> 语法结合了属性绑定的方括号 <code>[x]</code> 和事件绑定的圆括号 <code>(x)</code> 。也就是说，Angular2 数据流向是单向的。</p>
+<p><strong>注：这里不讨论 Angularjs 和 Angular2 的区别，因为 Angular2 几乎是 Angularjs 的大改，很多地方都不一样了，具体可以自己去找找。</strong></p>
+<h2 id="怎么知道数据变化了"><a href="#怎么知道数据变化了" class="headerlink" title="怎么知道数据变化了"></a>怎么知道数据变化了</h2><p>我们知道有一些操作会引起数据的变化</p>
+<ul>
+<li>用户输入操作，比如点击，提交等</li>
+<li>请求服务端数据</li>
+<li>定时事件，比如 <code>setTimeout</code>，<code>setInterval</code></li>
+</ul>
+<p>这几点有一个共同点，就是它们都是异步的。也就是说，所有的异步操作是可能导致数据变化的根源因素。<br>Angular2 引入了一个很重要的文件 <code>zone.js</code>（所谓的猴子补丁Monkey patch），它主要是对异步事件做一层代理包裹，也就是说 <code>Zone.js</code> 运行后，调用 <code>setTimeout</code>、<code>addEventListener</code> 等浏览器异步事件时，不再是调用原生的方法，而是被猴子补丁包装过后的代理方法。<br>这里就用到了一个模式：<strong>代理模式</strong></p>
+<p>下面我们来介绍 <code>ngZone</code> 。实际上，<code>ngZone</code> 是基于 <code>Zone.js</code> 来实现的，Angular2 fork了 <code>zone.js</code>，它是 <code>zone</code> 派生出来的一个子zone，在 Angular 环境内注册的异步事件都运行在这个 子zone 上(因为 <code>ngZone</code> 拥有整个 Angular 运行环境的执行上下文)，并且 <code>onTurnStart</code> 和 <code>onTurnDone</code> 事件也会在该 子zone 的 <code>run</code><br> 方法中触发。</p>
+<p>在Angular2源码中，有一个 <code>ApplicationRef</code> 类，其作用是用来监听 <code>ngZone</code> 中的<br> <code>onTurnDone</code> 事件，不论何时只要触发这个事件，那么将会执行一个 <code>tick()</code> 方法用来告诉 Angular 去执行变化监测。<br><figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="regexp">//</span> very simplified version <span class="keyword">of</span> actual source</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ApplicationRef</span> &#123;</span></span><br><span class="line">  changeDetectorRefs:ChangeDetectorRef[] = [];</span><br><span class="line"></span><br><span class="line">  constructor(private zone: NgZone) &#123;</span><br><span class="line">    <span class="keyword">this</span>.zone.onTurnDone</span><br><span class="line">      .subscribe(<span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">this</span>.zone.run(<span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">this</span>.tick());</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  tick() &#123;</span><br><span class="line">    <span class="keyword">this</span>.changeDetectorRefs</span><br><span class="line">      .forEach(<span class="function"><span class="params">(ref)</span> =&gt;</span> ref.detectChanges());</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="数据更新"><a href="#数据更新" class="headerlink" title="数据更新"></a>数据更新</h2><p>Angular2 有一个机制：脏检查，其实就是存储所有变量的值，每当可能有变量发生变化需要检查时，就将所有变量的旧值跟新值进行比较，不相等就说明检测到变化，需要更新对应视图。<br>在 Angular2 中，任何的一个 Angular2 应用都是由大大小小的组件组成的，可以把它看成是一颗线性的组件树，重要的是，每一个组件都有自己的变化检测器。正是因为每个组件都拥有它的变化检测器，组成了 Angular2 应用的一颗组件树，同样的我们也有变化监测树，它也是线性的，数据的流向也是从上到下，因为变化监测在每个组件中的执行也是从根组件开始，从上往下的执行。<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://github.com/JTangming/tm/blob/master/images/NG-2-transelate/20160403/tumblr_njb2puhhEa1qc0howo2_1280.png?raw=true" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure><br>Angular2 在整个运行期间都会为每一个组件创建监测类，用来监测每个组件在每个运行周期是否有异步操作发生。当变化监测被执行时，即发生了异步操作，那么这个组件的值被传递到对应组件的变化检测器来和之前的数据对比是否有改变，如果和参照数据对比有变动的话，Angular 将更新视图。</p>
+<h2 id="优化变化检测策略"><a href="#优化变化检测策略" class="headerlink" title="优化变化检测策略"></a>优化变化检测策略</h2><p>因为在JavaScript语言中不提供给我们对象的变化通知，所以 Angular 必须保守的要对每一个组件的每一次运行结果执行变化检测，但其实很多组件的输入属性是没有变化的，没必要对这样的组件来一次变化监测，如何减少不必要的监测，我们有两种<br> <code>OnPush</code> 方式去实现。<br><figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">export <span class="class"><span class="keyword">enum</span> <span class="title">ChangeDetectionStrategy</span> &#123; </span></span><br><span class="line">  OnPush, <span class="regexp">//</span> 表示变化检测对象的状态为<span class="string">`CheckOnce`</span> </span><br><span class="line">  Default, <span class="regexp">//</span> 表示变化检测对象的状态为<span class="string">`CheckAlways`</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>从 <code>ChangeDetectionStrategy</code> 可以看到，Angular2 有两种变化检测策略。<code>Default</code><br> 是 Angular2 默认的变化检测策略，也就是上述提到的脏检查（只要有值发生变化，就全部检查）。开发者可以根据场景来设置更加高效的变化检测方式：<code>onPush</code> 。<code>onPush</code> 策略，就是只有当输入数据的引用发生变化或者有事件触发时，组件才进行变化检测。</p>
+<h3 id="不可变对象（Immutable-Objects）"><a href="#不可变对象（Immutable-Objects）" class="headerlink" title="不可变对象（Immutable Objects）"></a>不可变对象（Immutable Objects）</h3><p>不可变对象(Immutable Objects)给我们提供的保障是对象不会改变，即当其内部的属性发生变化时，相对旧有的对象，我们将会保存另一份新的参照。它仅仅依赖输入的属性，也就是当输入属性没有变动（没有变动即没有产生一份新的参照），Angula 将跳过对该组件的全部变化监测，直到有属性变化为止。如果需要在 Angular2 中使用不可变对象，我们需要做的就是设置 <code>changeDetection: ChangeDetectionStrategy.OnPush</code>，如下的例子：<br><figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">@Component(&#123;</span><br><span class="line"><span class="symbol">  template:</span> `</span><br><span class="line">    <span class="params">&lt;h2&gt;</span>&#123; &#123;vData.name&#125; &#125;<span class="params">&lt;/h2&gt;</span></span><br><span class="line">    <span class="params">&lt;span&gt;</span>&#123; &#123;vData.email&#125; &#125;<span class="params">&lt;/span&gt;</span></span><br><span class="line">  `,</span><br><span class="line">  <span class="comment">// 设置该组件的变化检测策略为onPush</span></span><br><span class="line"><span class="symbol">  changeDetection:</span> ChangeDetectionStrategy.OnPush</span><br><span class="line">&#125;)</span><br><span class="line">class <span class="class">VCardCmp </span>&#123;</span><br><span class="line">  @Input() vData;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>比如上面这个例子，当 <code>vData</code> 的属性值发生变化的时候，这个组件不会发生变化检测，只有当 <code>vData</code> 重新赋值的时候才会。一般，只接受输入的木偶子组件（<code>dumb components</code>），也可以理解为子组件，比较适合采用 <code>onPush</code> 策略。</p>
+<h3 id="可观察量（Observables）"><a href="#可观察量（Observables）" class="headerlink" title="可观察量（Observables）"></a>可观察量（Observables）</h3><p>和不可变对象类似，但却又和不可变对象不同，它们有相关变化的时候不会提供一份新的参照，可观测对象在输入属性发生变化的时候来触发一个事件来更新组件视图，同样的，我们也是添加 <code>OnPush</code> 来跳过子组件树的监测器，我们看一个例子：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component(&#123;</span></span><br><span class="line"><span class="meta">  template: <span class="meta-string">'&#123; &#123;counter&#125; &#125;'</span>,</span></span><br><span class="line"><span class="meta">  changeDetection: ChangeDetectionStrategy.OnPush</span></span><br><span class="line"><span class="meta">&#125;)</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CartBadgeCmp</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Input()</span> addItemStream:Observable&lt;any&gt;;</span><br><span class="line">  counter = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">  ngOnInit() &#123;</span><br><span class="line">    <span class="keyword">this</span>.addItemStream.subscribe(() =&gt; &#123;</span><br><span class="line">      <span class="keyword">this</span>.counter++; <span class="comment">// application state changed</span></span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>该组件是模拟的当用户触发一个事件后增加 <code>counter</code> 这样一个场景，确切的讲，<code>CartBadgeCmp</code> 设置了一个插值 <code>counter</code> 和一个输入属性 <code>addItemStream</code>，当有异步操作需要更新 <code>counter</code> 的时候，将会触发一个事件流，但是输入属性<br> <code>addItemStream</code> 作为参考对象将不会更改，意味着该组件树的变化监测将不会发生。那怎么办？我们将怎么来通知 Angular 某区块有改变呢？Angular2 的变化监测总是从组件树的头到尾来执行，我们其实需要的就是在整个组件树的某个发生改变的地方来做出相应即可，Angular 是不知道那一块目录有改变的，但是我们知道，我们可以通过依赖注入给组件来引入一个 <code>ChangeDetectorRef</code> ，这个方法正是我们所需要的，它能标记整颗组件树的目录直到下一次变化监测的执行，代码示例如下：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CartBadgeCmp</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>(<span class="keyword">private</span> cd: ChangeDetectorRef) &#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Input()</span> addItemStream:Observable&lt;any&gt;;</span><br><span class="line">    counter = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    ngOnInit() &#123;</span><br><span class="line">        <span class="keyword">this</span>.addItemStream.subscribe(() =&gt; &#123;</span><br><span class="line">            <span class="keyword">this</span>.counter++; <span class="comment">// application state changed</span></span><br><span class="line">            <span class="keyword">this</span>.cd.markForCheck(); <span class="comment">// marks path</span></span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>当这个可监测的 <code>addItemStream</code> 触发一个事件，该事件处理句柄将会从根路径到这个已经改变的 <code>addItemStream</code> 组件来处理监测，一旦变化监测跑遍整个监测路径，它将会存储 <code>OnPush</code> 状态到整个组件树。这样做的好处是，变化监测系统将会走遍整棵树，你可以利用他们来监测树在局部是否有真正的改变，以此来做出相应的改变。</p>
+<h1 id="Vue"><a href="#Vue" class="headerlink" title="Vue"></a>Vue</h1><p>Vue 和 Angular2 一样，也是使用了单向数据流，实现双向绑定也是属性绑定和事件绑定相结合，但是实现的方法却不一样。</p>
+<h2 id="怎么知道数据变化了-1"><a href="#怎么知道数据变化了-1" class="headerlink" title="怎么知道数据变化了"></a>怎么知道数据变化了</h2><p>vue 是通过数据劫持的方式来做数据绑定的，其中最核心的方法便是通过<code>Object.defineProperty()</code>来实现对属性的劫持，达到监听数据变动的目的。这个函数是重要的概念，不理解可以去看一下 <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty" target="_blank" rel="noopener">MDN-Object.defineProperty()</a><br><code>Object.defineProperty</code> 是 ES5 中一个无法 shim 的特性，这也就是为什么 Vue 不支持 IE8 以及更低版本浏览器的原因。<br>把一个普通的 JavaScript 对象传给 Vue 实例的 <code>data</code> 选项，Vue 将遍历此对象所有的属性，并使用 <code>Object.defineProperty</code> 把这些属性全部转为 <code>getter/setter</code>。<br>这些 <code>getter/setter</code> 对用户来说是不可见的，但是在内部它们让 Vue 追踪依赖，在属性被访问和修改时通知变化。<br>vue 是采用数据劫持结合<strong>发布者-订阅者模式</strong>的方式，通过<code>Object.defineProperty()</code> 来劫持各个属性的 <code>setter</code>，<code>getter</code>，在数据变动时发布消息给订阅者，触发相应的监听回调。</p>
+<h2 id="vue的发布者-订阅者模式"><a href="#vue的发布者-订阅者模式" class="headerlink" title="vue的发布者-订阅者模式"></a>vue的发布者-订阅者模式</h2><p>个人觉得比较好的一篇<a href="https://segmentfault.com/a/1190000006599500" target="_blank" rel="noopener">文章</a>，搬运了，以下是搬运的内容，当做学习与记录。</p>
+<p>要实现mvvm的双向绑定，就必须要实现以下几点：<br>1、实现一个数据监听器 <code>Observer</code>，能够对数据对象的所有属性进行监听，如有变动可拿到最新值并通知订阅者<br>2、实现一个指令解析器 <code>Compile</code>，对每个元素节点的指令进行扫描和解析，根据指令模板替换数据，以及绑定相应的更新函数<br>3、实现一个 <code>Watcher</code>，作为连接 <code>Observer</code> 和 <code>Compile</code> 的桥梁，能够订阅并收到每个属性变动的通知，执行指令绑定的相应回调函数，从而更新视图<br>4、<code>mvvm</code> 入口函数，整合以上三者<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://sfault-image.b0.upaiyun.com/132/184/132184689-57b310ea1804f" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure></p>
+<h3 id="实现Observer"><a href="#实现Observer" class="headerlink" title="实现Observer"></a>实现Observer</h3><p>我们知道可以利用 <code>Obeject.defineProperty()</code> 来监听属性变动<br>那么将需要 <code>observe</code> 的数据对象进行递归遍历，包括子属性对象的属性，都加上 <code>setter</code> 和 <code>getter</code> 这样的话，给这个对象的某个值赋值，就会触发 <code>setter</code> ，那么就能监听到了数据变化。相关代码可以是这样：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">observe</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!data || <span class="keyword">typeof</span> data !== <span class="string">'object'</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 取出所有属性遍历</span></span><br><span class="line">    <span class="built_in">Object</span>.keys(data).forEach(<span class="function"><span class="keyword">function</span>(<span class="params">key</span>) </span>&#123;</span><br><span class="line">        defineReactive(data, key, data[key]);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">defineReactive</span>(<span class="params">data, key, val</span>) </span>&#123;</span><br><span class="line">    observe(val); <span class="comment">// 监听子属性</span></span><br><span class="line">    <span class="built_in">Object</span>.defineProperty(data, key, &#123;</span><br><span class="line">        enumerable: <span class="literal">true</span>, <span class="comment">// 可枚举</span></span><br><span class="line">        configurable: <span class="literal">false</span>, <span class="comment">// 不能再define</span></span><br><span class="line">        get: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> val;</span><br><span class="line">        &#125;,</span><br><span class="line">        set: <span class="function"><span class="keyword">function</span>(<span class="params">newVal</span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'哈哈哈，监听到值变化了 '</span>, val, <span class="string">' --&gt; '</span>, newVal);</span><br><span class="line">            val = newVal;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这样我们已经可以监听每个数据的变化了，那么监听到变化之后就是怎么通知订阅者了，所以接下来我们需要实现一个消息订阅器，很简单，维护一个数组，用来收集订阅者，数据变动触发 <code>notify</code> ，再调用订阅者的 <code>update</code> 方法，代码改善之后是这样：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ... 省略</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">defineReactive</span>(<span class="params">data, key, val</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> dep = <span class="keyword">new</span> Dep();</span><br><span class="line">    observe(val); <span class="comment">// 监听子属性</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">Object</span>.defineProperty(data, key, &#123;</span><br><span class="line">        <span class="comment">// ... 省略</span></span><br><span class="line">        set: <span class="function"><span class="keyword">function</span>(<span class="params">newVal</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (val === newVal) <span class="keyword">return</span>;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'哈哈哈，监听到值变化了 '</span>, val, <span class="string">' --&gt; '</span>, newVal);</span><br><span class="line">            val = newVal;</span><br><span class="line">            dep.notify(); <span class="comment">// 通知所有订阅者</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Dep</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.subs = [];</span><br><span class="line">&#125;</span><br><span class="line">Dep.prototype = &#123;</span><br><span class="line">    addSub: <span class="function"><span class="keyword">function</span>(<span class="params">sub</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.subs.push(sub);</span><br><span class="line">    &#125;,</span><br><span class="line">    notify: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.subs.forEach(<span class="function"><span class="keyword">function</span>(<span class="params">sub</span>) </span>&#123;</span><br><span class="line">            sub.update();</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>那么问题来了，谁是订阅者？怎么往订阅器添加订阅者？<br>没错，上面的思路整理中我们已经明确订阅者应该是 <code>Watcher</code> , 而且 <code>var dep = new Dep();</code> 是在  <code>defineReactive</code> 方法内部定义的，所以想通过 <code>dep</code> 添加订阅者，就必须要在闭包内操作，所以我们可以在  <code>getter</code> 里面动手脚：<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Observer.js</span></span><br><span class="line"><span class="comment">// ...省略</span></span><br><span class="line">Object.defineProperty(data, key, &#123;</span><br><span class="line">    <span class="keyword">get</span>: <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 由于需要在闭包内添加watcher，所以通过Dep定义一个全局target属性，暂存watcher, 添加完移除</span></span><br><span class="line">        Dep.target &amp;&amp; dep.addDep(Dep.target);</span><br><span class="line">        <span class="keyword">return</span> val;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// ... 省略</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Watcher.js</span></span><br><span class="line">Watcher.prototype = &#123;</span><br><span class="line">    <span class="keyword">get</span>: <span class="function"><span class="keyword">function</span><span class="params">(key)</span> </span>&#123;</span><br><span class="line">        Dep.target = <span class="keyword">this</span>;</span><br><span class="line">        <span class="keyword">this</span>.value = data[key];    <span class="comment">// 这里会触发属性的getter，从而添加订阅者</span></span><br><span class="line">        Dep.target = <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这里已经实现了一个 <code>Observer</code> 了，已经具备了监听数据和数据变化通知订阅者的功能。</p>
+<h3 id="实现Compile"><a href="#实现Compile" class="headerlink" title="实现Compile"></a>实现Compile</h3><p><code>compile</code> 主要做的事情是解析模板指令，将模板中的变量替换成数据，然后初始化渲染页面视图，并将每个指令对应的节点绑定更新函数，添加监听数据的订阅者，一旦数据有变动，收到通知，更新视图，如图所示：<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://sfault-image.b0.upaiyun.com/111/738/1117380429-57b3110440af0" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure><br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">function Compile(el) &#123;</span><br><span class="line">    <span class="keyword">this</span>.$el = <span class="keyword">this</span>.isElementNode(el) ? el : document.querySelector(el);</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.$el) &#123;</span><br><span class="line">        <span class="keyword">this</span>.$fragment = <span class="keyword">this</span>.node2Fragment(<span class="keyword">this</span>.$el);</span><br><span class="line">        <span class="keyword">this</span>.init();</span><br><span class="line">        <span class="keyword">this</span>.$el.appendChild(<span class="keyword">this</span>.$fragment);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">Compile.prototype = &#123;</span><br><span class="line">    init: function() &#123; <span class="keyword">this</span>.compileElement(<span class="keyword">this</span>.$fragment); &#125;,</span><br><span class="line">    node2Fragment: function(el) &#123;</span><br><span class="line">        <span class="keyword">var</span> fragment = document.createDocumentFragment(), child;</span><br><span class="line">        <span class="comment">// 将原生节点拷贝到fragment</span></span><br><span class="line">        <span class="keyword">while</span> (child = el.firstChild) &#123;</span><br><span class="line">            fragment.appendChild(child);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> fragment;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p><code>compileElement</code> 方法将遍历所有节点及其子节点，进行扫描解析编译，调用对应的指令渲染函数进行数据渲染，并调用对应的指令更新函数进行绑定，详看代码及注释说明：<br><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line">Compile.prototype = &#123;</span><br><span class="line">    // ... 省略</span><br><span class="line">    compileElement: function(el) &#123;</span><br><span class="line">        var childNodes = el.childNodes, me = this;</span><br><span class="line">        [].slice.call(childNodes).forEach(function(<span class="keyword">node</span><span class="title">) &#123;</span></span><br><span class="line"><span class="title">            var</span> text = <span class="keyword">node</span>.<span class="title">textContent</span>;</span><br><span class="line">            var reg = /&#123; &#123;(.*)&#125; &#125;/;    // 表达式文本</span><br><span class="line">            // 按元素节点方式编译</span><br><span class="line">            if (me.isElementNode(<span class="keyword">node</span><span class="title">)) &#123;</span></span><br><span class="line"><span class="title">                me</span>.compile(<span class="keyword">node</span><span class="title">);</span></span><br><span class="line"><span class="title">            &#125; else</span> if (me.isTextNode(<span class="keyword">node</span><span class="title">) &amp;&amp; reg</span>.test(text)) &#123;</span><br><span class="line">                me.compileText(<span class="keyword">node</span><span class="title">, RegExp</span>.$<span class="number">1</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            // 遍历编译子节点</span><br><span class="line">            if (<span class="keyword">node</span>.<span class="title">childNodes</span> &amp;&amp; <span class="keyword">node</span>.<span class="title">childNodes</span>.length) &#123;</span><br><span class="line">                me.compileElement(<span class="keyword">node</span><span class="title">);</span></span><br><span class="line"><span class="title">            &#125;</span></span><br><span class="line"><span class="title">        &#125;);</span></span><br><span class="line"><span class="title">    &#125;,</span></span><br><span class="line"><span class="title"></span></span><br><span class="line"><span class="title">    compile</span>: function(<span class="keyword">node</span><span class="title">) &#123;</span></span><br><span class="line"><span class="title">        var</span> nodeAttrs = <span class="keyword">node</span>.<span class="title">attributes</span>, me = this;</span><br><span class="line">        [].slice.call(nodeAttrs).forEach(function(attr) &#123;</span><br><span class="line">            // 规定：指令以 v-xxx 命名</span><br><span class="line">            // 如 <span class="tag">&lt;span v-text="content"&gt;</span><span class="tag">&lt;/span&gt;</span> 中指令为 v-text</span><br><span class="line">            var attrName = attr.name;    // v-text</span><br><span class="line">            if (me.isDirective(attrName)) &#123;</span><br><span class="line">                var exp = attr.value; // content</span><br><span class="line">                var dir = attrName.substring(<span class="number">2</span>);    // text</span><br><span class="line">                if (me.isEventDirective(dir)) &#123;</span><br><span class="line">                    // 事件指令, 如 v-on:click</span><br><span class="line">                    compileUtil.eventHandler(<span class="keyword">node</span><span class="title">, me</span>.$vm, exp, dir);</span><br><span class="line">                &#125; else &#123;</span><br><span class="line">                    // 普通指令</span><br><span class="line">                    compileUtil[dir] &amp;&amp; compileUtil[dir](<span class="keyword">node</span><span class="title">, me</span>.$vm, exp);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">// 指令处理集合</span><br><span class="line">var compileUtil = &#123;</span><br><span class="line">    text: function(<span class="keyword">node</span><span class="title">, vm</span>, exp) &#123;</span><br><span class="line">        this.bind(<span class="keyword">node</span><span class="title">, vm</span>, exp, 'text');</span><br><span class="line">    &#125;,</span><br><span class="line">    // ...省略</span><br><span class="line">    bind: function(<span class="keyword">node</span><span class="title">, vm</span>, exp, dir) &#123;</span><br><span class="line">        var updaterFn = updater[dir + 'Updater'];</span><br><span class="line">        // 第一次初始化视图</span><br><span class="line">        updaterFn &amp;&amp; updaterFn(<span class="keyword">node</span><span class="title">, vm</span>[exp]);</span><br><span class="line">        // 实例化订阅者，此操作会在对应的属性消息订阅器中添加了该订阅者watcher</span><br><span class="line">        new Watcher(vm, exp, function(value, oldValue) &#123;</span><br><span class="line">            // 一旦属性值有变化，会收到通知执行此更新函数，更新视图</span><br><span class="line">            updaterFn &amp;&amp; updaterFn(<span class="keyword">node</span><span class="title">, value</span>, oldValue);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">// 更新函数</span><br><span class="line">var updater = &#123;</span><br><span class="line">    textUpdater: function(<span class="keyword">node</span><span class="title">, value</span>) &#123;</span><br><span class="line">        <span class="keyword">node</span>.<span class="title">textContent</span> = typeof value == 'undefined' ? '' : value;</span><br><span class="line">    &#125;</span><br><span class="line">    // ...省略</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>这里通过递归遍历保证了每个节点及子节点都会解析编译到，包括了 <code>{ {} }</code> 表达式声明的文本节点。指令的声明规定是通过特定前缀的节点属性来标记，如 <code>&lt;span v-text=&quot;content&quot; other-attr</code>中 <code>v-text</code> 便是指令，而 <code>other-attr</code> 不是指令，只是普通的属性。<br>监听数据、绑定更新函数的处理是在 <code>compileUtil.bind()</code> 这个方法中，通过 <code>new Watcher()</code> 添加回调来接收数据变化的通知。至此，一个简单的Compile就完成了。</p>
+<h3 id="实现Watcher"><a href="#实现Watcher" class="headerlink" title="实现Watcher"></a>实现Watcher</h3><p><code>Watcher</code> 订阅者作为 <code>Observer</code> 和 <code>Compile</code> 之间通信的桥梁，主要做的事情是:<br>1、在自身实例化时往属性订阅器( <code>dep</code> )里面添加自己<br>2、自身必须有一个 <code>update()</code> 方法<br>3、待属性变动 <code>dep.notice()</code> 通知时，能调用自身的 <code>update()</code> 方法，并触发<br> <code>Compile</code> 中绑定的回调，则功成身退。<br>如果有点乱，可以回顾前面的思路整理<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Watcher</span><span class="params">(vm, exp, cb)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.cb = cb;</span><br><span class="line">    <span class="keyword">this</span>.vm = vm;</span><br><span class="line">    <span class="keyword">this</span>.exp = exp;</span><br><span class="line">    <span class="comment">// 此处为了触发属性的getter，从而在dep添加自己，结合Observer更易理解</span></span><br><span class="line">    <span class="keyword">this</span>.value = <span class="keyword">this</span>.get(); </span><br><span class="line">&#125;</span><br><span class="line">Watcher.prototype = &#123;</span><br><span class="line">    update: <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.run();    <span class="comment">// 属性值变化收到通知</span></span><br><span class="line">    &#125;,</span><br><span class="line">    run: <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> value = <span class="keyword">this</span>.get(); <span class="comment">// 取到最新值</span></span><br><span class="line">        <span class="keyword">var</span> oldVal = <span class="keyword">this</span>.value;</span><br><span class="line">        <span class="keyword">if</span> (value !== oldVal) &#123;</span><br><span class="line">            <span class="keyword">this</span>.value = value;</span><br><span class="line">            <span class="keyword">this</span>.cb.call(<span class="keyword">this</span>.vm, value, oldVal); <span class="comment">// 执行Compile中绑定的回调，更新视图</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="keyword">get</span>: <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Dep.target = <span class="keyword">this</span>;    <span class="comment">// 将当前订阅者指向自己</span></span><br><span class="line">        <span class="keyword">var</span> value = <span class="keyword">this</span>.vm[exp];    <span class="comment">// 触发getter，添加自己到属性订阅器中</span></span><br><span class="line">        Dep.target = <span class="literal">null</span>;    <span class="comment">// 添加完毕，重置</span></span><br><span class="line">        <span class="keyword">return</span> value;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// 这里再次列出Observer和Dep，方便理解</span></span><br><span class="line">Object.defineProperty(data, key, &#123;</span><br><span class="line">    <span class="keyword">get</span>: <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 由于需要在闭包内添加watcher，所以可以在Dep定义一个全局target属性，暂存watcher, 添加完移除</span></span><br><span class="line">        Dep.target &amp;&amp; dep.addDep(Dep.target);</span><br><span class="line">        <span class="keyword">return</span> val;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// ... 省略</span></span><br><span class="line">&#125;);</span><br><span class="line">Dep.prototype = &#123;</span><br><span class="line">    notify: <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.subs.forEach(<span class="function"><span class="keyword">function</span><span class="params">(sub)</span> </span>&#123;</span><br><span class="line">            sub.update(); <span class="comment">// 调用订阅者的update方法，通知变化</span></span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>实例化 <code>Watcher</code> 的时候，调用 <code>get()</code> 方法，通过 <code>Dep.target = watcherInstance</code><br> 标记订阅者是当前 <code>watcher</code> 实例，强行触发属性定义的 <code>getter</code> 方法，<code>getter</code> 方法执行的时候，就会在属性的订阅器 <code>dep</code> 添加当前 <code>watcher</code> 实例，从而在属性值有变化的时候， <code>watcherInstance</code> 就能收到更新通知。</p>
+<h3 id="实现MVVM"><a href="#实现MVVM" class="headerlink" title="实现MVVM"></a>实现MVVM</h3><p> <code>MVVM</code> 作为数据绑定的入口，整合 <code>Observer</code> 、<code>Compile</code> 和 <code>Watcher</code> 三者，通过 <code>Observer</code> 来监听自己的 <code>model</code> 数据变化，通过 <code>Compile</code> 来解析编译模板指令，最终利用 <code>Watcher</code> 搭起 <code>Observer</code> 和 <code>Compile</code> 之间的通信桥梁，达到数据变化 -&gt; 视图更新；视图交互变化(<code>input</code>) -&gt; 数据 <code>model</code> 变更的双向绑定效果。</p>
+<p>一个简单的MVVM构造器是这样子：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">function MVVM(options) &#123;</span><br><span class="line">    <span class="keyword">this</span>.$options = options;</span><br><span class="line">    <span class="keyword">var</span> <span class="keyword">data</span> = <span class="keyword">this</span>._data = <span class="keyword">this</span>.$options.<span class="keyword">data</span>;</span><br><span class="line">    observe(<span class="keyword">data</span>, <span class="keyword">this</span>);</span><br><span class="line">    <span class="keyword">this</span>.$compile = new Compile(options.el || document.body, <span class="keyword">this</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>但是这里有个问题，从代码中可看出监听的数据对象是 <code>options.data</code> ，每次需要更新视图，则必须通过 <code>var vm = new MVVM({data:{name: &#39;kindeng&#39;} });</code> <code>vm._data.name = &#39;dmq&#39;;</code>这样的方式来改变数据。</p>
+<p>显然不符合我们一开始的期望，我们所期望的调用方式应该是这样的：<br><code>var vm = new MVVM({data: {name: &#39;kindeng&#39;} });</code> <code>vm.name = &#39;dmq&#39;;</code></p>
+<p>所以这里需要给 <code>MVVM</code> 实例添加一个属性代理的方法，使访问 <code>vm</code> 的属性代理为访问 <code>vm._data</code> 的属性，改造后的代码如下：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">MVVM</span>(<span class="params">options</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.$options = options;</span><br><span class="line">    <span class="keyword">var</span> data = <span class="keyword">this</span>._data = <span class="keyword">this</span>.$options.data, me = <span class="keyword">this</span>;</span><br><span class="line">    <span class="comment">// 属性代理，实现 vm.xxx -&gt; vm._data.xxx</span></span><br><span class="line">    <span class="built_in">Object</span>.keys(data).forEach(<span class="function"><span class="keyword">function</span>(<span class="params">key</span>) </span>&#123;</span><br><span class="line">        me._proxy(key);</span><br><span class="line">    &#125;);</span><br><span class="line">    observe(data, <span class="keyword">this</span>);</span><br><span class="line">    <span class="keyword">this</span>.$compile = <span class="keyword">new</span> Compile(options.el || <span class="built_in">document</span>.body, <span class="keyword">this</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">MVVM.prototype = &#123;</span><br><span class="line">    _proxy: <span class="function"><span class="keyword">function</span>(<span class="params">key</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> me = <span class="keyword">this</span>;</span><br><span class="line">        <span class="built_in">Object</span>.defineProperty(me, key, &#123;</span><br><span class="line">            configurable: <span class="literal">false</span>,</span><br><span class="line">            enumerable: <span class="literal">true</span>,</span><br><span class="line">            get: <span class="function"><span class="keyword">function</span> <span class="title">proxyGetter</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">                <span class="keyword">return</span> me._data[key];</span><br><span class="line">            &#125;,</span><br><span class="line">            set: <span class="function"><span class="keyword">function</span> <span class="title">proxySetter</span>(<span class="params">newVal</span>) </span>&#123;</span><br><span class="line">                me._data[key] = newVal;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>这里主要还是利用了 <code>Object.defineProperty()</code> 这个方法来劫持了 <code>vm</code> 实例对象的属性的读写权，使读写 <code>vm</code> 实例的属性转成读写了 <code>vm._data</code> 的属性值。</p>
+<h1 id="React"><a href="#React" class="headerlink" title="React"></a>React</h1><p>在React中，数据流是自上而下单向的从父节点传递到子节点，也就是只有单向绑定，并没有 Angular2 和 Vue 的双向绑定 ，但是我们也可以自己实现双向绑定，这里就不说了，给出一篇<a href="https://chenyitian.gitbooks.io/react-docs/content/docs/10.2-form-input-binding-sugar.html" target="_blank" rel="noopener">文章</a>，里面说到了 React 双向绑定的实现方法，可以自己去看看。</p>
+<h2 id="怎么知道数据变化了-2"><a href="#怎么知道数据变化了-2" class="headerlink" title="怎么知道数据变化了"></a>怎么知道数据变化了</h2><p>React 通过<code>setState()</code>通知变化</p>
+<h2 id="数据更新-1"><a href="#数据更新-1" class="headerlink" title="数据更新"></a>数据更新</h2><p>React 最出名的就是 虚拟DOM（virtual DOM），Vue（2.0版本）也有虚拟DOM（Vue宣称可以更快地计算出Virtual DOM的差异，这是由于它在渲染过程中，会跟踪每一个组件的依赖关系，不需要重新渲染整个组件树。）但我们不在 Vue 里面讲 virtual DOM 而是放到 React 来讲。</p>
+<h3 id="什么是Virtual-DOM"><a href="#什么是Virtual-DOM" class="headerlink" title="什么是Virtual DOM"></a>什么是Virtual DOM</h3><p>Virtual DOM并没有完全实现 DOM，Virtual DOM最主要的还是保留了 <code>Element</code> 之间的层次关系和一些基本属性。Virtual DOM 里每一个 <code>Element</code> 实际上只有几个属性，并且没有那么多乱七八糟的引用。所以哪怕是直接把 Virtual DOM 删了，根据新传进来的数据重新创建一个新的 Virtual DOM 出来都非常非常非常快。<br>我们可以看看下面这个列表在HTML中的代码是如何写的：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ul</span> <span class="attr">class</span>=<span class="string">"list"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span>item 1<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span>item 2<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>而在JavaScript中，我们可以用对象简单地创造一个针对上面例子的映射：<br><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attribute">type</span>: <span class="string">'ul'</span>, </span><br><span class="line">    <span class="attribute">props</span>: &#123;<span class="string">'class'</span>: <span class="string">'list'</span>&#125;, </span><br><span class="line">    <span class="attribute">children</span>: [</span><br><span class="line">        &#123; <span class="attribute">type</span>: <span class="string">'li'</span>, <span class="attribute">props</span>: &#123;&#125;, <span class="attribute">children</span>: [<span class="string">'item 1'</span>] &#125;,</span><br><span class="line">        &#123; <span class="attribute">type</span>: <span class="string">'li'</span>, <span class="attribute">props</span>: &#123;&#125;, <span class="attribute">children</span>: [<span class="string">'item 2'</span>] &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>真实的 Virtual DOM 会比上面的例子更复杂，但它本质上是一个嵌套着数组的原生对象。</p>
+<h3 id="为什么要用-Virtual-DOM"><a href="#为什么要用-Virtual-DOM" class="headerlink" title="为什么要用 Virtual DOM"></a>为什么要用 Virtual DOM</h3><p>这是因为更新 DOM 的花费时间非常长，当我们使用 JavaScript 来改变页面的时候，浏览器不得不做一些工作来找到需要的DOM节点。在如今的应用程序的DOM中大概有成千上万的节点，因此更新所花费的时间就更长了。有很多不可避免的很小很频繁的更新拖慢了页面的速度。</p>
+<p><strong>注意：如果你的应用中，交互复杂，需要处理大量的UI变化，那么使用 Virtual DOM 是一个好主意。如果你更新元素并不频繁，那么 Virtual DOM 并不一定适用，性能很可能还不如直接操控 DOM。</strong></p>
+<h3 id="为什么-Virtual-DOM-可以提高网页性能"><a href="#为什么-Virtual-DOM-可以提高网页性能" class="headerlink" title="为什么 Virtual DOM 可以提高网页性能"></a>为什么 Virtual DOM 可以提高网页性能</h3><p>状态变更-&gt;重新渲染整个视图的方式可以稍微修改一下：用 JavaScript 对象表示 DOM 信息和结构，当状态变更的时候，重新渲染这个 JavaScript 的对象结构。当然这样做其实没什么卵用，因为真正的页面其实没有改变。<br>但是可以用新渲染的对象树去和旧的树进行对比，记录这两棵树差异。记录下来的不同就是我们需要对页面真正的 DOM 操作，然后把它们应用在真正的 DOM 树上，页面就变更了。这样就可以做到：视图的结构确实是整个全新渲染了，但是最后操作DOM的时候确实只变更有不同的地方。<br>这就是所谓的 Virtual DOM 算法。包括几个步骤：</p>
+<ol>
+<li>用 JavaScript 对象结构表示 DOM 树的结构；然后用这个树构建一个真正的 DOM 树，插到文档当中</li>
+<li>当状态变更的时候，重新构造一棵新的对象树。然后用新的树和旧的树进行比较，记录两棵树差异</li>
+<li>把第 2 步所记录的差异应用到第 1 步所构建的真正的DOM树上，视图就更新了</li>
+</ol>
+<p>Virtual DOM 本质上就是在 JS 和 DOM 之间做了一个缓存。可以类比 CPU 和硬盘，既然硬盘这么慢，我们就在它们之间加个缓存：既然 DOM 这么慢，我们就在它们 JS 和 DOM 之间加个缓存。CPU（JS）只操作内存（Virtual DOM），最后的时候再把变更写入硬盘（DOM）。</p>
+<h3 id="diff算法"><a href="#diff算法" class="headerlink" title="diff算法"></a>diff算法</h3><p>比较两棵DOM树的差异是 Virtual DOM 算法最核心的部分，这也是所谓的 Virtual DOM 的 <code>diff</code> 算法。两个树的完全的 <code>diff</code> 算法是一个时间复杂度为 O(n^3) 的问题。但是在前端当中，你很少会跨越层级地移动 DOM 元素。所以 Virtual DOM 只会对同一个层级的元素进行对比：<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://camo.githubusercontent.com/a32766a14f6b7fbe631475ed1a186fbd9de7f2c3/687474703a2f2f6c69766f7261732e6769746875622e696f2f626c6f672f7669727475616c2d646f6d2f636f6d706172652d696e2d6c6576656c2e706e67" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure><br>上面的 <code>div</code>只会和同一层级的 <code>div</code> 对比，第二层级的只会跟第二层级对比。这样算法复杂度就可以达到 O(n)。</p>
+<p>在实际的代码中，会对新旧两棵树进行一个深度优先的遍历，这样每个节点都会有一个唯一的标记：<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://camo.githubusercontent.com/6cdc35026bcbb6aa0f8fb4aaca3596963192a7f3/687474703a2f2f6c69766f7261732e6769746875622e696f2f626c6f672f7669727475616c2d646f6d2f6466732d77616c6b2e706e67" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure><br>在深度优先遍历的时候，每遍历到一个节点就把该节点和新的的树进行对比。如果有差异的话就记录到一个对象里面。</p>
+<figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// diff 函数，对比两棵树</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">diff</span> </span>(oldTree, <span class="keyword">new</span><span class="type">Tree</span>) &#123;</span><br><span class="line">  <span class="keyword">var</span> index = <span class="number">0</span> <span class="comment">// 当前节点的标志</span></span><br><span class="line">  <span class="keyword">var</span> patches = &#123;&#125; <span class="comment">// 用来记录每个节点差异的对象</span></span><br><span class="line">  dfsWalk(oldTree, <span class="keyword">new</span><span class="type">Tree</span>, index, patches)</span><br><span class="line">  <span class="keyword">return</span> patches</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 对两棵树进行深度优先遍历</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">dfsWalk</span> </span>(oldNode, <span class="keyword">new</span><span class="type">Node</span>, index, patches) &#123;</span><br><span class="line">  <span class="comment">// 对比oldNode和newNode的不同，记录下来</span></span><br><span class="line">  patches[index] = [...]</span><br><span class="line"></span><br><span class="line">  diffChildren(oldNode.children, <span class="keyword">new</span><span class="type">Node</span>.children, index, patches)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 遍历子节点</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">diffChildren</span> </span>(oldChildren, <span class="keyword">new</span><span class="type">Children</span>, index, patches) &#123;</span><br><span class="line">  <span class="keyword">var</span> leftNode = <span class="literal">null</span></span><br><span class="line">  <span class="keyword">var</span> currentNodeIndex = index</span><br><span class="line">  oldChildren.forEach(<span class="function"><span class="keyword">function</span> </span>(child, i) &#123;</span><br><span class="line">    <span class="keyword">var</span> <span class="keyword">new</span><span class="type">Child</span> = <span class="keyword">new</span><span class="type">Children</span>[i]</span><br><span class="line">    currentNodeIndex = (leftNode &amp;&amp; leftNode.count) <span class="comment">// 计算节点的标识</span></span><br><span class="line">      ? currentNodeIndex + leftNode.count + <span class="number">1</span></span><br><span class="line">      : <span class="type">currentNodeIndex </span>+ <span class="number">1</span></span><br><span class="line">    dfsWalk(child, <span class="keyword">new</span><span class="type">Child</span>, currentNodeIndex, patches) <span class="comment">// 深度遍历子节点</span></span><br><span class="line">    leftNode = child</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>例如，上面的 <code>div</code> 和新的 <code>div</code> 有差异，当前的标记是0，那么：<br><code>patches[0] = [{difference}, {difference}, ...] // 用数组存储新旧节点的不同</code><br>同理 <code>p</code> 是 <code>patches[1]</code>，<code>ul</code> 是 <code>patches[3]</code> ，类推。</p>
+<p>如果想了解 Vue Virtual DOM具体算法，可以参考<a href="">这篇文章</a></p>
+<p><strong>注意：由于hexo的问题，不能在代码块中出现&#123;&#123;或&#125;&#125; 的字符,所以只能在&#123;&#123;中间加一个空格</strong></p>
+<blockquote>
+<p>参考<br><a href="https://github.com/JTangming/tm/issues/4" target="_blank" rel="noopener">深入理解Angular2变化监测和ngZone</a><br><a href="https://zhuanlan.zhihu.com/p/27901766" target="_blank" rel="noopener">Angular变化检测机制：改善的脏检查</a><br><a href="http://blog.csdn.net/u010977147/article/details/53785733" target="_blank" rel="noopener">angular2 脏检查总述–zone.js 原理</a><br><a href="https://segmentfault.com/a/1190000006599500" target="_blank" rel="noopener">剖析Vue原理&amp;实现双向绑定MVVM</a><br><a href="https://cn.vuejs.org/v2/guide/comparison.html" target="_blank" rel="noopener">对比其他框架</a><br><a href="https://github.com/livoras/blog/issues/13" target="_blank" rel="noopener">深度剖析：如何实现一个 Virtual DOM 算法</a><br><a href="https://www.zhihu.com/question/29504639" target="_blank" rel="noopener">如何理解虚拟DOM?</a></p>
+</blockquote>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <footer>
+        <a href="https://recallhyx.github.io">
+            <img src="/img/avatar.jpg" alt="Recall HYX">
+            Recall HYX
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Angular-React-Vue/">Angular-React-Vue</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://recallhyx.github.io/2018/03/18/前端三大框架数据流动和原理/&title=《前端三大框架数据流动和原理》 — Recall Hyx&pic=https://recallhyx.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://recallhyx.github.io/2018/03/18/前端三大框架数据流动和原理/&title=《前端三大框架数据流动和原理》 — Recall Hyx&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://recallhyx.github.io/2018/03/18/前端三大框架数据流动和原理/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《前端三大框架数据流动和原理》 — Recall Hyx&url=https://recallhyx.github.io/2018/03/18/前端三大框架数据流动和原理/&via=https://recallhyx.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://recallhyx.github.io/2018/03/18/前端三大框架数据流动和原理/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2018/03/19/HTTP小结/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">HTTP小结</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/03/16/SCSS的一些笔记/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">SCSS的一些笔记</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "gnMQ4bW3FRMELqY7UJSFCG2L-gzGzoHsz",
+            appKey: "8kUBso0hYLBcTE8e9h89D1Hc",
+            avatar: "mm",
+            placeholder: "Just go go",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Recall HYX &copy; 2017 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://recallhyx.github.io/2018/03/18/前端三大框架数据流动和原理/&title=《前端三大框架数据流动和原理》 — Recall Hyx&pic=https://recallhyx.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://recallhyx.github.io/2018/03/18/前端三大框架数据流动和原理/&title=《前端三大框架数据流动和原理》 — Recall Hyx&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://recallhyx.github.io/2018/03/18/前端三大框架数据流动和原理/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《前端三大框架数据流动和原理》 — Recall Hyx&url=https://recallhyx.github.io/2018/03/18/前端三大框架数据流动和原理/&via=https://recallhyx.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://recallhyx.github.io/2018/03/18/前端三大框架数据流动和原理/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACsklEQVR42u3aQW7jMAwF0Nz/0jPbAYo4/5NSpovnVZE6sp4LkCrJ1yu+/vy4fn7+7yfJd3/e8+5b7+45duHh4eGtt/689DteskKy5vPK+Z7x8PDwbvOeg3Ub1mdBf5N+3n6Oh4eH9wt4Oeb5Wwn7eWU8PDy8389L/t9vyxDJal9KDHh4eHglrz3U5kfnfaH2S7UWPDw8vJiXB+vf8/OV/h4eHh7euqueX21jrA3uw13h4eHhXeC1QblF5gE9v6cuVeDh4eFd4OULbcYIksQwa3TVx248PDy8Ba8N7jPwrGG2LxPj4eHh3eA9H5dn41aztPF8iJ+lLjw8PLwbvE3T/VTnbf86ipkIPDw8vDUvD815u6tdbXO8xsPDw/s+Ly+hzhpd+Qp5WSQvDePh4eHd4NV1i7IF1WLyonBRLsHDw8M7ymtbVvvkceM4/haJh4eHd4G3KUAkxdx2K3mpoq5V4+Hh4R3itW2npKi6TxKzIYPXKQYeHh5ewMuLuWd/244U5Anjw9AVHh4e3gXeJmS3Yb1NJDkeDw8P7zu8zbU5ap9qg0WTWXh4eHiHeLNyQ35P+4I2T4xmyvDw8PBGvNmUVt4eyw/E++d+SCR4eHh4h3jtO2iHANqiRg6LXi4eHh7eNd7skW0jvy1JbIrIeHh4ePd4sxGr/T3t61jtEw8PD+8obxbE8xLt2ejd7goPDw/vBm9WONgnkmRb+Wsq/oZ4eHh4a95mrCo/KG/STNsee+XVXzw8PLwRrz3ybsakktZa+wraAgceHh7eKV7emG/HW5N2V5tg6rSBh4eHd43XDgTk41btYNbsoPwhMeDh4eH9J15+LN4fxPOyyIed4OHh4f1X3qmS6yzED9fEw8PDu8bLixGbzeXDBPuxAzw8PLx7vFmw3iSDzXDq5qiNh4eHt+b9BdExNcpjQBeSAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
