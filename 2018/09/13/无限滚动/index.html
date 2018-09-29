@@ -45,7 +45,7 @@ ga('send', 'pageview');
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5834506-f80aa25bd43926cd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5834506-3989f59d914eddfd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5834506-dddde3111521f6c8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-09-13T14:37:39.564Z">
+<meta property="og:updated_time" content="2018-09-13T14:39:01.310Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="无限滚动">
 <meta name="twitter:description" content="前言滚动加载和分页在前端其实用的场景挺多的，都是避免一次性请求太多数据导致网站加载数据过慢，这次来做做无限滚动加载，具体滚动加载和分页的区别可以看这篇文章 无限滚动原理其实无限滚动的原理很简单，用户滚动，当滚动条到底的时候就加载，所以只需要知道滚动条和底部的距离，就可以完成了，当然其中还有一些细节，我们介绍几种方法。 第一种方法首先，浏览器提供了很多属性，可以给我们计算位置： scrollHeig">
@@ -403,7 +403,14 @@ HTML 文档通常包含一个子节点</code><html><code>，可能在它前面�
     </div>
 
     
-<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2018/09/27/myexperience/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">我的工作之路</h4>
+      </a>
+    </div>
   
 
   
