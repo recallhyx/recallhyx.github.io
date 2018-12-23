@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-112417276-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>react-router学习 | Recall Hyx | Your star</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#FFC107">
+    
+    
+    <meta name="keywords" content="react">
+    <meta name="description" content="前言最近新入职阿里，我们部门用的是 React 全家桶，之前只自学了 React，所以这次要学一下 React-router">
+<meta name="keywords" content="react">
+<meta property="og:type" content="article">
+<meta property="og:title" content="react-router学习">
+<meta property="og:url" content="https://recallhyx.github.io/2018/11/23/react-router学习/index.html">
+<meta property="og:site_name" content="Recall Hyx">
+<meta property="og:description" content="前言最近新入职阿里，我们部门用的是 React 全家桶，之前只自学了 React，所以这次要学一下 React-router">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5834506-4dd27e8eae2b7db0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-12-23T07:03:48.406Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="react-router学习">
+<meta name="twitter:description" content="前言最近新入职阿里，我们部门用的是 React 全家桶，之前只自学了 React，所以这次要学一下 React-router">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/5834506-4dd27e8eae2b7db0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Recall HYX</h5>
+          <a href="mailto:quce.hu@qq.com" title="quce.hu@qq.com" class="mail">quce.hu@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                文章
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/recallhyx" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">react-router学习</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">react-router学习</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-11-23T07:02:26.000Z" itemprop="datePublished" class="page-time">
+  2018-11-23
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/前端/">前端</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#前言"><span class="post-toc-number">1.</span> <span class="post-toc-text">前言</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#使用方法"><span class="post-toc-number">2.</span> <span class="post-toc-text">使用方法</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Router"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">Router</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Link"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">Link</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Route"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">Route</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#match"><span class="post-toc-number">2.4.</span> <span class="post-toc-text">match</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#值的注意的一些东西"><span class="post-toc-number">3.</span> <span class="post-toc-text">值的注意的一些东西</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#和"><span class="post-toc-number">3.1.</span> <span class="post-toc-text"> 和 </span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#同时渲染侧边栏内容和主页内容"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">同时渲染侧边栏内容和主页内容</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#withRouter"><span class="post-toc-number">3.3.</span> <span class="post-toc-text">withRouter</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-react-router学习"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">react-router学习</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-11-23 15:02:26" datetime="2018-11-23T07:02:26.000Z"  itemprop="datePublished">2018-11-23</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/前端/">前端</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近新入职阿里，我们部门用的是 React 全家桶，之前只自学了 React，所以这次要学一下 React-router</p>
+<a id="more"></a>
+<h1 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h1><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">import &#123; BrowserRouter as Router, Route, Link &#125; from "react-router-dom";</span><br><span class="line">const Home = () =&gt; <span class="tag">&lt;<span class="name">h2</span>&gt;</span>home<span class="tag">&lt;/<span class="name">h2</span>&gt;</span>;</span><br><span class="line">const About = () =&gt; <span class="tag">&lt;<span class="name">h2</span>&gt;</span>about<span class="tag">&lt;/<span class="name">h2</span>&gt;</span>;</span><br><span class="line">const Topic = (&#123;match&#125;) =&gt; (</span><br><span class="line">  <span class="tag">&lt;<span class="name">h3</span>&gt;</span>Requested Param: &#123;match.params.id&#125;<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br><span class="line">);</span><br><span class="line">const Topics = (&#123;match&#125;) =&gt; (</span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">Route</span> <span class="attr">path</span>=<span class="string">&#123;</span>`$&#123;<span class="attr">match.path</span>&#125;/<span class="attr">:id</span>`&#125; <span class="attr">component</span>=<span class="string">&#123;Topic&#125;/</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">Route</span></span></span><br><span class="line"><span class="tag">      <span class="attr">exact</span></span></span><br><span class="line"><span class="tag">      <span class="attr">path</span>=<span class="string">&#123;match.path&#125;</span></span></span><br><span class="line"><span class="tag">      <span class="attr">render</span>=<span class="string">&#123;()</span>=&gt;</span><span class="tag">&lt;<span class="name">h3</span>&gt;</span>Please select a topic.<span class="tag">&lt;/<span class="name">h3</span>&gt;</span>&#125;</span><br><span class="line">    /&gt;</span><br><span class="line">    <span class="tag">&lt;<span class="name">Route</span></span></span><br><span class="line"><span class="tag">      <span class="attr">render</span>=<span class="string">&#123;()</span>=&gt;</span><span class="tag">&lt;<span class="name">h1</span>&gt;</span>Always render<span class="tag">&lt;/<span class="name">h1</span>&gt;</span>&#125;</span><br><span class="line">    /&gt;</span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">h2</span>&gt;</span>Topics<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Link</span> <span class="attr">to</span>=<span class="string">&#123;</span>`$&#123;<span class="attr">match.url</span>&#125;/<span class="attr">components</span>`&#125;&gt;</span>Components<span class="tag">&lt;/<span class="name">Link</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Link</span> <span class="attr">to</span>=<span class="string">&#123;</span>`$&#123;<span class="attr">match.url</span>&#125;/<span class="attr">props-v-state</span>`&#125;&gt;</span>Props-v-state<span class="tag">&lt;/<span class="name">Link</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">);</span><br><span class="line">const App = () =&gt; &#123;</span><br><span class="line">    <span class="tag">&lt;<span class="name">Router</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">li</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">Link</span> <span class="attr">to</span>=<span class="string">"/"</span>&gt;</span>Home<span class="tag">&lt;/<span class="name">Link</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">li</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">Link</span> <span class="attr">to</span>=<span class="string">"/about"</span>&gt;</span>About<span class="tag">&lt;/<span class="name">Link</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">li</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">Link</span> <span class="attr">to</span>=<span class="string">"/topics"</span>&gt;</span>Topics<span class="tag">&lt;/<span class="name">Link</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">hr</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">Route</span> <span class="attr">exact</span> <span class="attr">path</span>=<span class="string">"/"</span> <span class="attr">component</span>=<span class="string">&#123;Home&#125;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Route</span> <span class="attr">path</span>=<span class="string">"/about"</span> <span class="attr">component</span>=<span class="string">&#123;About&#125;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Route</span> <span class="attr">path</span>=<span class="string">"/topics"</span> <span class="attr">component</span>=<span class="string">&#123;Topics&#125;</span> /&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">Router</span>&gt;</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="Router"><a href="#Router" class="headerlink" title="Router"></a>Router</h2><p>这是简单的结构，从第一行开始看，引入了 <code>BrowserRouter</code>，这个其实还有另外一个兄弟 <code>HashRouter</code><br>区别：<code>BrowserRouter</code> 用的是浏览器的HTML5 history API (pushState, replaceState, popstate event)，<code>HashRouter</code>根据URL后面的 <code>#</code> 的内容来进行刷新，这个区别在 Vue-router 里面也有。<br>联系：都是 React-router 的核心，有 Router 才能继续接下来的工作。</p>
+<h2 id="Link"><a href="#Link" class="headerlink" title="Link"></a>Link</h2><p>这个组件就相当于 <code>a</code> 标签，当然还有其他类似的组件：<code>&lt;NavLink&gt;</code>，<code>&lt;Redirect&gt;</code>，根据不同场景使用</p>
+<h2 id="Route"><a href="#Route" class="headerlink" title="Route"></a>Route</h2><p>这个组件就是如果匹配到了 <code>path</code> 就会渲染 <code>component</code>属性对应的组件，<strong>注意：如果没有 <code>path</code> 属性，则一定会渲染这个 route</strong>，对于 <code>exact</code> 属性，有一张图<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://upload-images.jianshu.io/upload_images/5834506-4dd27e8eae2b7db0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure><br>可以很清楚的理解 <code>exact</code> 属性</p>
+<h2 id="match"><a href="#match" class="headerlink" title="match"></a>match</h2><p>这个就是在路由匹配到的时候可以知道匹配的路由里面的东西，具体的属性看下表：<br>| 属性 | 类型 | 说明/作用 |<br>| —— | —— | —— |<br>| params | object | 从 URL 传进来的键值对 |<br>| isExact | boolean | 是否和 URL 完全匹配 |<br>| path | string | 值是 path，也就是Route的属性，用作嵌套<route> |<br>| url | string | 值是匹配的 URL，用作嵌套<link> | </route></p>
+<h1 id="值的注意的一些东西"><a href="#值的注意的一些东西" class="headerlink" title="值的注意的一些东西"></a>值的注意的一些东西</h1><h2 id="和"><a href="#和" class="headerlink" title=" 和 "></a><switch> 和 <route></route></switch></h2><p>上面说了 <code>&lt;Route&gt;</code> 会根据 <code>path</code> 渲染匹配到路由的组件，而且不设置 <code>path</code> 组件也会渲染，也就是说 <code>&lt;Route&gt;</code> 能够同时渲染多个组件，但是我们有时候只想渲染一个组件，这个时候 <code>&lt;Switch&gt;</code> 就出来了，用法就是在 <code>&lt;Route&gt;</code> 外面包住：<br><figure class="highlight dust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="xml">import </span><span class="template-variable">&#123; Switch, Route &#125;</span><span class="xml"> from 'react-router'</span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">Switch</span>&gt;</span></span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;<span class="name">Route</span> <span class="attr">exact</span> <span class="attr">path</span>=<span class="string">"/"</span> <span class="attr">component</span>=</span></span><span class="template-variable">&#123;Home&#125;</span><span class="xml"><span class="tag">/&gt;</span></span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;<span class="name">Route</span> <span class="attr">path</span>=<span class="string">"/about"</span> <span class="attr">component</span>=</span></span><span class="template-variable">&#123;About&#125;</span><span class="xml"><span class="tag">/&gt;</span></span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;<span class="name">Route</span> <span class="attr">path</span>=<span class="string">"/:user"</span> <span class="attr">component</span>=</span></span><span class="template-variable">&#123;User&#125;</span><span class="xml"><span class="tag">/&gt;</span></span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;<span class="name">Route</span> <span class="attr">component</span>=</span></span><span class="template-variable">&#123;NoMatch&#125;</span><span class="xml"><span class="tag">/&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;/<span class="name">Switch</span>&gt;</span></span></span><br></pre></td></tr></table></figure></p>
+<p>当匹配到一个 route，就会停止接下来的查找，也就是自始自终只有一个组件会被渲染，这在做路由跳转动画的时候会比较有利。</p>
+<h2 id="同时渲染侧边栏内容和主页内容"><a href="#同时渲染侧边栏内容和主页内容" class="headerlink" title="同时渲染侧边栏内容和主页内容"></a>同时渲染侧边栏内容和主页内容</h2><p>具体场景就是点击侧边栏的内容，在主内容跳转渲染的同时，同时改变侧边栏样式，这里只是简单的版本，具体根据自己需要修改：<br><figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line">import React from <span class="string">"react"</span>;</span><br><span class="line"><span class="class">import </span>&#123; BrowserRouter as Router, Route, Link &#125; from <span class="string">"react-router-dom"</span>;</span><br><span class="line"></span><br><span class="line">const routes = [</span><br><span class="line">  &#123;</span><br><span class="line"><span class="symbol">    path:</span> <span class="string">"/"</span>,</span><br><span class="line"><span class="symbol">    exact:</span> true,</span><br><span class="line"><span class="symbol">    sidebar:</span> () =&gt; <span class="params">&lt;div&gt;</span>home!<span class="params">&lt;/div&gt;</span>,</span><br><span class="line"><span class="symbol">    main:</span> () =&gt; <span class="params">&lt;h2&gt;</span>Home<span class="params">&lt;/h2&gt;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line"><span class="symbol">    path:</span> <span class="string">"/bubblegum"</span>,</span><br><span class="line"><span class="symbol">    sidebar:</span> () =&gt; <span class="params">&lt;div&gt;</span>bubblegum!<span class="params">&lt;/div&gt;</span>,</span><br><span class="line"><span class="symbol">    main:</span> () =&gt; <span class="params">&lt;h2&gt;</span>Bubblegum<span class="params">&lt;/h2&gt;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line"><span class="symbol">    path:</span> <span class="string">"/shoelaces"</span>,</span><br><span class="line"><span class="symbol">    sidebar:</span> () =&gt; <span class="params">&lt;div&gt;</span>shoelaces!<span class="params">&lt;/div&gt;</span>,</span><br><span class="line"><span class="symbol">    main:</span> () =&gt; <span class="params">&lt;h2&gt;</span>Shoelaces<span class="params">&lt;/h2&gt;</span></span><br><span class="line">  &#125;</span><br><span class="line">];</span><br><span class="line">function SidebarExample() &#123;</span><br><span class="line">  return (</span><br><span class="line">    <span class="params">&lt;Router&gt;</span></span><br><span class="line">      <span class="params">&lt;div style=&#123;&#123; display: "flex" &#125;&#125;&gt;</span></span><br><span class="line">        <span class="params">&lt;div</span></span><br><span class="line"><span class="params">          style=&#123;&#123;</span></span><br><span class="line"><span class="params">            padding: "<span class="number">10</span>px",</span></span><br><span class="line"><span class="params">            width: "<span class="number">40</span>%",</span></span><br><span class="line"><span class="params">            background: "#f0f0f0"</span></span><br><span class="line"><span class="params">          &#125;&#125;</span></span><br><span class="line"><span class="params">        &gt;</span></span><br><span class="line">          <span class="params">&lt;ul style=&#123;&#123; listStyleType: "none", padding: <span class="number">0</span> &#125;&#125;&gt;</span></span><br><span class="line">            <span class="params">&lt;li&gt;</span></span><br><span class="line">              <span class="params">&lt;Link to="/"&gt;</span>Home<span class="params">&lt;/Link&gt;</span></span><br><span class="line">            <span class="params">&lt;/li&gt;</span></span><br><span class="line">            <span class="params">&lt;li&gt;</span></span><br><span class="line">              <span class="params">&lt;Link to="/bubblegum"&gt;</span>Bubblegum<span class="params">&lt;/Link&gt;</span></span><br><span class="line">            <span class="params">&lt;/li&gt;</span></span><br><span class="line">            <span class="params">&lt;li&gt;</span></span><br><span class="line">              <span class="params">&lt;Link to="/shoelaces"&gt;</span>Shoelaces<span class="params">&lt;/Link&gt;</span></span><br><span class="line">            <span class="params">&lt;/li&gt;</span></span><br><span class="line">          <span class="params">&lt;/ul&gt;</span></span><br><span class="line"></span><br><span class="line">          &#123;routes.map((route, index) =&gt; (</span><br><span class="line">            <span class="params">&lt;Route</span></span><br><span class="line"><span class="params">              key=&#123;index&#125;</span></span><br><span class="line"><span class="params">              path=&#123;route.path&#125;</span></span><br><span class="line"><span class="params">              exact=&#123;route.exact&#125;</span></span><br><span class="line"><span class="params">              component=&#123;route.sidebar&#125;</span></span><br><span class="line"><span class="params">            /&gt;</span></span><br><span class="line">          ))&#125;</span><br><span class="line">        <span class="params">&lt;/div&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="params">&lt;div style=&#123;&#123; flex: <span class="number">1</span>, padding: "<span class="number">10</span>px" &#125;&#125;&gt;</span></span><br><span class="line">          &#123;routes.map((route, index) =&gt; (</span><br><span class="line">            <span class="comment">// Render more &lt;Route&gt;s with the same paths as</span></span><br><span class="line">            <span class="comment">// above, but different components this time.</span></span><br><span class="line">            <span class="params">&lt;Route</span></span><br><span class="line"><span class="params">              key=&#123;index&#125;</span></span><br><span class="line"><span class="params">              path=&#123;route.path&#125;</span></span><br><span class="line"><span class="params">              exact=&#123;route.exact&#125;</span></span><br><span class="line"><span class="params">              component=&#123;route.main&#125;</span></span><br><span class="line"><span class="params">            /&gt;</span></span><br><span class="line">          ))&#125;</span><br><span class="line">        <span class="params">&lt;/div&gt;</span></span><br><span class="line">      <span class="params">&lt;/div&gt;</span></span><br><span class="line">    <span class="params">&lt;/Router&gt;</span></span><br><span class="line">  );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">export default SidebarExample;</span><br></pre></td></tr></table></figure></p>
+<p>其实很简单，首先有一个 <code>routes</code> 的配置，在里面设置对应的组件，然后传给 <code>&lt;Route&gt;</code>，它就会根据传进来的东西生成一个列表，但是真正渲染的只有匹配到路由的那个组件。</p>
+<h2 id="withRouter"><a href="#withRouter" class="headerlink" title="withRouter"></a>withRouter</h2><p>用法：<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="type">React</span> from <span class="string">"react"</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="type">PropTypes</span> from <span class="string">"prop-types"</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; withRouter &#125; from <span class="string">"react-router"</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ShowTheLocation</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  static propTypes = &#123;</span><br><span class="line">    <span class="keyword">match</span>: <span class="type">PropTypes</span>.<span class="keyword">object</span>.isRequired,</span><br><span class="line">    location: <span class="type">PropTypes</span>.<span class="keyword">object</span>.isRequired,</span><br><span class="line">    history: <span class="type">PropTypes</span>.<span class="keyword">object</span>.isRequired</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  render() &#123;</span><br><span class="line">    const &#123; <span class="keyword">match</span>, location, history &#125; = <span class="keyword">this</span>.props;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> &lt;div&gt;<span class="type">You</span> are now at &#123;location.pathname&#125;&lt;/div&gt;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">const <span class="type">ShowTheLocationWithRouter</span> = withRouter(<span class="type">ShowTheLocation</span>);</span><br></pre></td></tr></table></figure></p>
+<p>其实就是通过  <code>withRouter</code> 高阶组件访问 <code>history</code> 对象的属性和最近（UI 结构上靠的最近）的 <code>&lt;Route&gt;</code> 的 <code>match</code> 对象。当组件渲染时，<code>withRouter</code> 会将更新后的 <code>match</code>、<code>location</code> 和 <code>history</code> 传递给它。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <footer>
+        <a href="https://recallhyx.github.io">
+            <img src="/img/avatar.jpg" alt="Recall HYX">
+            Recall HYX
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/react/">react</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://recallhyx.github.io/2018/11/23/react-router学习/&title=《react-router学习》 — Recall Hyx&pic=https://recallhyx.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://recallhyx.github.io/2018/11/23/react-router学习/&title=《react-router学习》 — Recall Hyx&source=前言最近新入职阿里，我们部门用的是 React 全家桶，之前只自学了 React，所以这次要学一下 React-router" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://recallhyx.github.io/2018/11/23/react-router学习/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《react-router学习》 — Recall Hyx&url=https://recallhyx.github.io/2018/11/23/react-router学习/&via=https://recallhyx.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://recallhyx.github.io/2018/11/23/react-router学习/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2018/12/23/react-redux学习/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">react-redux学习</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/09/27/myexperience/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">我的春招秋招</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "gnMQ4bW3FRMELqY7UJSFCG2L-gzGzoHsz",
+            appKey: "8kUBso0hYLBcTE8e9h89D1Hc",
+            avatar: "mm",
+            placeholder: "Just go go",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Recall HYX &copy; 2017 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://recallhyx.github.io/2018/11/23/react-router学习/&title=《react-router学习》 — Recall Hyx&pic=https://recallhyx.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://recallhyx.github.io/2018/11/23/react-router学习/&title=《react-router学习》 — Recall Hyx&source=前言最近新入职阿里，我们部门用的是 React 全家桶，之前只自学了 React，所以这次要学一下 React-router" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://recallhyx.github.io/2018/11/23/react-router学习/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《react-router学习》 — Recall Hyx&url=https://recallhyx.github.io/2018/11/23/react-router学习/&via=https://recallhyx.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://recallhyx.github.io/2018/11/23/react-router学习/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACKklEQVR42u3aS27DMAwFwNz/0u66SKM8kmkAS+NVgNqyxgtW/Dwe8XU9Xc9/fXV/smb+1OjCwMC4LeNaXutXvmLkK69Xy1fAwMA4gfFqE+t7khcnwXT91PqNGBgYGOuNJuvkR8xqKMfAwMCoBtxquMTAwMCoMpIktre5PBB/KRfHwMC4ISOvun//97/0NzAwMG7FuIpXXmhL2gm9PfyxKwwMjK0ZvTJZHpqT0YpewMXAwDiHkaeOva3MQ3YEw8DAOIAxKbdVt1t9NmqjYmBgbM2YR608Wc0T3WpTAQMD4wRGvonkSJeH7Gph7s3eMDAwtmb0EtremNenwjQGBsbJjGoDIA+7vc+03kmUxGJgYGzHqC7du2fed31TbsPAwNiUMR+MyNPUvIT3sWMiBgbGzRnJaMWkfJYnt6M7MTAwjmT0mp15BWw+ePHrHgwMjE0ZSTFrMn7xaF3ltBYDA2NrRr6J6kBGHjTzNxbqhRgYGFsz1o9NML2PVfiIGBgYBzB6Zf35eEQ1JX65GgYGxpGMXtCsHgF7x8RCwMXAwNiIkZ+yJkGzd8SMGhgYGBibMq7i1Qug1WZAmYqBgbE1o/qa+bBXkqAmnyxPdDEwMPZgfHacohqayyfZpNyGgYGxKaNaAus1I3ujG4VUFgMDA2PcSKg2OwstUgwMDIwgdPZ4+bjYP/7fwMDAuAkj2VCvWFYdkK2GdQwMjBMYvRbjpCVQbTDMS3gYGBi3ZfwAA750clm2Gw8AAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
