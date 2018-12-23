@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-112417276-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>react-redux学习 | Recall Hyx | Your star</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#FFC107">
+    
+    
+    <meta name="keywords" content="react">
+    <meta name="description" content="前言生活还是对我下手了，react 全家桶一个都不能少，这次是 redux。 redux介绍 Redux 是 JavaScript 状态容器，提供可预测化的状态管理。可以让你构建一致化的应用，运行于不同的环境（客户端、服务器、原生应用），并且易于测试。  redux 有三大原则：单一数据源，State 是只读的，使用纯函数来执行修改 几个概念action唯一改变 state 的方法就是触发 act">
+<meta name="keywords" content="react">
+<meta property="og:type" content="article">
+<meta property="og:title" content="react-redux学习">
+<meta property="og:url" content="https://recallhyx.github.io/2018/12/23/react-redux学习/index.html">
+<meta property="og:site_name" content="Recall Hyx">
+<meta property="og:description" content="前言生活还是对我下手了，react 全家桶一个都不能少，这次是 redux。 redux介绍 Redux 是 JavaScript 状态容器，提供可预测化的状态管理。可以让你构建一致化的应用，运行于不同的环境（客户端、服务器、原生应用），并且易于测试。  redux 有三大原则：单一数据源，State 是只读的，使用纯函数来执行修改 几个概念action唯一改变 state 的方法就是触发 act">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5834506-cf5397cf7ca3d35e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5834506-c40333f7a4ce43fa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5834506-8eb2f1894bc2b409.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-12-23T06:52:30.309Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="react-redux学习">
+<meta name="twitter:description" content="前言生活还是对我下手了，react 全家桶一个都不能少，这次是 redux。 redux介绍 Redux 是 JavaScript 状态容器，提供可预测化的状态管理。可以让你构建一致化的应用，运行于不同的环境（客户端、服务器、原生应用），并且易于测试。  redux 有三大原则：单一数据源，State 是只读的，使用纯函数来执行修改 几个概念action唯一改变 state 的方法就是触发 act">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/5834506-cf5397cf7ca3d35e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Recall HYX</h5>
+          <a href="mailto:quce.hu@qq.com" title="quce.hu@qq.com" class="mail">quce.hu@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                文章
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/recallhyx" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">react-redux学习</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">react-redux学习</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-12-23T06:41:48.000Z" itemprop="datePublished" class="page-time">
+  2018-12-23
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/前端/">前端</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#前言"><span class="post-toc-number">1.</span> <span class="post-toc-text">前言</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#redux介绍"><span class="post-toc-number">2.</span> <span class="post-toc-text">redux介绍</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#几个概念"><span class="post-toc-number">3.</span> <span class="post-toc-text">几个概念</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#action"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">action</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#action-creator"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">action creator</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#reducer"><span class="post-toc-number">3.3.</span> <span class="post-toc-text">reducer</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#store"><span class="post-toc-number">3.4.</span> <span class="post-toc-text">store</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#react-和-redux-结合"><span class="post-toc-number">4.</span> <span class="post-toc-text">react 和 redux 结合</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#异步"><span class="post-toc-number">5.</span> <span class="post-toc-text">异步</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#redux-thunk"><span class="post-toc-number">5.1.</span> <span class="post-toc-text">redux-thunk</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#最后"><span class="post-toc-number">5.2.</span> <span class="post-toc-text">最后</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-react-redux学习"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">react-redux学习</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-12-23 14:41:48" datetime="2018-12-23T06:41:48.000Z"  itemprop="datePublished">2018-12-23</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/前端/">前端</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>生活还是对我下手了，react 全家桶一个都不能少，这次是 redux。</p>
+<h1 id="redux介绍"><a href="#redux介绍" class="headerlink" title="redux介绍"></a>redux介绍</h1><blockquote>
+<p>Redux 是 JavaScript 状态容器，提供可预测化的状态管理。可以让你构建一致化的应用，运行于不同的环境（客户端、服务器、原生应用），并且易于测试。</p>
+</blockquote>
+<p>redux 有三大原则：<strong>单一数据源</strong>，<strong>State 是只读的</strong>，<strong>使用纯函数来执行修改</strong></p>
+<h1 id="几个概念"><a href="#几个概念" class="headerlink" title="几个概念"></a>几个概念</h1><h2 id="action"><a href="#action" class="headerlink" title="action"></a>action</h2><p><strong>唯一改变 state 的方法就是触发 <a href="https://www.redux.org.cn/docs/Glossary.html#action" target="_blank" rel="noopener">action</a>，action 是一个用于描述已发生事件的‘普通对象’。</strong></p>
+<p>这样确保了视图和网络请求都不能直接修改 <code>state</code>，相反它们只能表达想要修改的意图。因为所有的修改都被集中化处理，且严格按照一个接一个的顺序执行，因此不用担心 <code>race condition</code> 的出现。 <code>action</code> 就是<strong>普通对象</strong>而已，因此它们可以被日志打印、序列化、储存、后期调试或测试时回放出来。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attribute">type</span>: ADD_TODO,</span><br><span class="line">  text: <span class="string">'Build my first Redux app'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这就是一个 <code>action</code>。我们约定，<code>action</code> 内必须使用一个字符串类型的 <code>type</code> 字段来表示将要执行的动作。除了 <code>type</code> 字段外，<code>action</code> 对象的结构完全由你自己决定。</p>
+<h2 id="action-creator"><a href="#action-creator" class="headerlink" title="action creator"></a>action creator</h2><p>因为一个应用有很多 <code>action</code>，不可能自己写死，所以我们用一个函数来生成 <code>action</code>，其实这个函数只是返回一个对象，这个对象就是 <code>action</code>：<br><figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title">addTodo</span>(text) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="type">&#123;</span></span><br><span class="line">    <span class="keyword">type</span>: ADD_TODO,</span><br><span class="line">    text</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="reducer"><a href="#reducer" class="headerlink" title="reducer"></a>reducer</h2><p><strong>Reducers</strong> 指定了应用状态的变化如何响应 <a href="https://www.redux.org.cn/docs/basics/Actions.html" target="_blank" rel="noopener">actions</a> 并发送到 <code>store</code> 的，记住 <code>actions</code> 只是描述了<em>有事情发生了</em>这一事实，并没有描述应用如何更新 <code>state</code>。<br><code>reducer</code> 就是一个纯函数，接收旧的 <code>state</code> 和 <code>action</code>，返回新的 <code>state</code>。<br><figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(<span class="name">previousState</span>, action) =&gt; newState</span><br></pre></td></tr></table></figure></p>
+<p>保持 <code>reducer</code> 纯净非常重要。永远不要在 <code>reducer</code> 里做这些操作：</p>
+<ul>
+<li>修改传入参数；</li>
+<li>执行有副作用的操作，如 API 请求和路由跳转；</li>
+<li>调用非纯函数，如 Date.now() 或 Math.random()。</li>
+</ul>
+<p>一个完整的 <code>reducer</code>：<br><figure class="highlight pf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">function todoApp(<span class="keyword">state</span> = initialState, action) &#123;</span><br><span class="line">  switch (action.type) &#123;</span><br><span class="line">    case SET_VISIBILITY_FILTER:</span><br><span class="line">      return Object.assign(&#123;&#125;, <span class="keyword">state</span>, &#123;</span><br><span class="line">        visibilityFilter: action.filter</span><br><span class="line">      &#125;)</span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">      return <span class="keyword">state</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>根据传进来的 <code>action</code> 里面的 <code>type</code> 来执行不同的操作，然后返回一个新的 <code>state</code>，<strong>注意：不要修改 state。在 default 情况下返回旧的 state。遇到未知的 action 时，一定要返回旧的 state。</strong></p>
+<p>当然，当应用越来越大，需要对 <code>reducer</code> 进行拆分。Redux提出通过定义多个<code>reducer</code>对数据进行拆解访问或者修改，最终再通过<code>combineReducers</code>函数将零散的数据拼装回去：<br><figure class="highlight pf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">// Function names don't matter!</span><br><span class="line">function processA(<span class="keyword">state</span>, action) &#123; ... &#125;</span><br><span class="line">function doSomethingWithB(<span class="keyword">state</span>, action) &#123; ... &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">let reducer = combineReducers(&#123;</span><br><span class="line">  a: processA,</span><br><span class="line">  b: doSomethingWithB</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">/* 这种方法等价于 combineReducers</span><br><span class="line">function reducer(<span class="keyword">state</span> = &#123;&#125;, action) &#123;</span><br><span class="line">  return &#123;</span><br><span class="line">    a: processA(<span class="keyword">state</span>.a, action),</span><br><span class="line">    b: doSomethingWithB(<span class="keyword">state</span>.b, action)</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line">*/</span><br><span class="line"></span><br><span class="line">let store = createStore(reducer);</span><br></pre></td></tr></table></figure></p>
+<p>每一个<code>子reducer</code>都将直接对应数据源（<code>store</code>）的某一个字段，这样将所有的 <code>reducer</code> 组合之后，就形成一棵状态树：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; combineReducers &#125; <span class="keyword">from</span> <span class="string">'redux'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 叶子reducer</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">aReducer</span>(<span class="params">state = <span class="number">1</span>, action</span>) </span>&#123;<span class="comment">/*...*/</span>&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">cReducer</span>(<span class="params">state = true, action</span>) </span>&#123;<span class="comment">/*...*/</span>&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">eReducer</span>(<span class="params">state = [<span class="number">2</span>, <span class="number">3</span>], action</span>) </span>&#123;<span class="comment">/*...*/</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> dReducer = combineReducers(&#123;</span><br><span class="line">  e: eReducer</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> bReducer = combineReducers(&#123;</span><br><span class="line">  c: cReducer,</span><br><span class="line">  d: dReducer</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 根reducer</span></span><br><span class="line"><span class="keyword">const</span> rootReducer = combineReducers(&#123;</span><br><span class="line">  a: aReducer,</span><br><span class="line">  b: bReducer</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://upload-images.jianshu.io/upload_images/5834506-cf5397cf7ca3d35e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<h2 id="store"><a href="#store" class="headerlink" title="store"></a>store</h2><p>redux 的 <code>store</code> 将整个应用的 <a href="https://www.redux.org.cn/docs/Glossary.html#state" target="_blank" rel="noopener">state</a> 储存在一棵 <code>object tree</code>中，并且这个 <code>object tree</code> 只存在于唯一一个 <a href="https://www.redux.org.cn/docs/Glossary.html#store" target="_blank" rel="noopener">store</a> 中。简单来说，<code>store</code>就是把 <code>action</code> 和 <code>reducer</code> 连接起来。<br><figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; createStore &#125; <span class="keyword">from</span> <span class="string">'redux'</span></span><br><span class="line"><span class="keyword">import</span> todoApp <span class="keyword">from</span> <span class="string">'./reducers'</span> <span class="comment">// 合成的 reducer</span></span><br><span class="line"><span class="comment">// 用 createStore 生成 store</span></span><br><span class="line"><span class="keyword">let</span> store = createStore(todoApp)</span><br></pre></td></tr></table></figure></p>
+<p><code>store</code> 有几个方法</p>
+<ul>
+<li><a href="https://www.redux.org.cn/docs/api/Store.html#getState" target="_blank" rel="noopener"><code>getState()</code></a> 方法获取 state；</li>
+<li><a href="https://www.redux.org.cn/docs/api/Store.html#dispatch" target="_blank" rel="noopener"><code>dispatch(action)</code></a> 方法更新 state；</li>
+<li><a href="https://www.redux.org.cn/docs/api/Store.html#subscribe" target="_blank" rel="noopener"><code>subscribe(listener)</code></a> 注册监听器;</li>
+</ul>
+<h1 id="react-和-redux-结合"><a href="#react-和-redux-结合" class="headerlink" title="react 和 redux 结合"></a>react 和 redux 结合</h1><p>上面那些全都是 redux 的内容，完全可以不用 react 就能跑起来。用 react 写的展示组件和用 redux 写的容器组件 通过 <code>connect()</code> 函数结合起来。<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://upload-images.jianshu.io/upload_images/5834506-c40333f7a4ce43fa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure><br>使用 <code>connect()</code> 前，需要先定义 <code>mapStateToProps</code> 这个函数来指定如何把当前 <code>Redux store state</code> 映射到展示组件的 <code>props</code> 中。其实就是从完整的 <code>store</code>树里面抽出这个展示组件需要的一些 <code>state</code>，这样这个组件就不会感知到其他 <code>state</code> 的存在。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> getVisibleTodos = <span class="function">(<span class="params">todos, filter</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">switch</span> (filter) &#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">'SHOW_COMPLETED'</span>:</span><br><span class="line">      <span class="keyword">return</span> todos.filter(<span class="function"><span class="params">t</span> =&gt;</span> t.completed)</span><br><span class="line">    <span class="keyword">case</span> <span class="string">'SHOW_ACTIVE'</span>:</span><br><span class="line">      <span class="keyword">return</span> todos.filter(<span class="function"><span class="params">t</span> =&gt;</span> !t.completed)</span><br><span class="line">    <span class="keyword">case</span> <span class="string">'SHOW_ALL'</span>:</span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">      <span class="keyword">return</span> todos</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> mapStateToProps = <span class="function"><span class="params">state</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    todos: getVisibleTodos(state.todos, state.visibilityFilter)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><code>mapStateToProps</code> 始终返回一个对象。<br>除了读取 <code>state</code>，容器组件还能分发 <code>action</code>。类似的方式，可以定义 <code>mapDispatchToProps()</code> 方法接收 <a href="https://www.redux.org.cn/docs/api/Store.html#dispatch" target="_blank" rel="noopener"><code>dispatch()</code></a> 方法并返回期望注入到展示组件的 <code>props</code> 中的回调方法。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> mapDispatchToProps = <span class="function"><span class="params">dispatch</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    onTodoClick: <span class="function"><span class="params">id</span> =&gt;</span> &#123;</span><br><span class="line">      dispatch(toggleTodo(id))</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><code>mapDispatchToProps</code> 始终返回一个对象。<br>最后，使用 <code>connect()</code> 创建 <code>VisibleTodoList</code>，并传入这两个函数。<br><figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="built_in">connect</span> &#125; from <span class="string">'react-redux'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> VisibleTodoList = <span class="built_in">connect</span>(</span><br><span class="line">  mapStateToProps,</span><br><span class="line">  mapDispatchToProps</span><br><span class="line">)(TodoList)</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="built_in">default</span> VisibleTodoList</span><br></pre></td></tr></table></figure></p>
+<p>当用 <code>connect()</code> 连接后，我们在 <code>APP</code> 组件都是用这个连接之后的组件了。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> VisibleTodoList <span class="keyword">from</span> <span class="string">'../containers/VisibleTodoList'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> App = <span class="function"><span class="params">()</span> =&gt;</span> (</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">    &lt;VisibleTodoList /&gt;</span><br><span class="line">  &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">)</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">export default App</span></span><br></pre></td></tr></table></figure></p>
+<p>最后一步，传入 <code>store</code> 使用指定的 React Redux 组件 <a href="https://github.com/reactjs/react-redux/blob/master/docs/api.md#provider-store" target="_blank" rel="noopener"><code>&lt;Provider&gt;</code></a> 来 <a href="https://facebook.github.io/react/docs/context.html" target="_blank" rel="noopener">魔法般的</a> 让所有容器组件都可以访问 <code>store</code>，而不必显示地传递它。只需要在渲染根组件时使用即可。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span></span><br><span class="line"><span class="keyword">import</span> &#123; render &#125; <span class="keyword">from</span> <span class="string">'react-dom'</span></span><br><span class="line"><span class="keyword">import</span> &#123; Provider &#125; <span class="keyword">from</span> <span class="string">'react-redux'</span></span><br><span class="line"><span class="keyword">import</span> &#123; createStore &#125; <span class="keyword">from</span> <span class="string">'redux'</span></span><br><span class="line"><span class="keyword">import</span> todoApp <span class="keyword">from</span> <span class="string">'./reducers'</span></span><br><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">'./components/App'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> store = createStore(todoApp)</span><br><span class="line"></span><br><span class="line">render(</span><br><span class="line">  &lt;Provider store=&#123;store&#125;&gt;</span><br><span class="line">    &lt;App /&gt;</span><br><span class="line">  &lt;<span class="regexp">/Provider&gt;,</span></span><br><span class="line"><span class="regexp">  document.getElementById('root')</span></span><br><span class="line"><span class="regexp">)</span></span><br></pre></td></tr></table></figure></p>
+<p>最后用一张图来总结：<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://upload-images.jianshu.io/upload_images/5834506-8eb2f1894bc2b409.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure></p>
+<h1 id="异步"><a href="#异步" class="headerlink" title="异步"></a>异步</h1><p>之前的都是我们的 <code>action</code> 都是同步操作，但是我们的网络请求或者其他需要异步的操作，单纯的 redux 并不能提供异步的操作，所以又需要其他库（惊不惊喜），这里介绍一下算是用的比较多的库：redux-thunk 和 redux-saga，这些库都是用到 redux midlleware 的特性，简单来说就是它提供的是位于 <code>action</code> 被发起之后，到达 <code>reducer</code> 之前的扩展点。你可以利用 Redux middleware 来进行日志记录、创建崩溃报告、调用异步接口或者路由等等。</p>
+<h2 id="redux-thunk"><a href="#redux-thunk" class="headerlink" title="redux-thunk"></a>redux-thunk</h2><p>这个库是官网里面作为教程的，所以也有一定的意义。通过使用指定的 <code>middleware</code>，<code>action 创建函数</code>除了返回 <code>action</code> 对象外还可以返回函数。这时，这个 <code>action</code> 创建函数就成为了 <a href="https://en.wikipedia.org/wiki/Thunk" target="_blank" rel="noopener">thunk</a>。当 <code>action 创建函数</code>返回函数时，这个函数会被 Redux Thunk middleware 执行。这个函数并不需要保持纯净；它还可以带有副作用，包括执行异步 API 请求。这个函数还可以 <code>dispatch action</code>，就像 <code>dispatch</code> 前面定义的同步 <code>action</code> 一样。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 来看一下我们写的第一个 thunk action 创建函数！</span></span><br><span class="line"><span class="comment">// 虽然内部操作不同，你可以像其它 action 创建函数 一样使用它：</span></span><br><span class="line"><span class="comment">// store.dispatch(fetchPosts('reactjs'))</span></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">fetchPosts</span>(<span class="params">subreddit</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Thunk middleware 知道如何处理函数。</span></span><br><span class="line">  <span class="comment">// 这里把 dispatch 方法通过参数的形式传给函数，</span></span><br><span class="line">  <span class="comment">// 以此来让它自己也能 dispatch action。</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params">dispatch</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 首次 dispatch：更新应用的 state 来通知</span></span><br><span class="line">    <span class="comment">// API 请求发起了。</span></span><br><span class="line">    <span class="comment">// 这时 dispatch 的是一个同步的 action</span></span><br><span class="line">    dispatch(requestPosts(subreddit))</span><br><span class="line"></span><br><span class="line">    <span class="comment">// thunk middleware 调用的函数可以有返回值，</span></span><br><span class="line">    <span class="comment">// 它会被当作 dispatch 方法的返回值传递。</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 这个案例中，我们返回一个等待处理的 promise。</span></span><br><span class="line">    <span class="comment">// 这并不是 redux middleware 所必须的，但这对于我们而言很方便。</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> fetch(<span class="string">`http://www.subreddit.com/r/<span class="subst">$&#123;subreddit&#125;</span>.json`</span>)</span><br><span class="line">      .then(</span><br><span class="line">        response =&gt; response.json(),</span><br><span class="line">        <span class="comment">// 不要使用 catch，因为会捕获</span></span><br><span class="line">        <span class="comment">// 在 dispatch 和渲染中出现的任何错误，</span></span><br><span class="line">        <span class="comment">// 导致 'Unexpected batch number' 错误。</span></span><br><span class="line">        <span class="comment">// https://github.com/facebook/react/issues/6895</span></span><br><span class="line">         error =&gt; <span class="built_in">console</span>.log(<span class="string">'An error occurred.'</span>, error)</span><br><span class="line">      )</span><br><span class="line">      .then(<span class="function"><span class="params">json</span> =&gt;</span></span><br><span class="line">        <span class="comment">// 可以多次 dispatch！</span></span><br><span class="line">        <span class="comment">// 这里，使用 API 请求结果来更新应用的 state。</span></span><br><span class="line">        <span class="comment">// 这个也是一个同步的 action</span></span><br><span class="line">        dispatch(receivePosts(subreddit, json))</span><br><span class="line">      )</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>然后，我们在在 dispatch 机制中引入 Redux Thunk middleware ，我们使用了 <a href="https://www.redux.org.cn/docs/api/applyMiddleware.html" target="_blank" rel="noopener"><code>applyMiddleware()</code></a><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> thunkMiddleware <span class="keyword">from</span> <span class="string">'redux-thunk'</span></span><br><span class="line"><span class="keyword">import</span> &#123; createLogger &#125; <span class="keyword">from</span> <span class="string">'redux-logger'</span></span><br><span class="line"><span class="keyword">import</span> &#123; createStore, applyMiddleware &#125; <span class="keyword">from</span> <span class="string">'redux'</span></span><br><span class="line"><span class="keyword">import</span> &#123; selectSubreddit, fetchPosts &#125; <span class="keyword">from</span> <span class="string">'./actions'</span></span><br><span class="line"><span class="keyword">import</span> rootReducer <span class="keyword">from</span> <span class="string">'./reducers'</span></span><br><span class="line"><span class="comment">// 另外一个 middleware</span></span><br><span class="line"><span class="keyword">const</span> loggerMiddleware = createLogger()</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> store = createStore(</span><br><span class="line">  rootReducer,</span><br><span class="line">  applyMiddleware(</span><br><span class="line">    thunkMiddleware, <span class="comment">// 允许我们 dispatch() 函数</span></span><br><span class="line">    loggerMiddleware <span class="comment">// 一个很便捷的 middleware，用来打印 action 日志</span></span><br><span class="line">  )</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">store.dispatch(selectSubreddit(<span class="string">'reactjs'</span>))</span><br><span class="line">store</span><br><span class="line">  .dispatch(fetchPosts(<span class="string">'reactjs'</span>))</span><br><span class="line">  .then(<span class="function"><span class="params">()</span> =&gt;</span> <span class="built_in">console</span>.log(store.getState())</span><br><span class="line">)</span><br></pre></td></tr></table></figure></p>
+<p>这个异步 action 创建函数还可以有另外一个参数 <code>getState</code>：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">fetchPostsIfNeeded</span>(<span class="params">subreddit</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 注意这个函数也接收了 getState() 方法</span></span><br><span class="line">  <span class="comment">// 它让你选择接下来 dispatch 什么。</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// 当缓存的值是可用时，</span></span><br><span class="line">  <span class="comment">// 减少网络请求很有用。</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="function">(<span class="params">dispatch, getState</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (shouldFetchPosts(getState(), subreddit)) &#123;</span><br><span class="line">      <span class="comment">// 在 thunk 里 dispatch 另一个 thunk！</span></span><br><span class="line">      <span class="keyword">return</span> dispatch(fetchPosts(subreddit))</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="comment">// 告诉调用代码不需要再等待。</span></span><br><span class="line">      <span class="keyword">return</span> <span class="built_in">Promise</span>.resolve()</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>关于 redux-saga ，由于现在接触的项目没有怎么用，也不好说，所以等实际使用之后再来记录吧。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <footer>
+        <a href="https://recallhyx.github.io">
+            <img src="/img/avatar.jpg" alt="Recall HYX">
+            Recall HYX
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/react/">react</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://recallhyx.github.io/2018/12/23/react-redux学习/&title=《react-redux学习》 — Recall Hyx&pic=https://recallhyx.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://recallhyx.github.io/2018/12/23/react-redux学习/&title=《react-redux学习》 — Recall Hyx&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://recallhyx.github.io/2018/12/23/react-redux学习/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《react-redux学习》 — Recall Hyx&url=https://recallhyx.github.io/2018/12/23/react-redux学习/&via=https://recallhyx.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://recallhyx.github.io/2018/12/23/react-redux学习/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/09/27/myexperience/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">我的春招秋招</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "gnMQ4bW3FRMELqY7UJSFCG2L-gzGzoHsz",
+            appKey: "8kUBso0hYLBcTE8e9h89D1Hc",
+            avatar: "mm",
+            placeholder: "Just go go",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Recall HYX &copy; 2017 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://recallhyx.github.io/2018/12/23/react-redux学习/&title=《react-redux学习》 — Recall Hyx&pic=https://recallhyx.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://recallhyx.github.io/2018/12/23/react-redux学习/&title=《react-redux学习》 — Recall Hyx&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://recallhyx.github.io/2018/12/23/react-redux学习/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《react-redux学习》 — Recall Hyx&url=https://recallhyx.github.io/2018/12/23/react-redux学习/&via=https://recallhyx.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://recallhyx.github.io/2018/12/23/react-redux学习/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACMElEQVR42u3aQZKDMAwF0dz/0kzVrLLB9JdgapDbK4oQ7JeFIln+fPA4fsf39fcd/uTZHfLmG4YMGTJeyziWg09/9s71M+R6vTYZMmTsw3gidJ4tZT37Gn96X4YMGTJK1DSAkjAtQ4YMGTx1qxWipECVIUOGjE4RS5I5Usp20sobanEZMmS8kFFrDPzN9eP9DRkyZPx7xhGO2hvS9mS8KhkyZIxm8HSNp318cWlxe/FzyJAhYyiDBMe0JXBXG4CwT/83ZMiQMYjBD3Wl03QOUtQ27GTIkDGVkQa1J4IsYcedDRkyZAxi8Ef5gkgpy0tcshIZMmTswEgnIFv8NfYNbQYZMmSMY6SLqxW6/UMeF+FYhgwZGzA6iRpP/nhYT2EyZMjYgYEyx/DT2lEMErIv/jdkyJAxjlHblCetgtpmWb+RIEOGjKmMJ5qXBHnv7DJkyJjKqBWNtZZnbUMNBWIZMmRswOBpH08B08ZAq9yVIUPGaAZP9Qij/xOQgxcXRawMGTLGMWpbaWnzoNYkCAK6DBkytmHUWpKcWmstxBmuDBkyxjE6B8LiDLRd7gaBW4YMGYMYRzjSw6Zp+7MYmmXIkDGawUd/i79zRKPWHJUhQ8YkRj/I8m24flAOWpgyZMgYx0g3tnihu/5WJ6CjD2TIkLEZgy96vVwefIPgLkOGDBlhqVk7NsGTSxkyZOzJqB2VSJugaQoYrESGDBmjGf02JClN+TYcP3z2SYcMGTLex/gBEmnrQUc/tkwAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
