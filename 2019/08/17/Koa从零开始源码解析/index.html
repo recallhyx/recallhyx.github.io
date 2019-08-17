@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-112417276-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>Koa从零开始源码解析 | Recall Hyx | Your star</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#FFC107">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="前言好久没有写博客了，一方面是工作了比较忙，一方面是觉得之前的博客都是一个小点写成一篇文章，没有比较大的点，最近刚好在看 Koa 源码，就把这个写成了文章。 整体概况Koa 很精简，总共有四个文件：application.js、context.js、request.js、response.js，其他一些工具函数都写成一个包了，方便其他人使用。 application.jsapplication.j">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Koa从零开始源码解析">
+<meta property="og:url" content="https://recallhyx.github.io/2019/08/17/Koa从零开始源码解析/index.html">
+<meta property="og:site_name" content="Recall Hyx">
+<meta property="og:description" content="前言好久没有写博客了，一方面是工作了比较忙，一方面是觉得之前的博客都是一个小点写成一篇文章，没有比较大的点，最近刚好在看 Koa 源码，就把这个写成了文章。 整体概况Koa 很精简，总共有四个文件：application.js、context.js、request.js、response.js，其他一些工具函数都写成一个包了，方便其他人使用。 application.jsapplication.j">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5834506-60e3ad75f9755895.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5834506-cf4e780e48379e2e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2019-08-17T09:39:46.768Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Koa从零开始源码解析">
+<meta name="twitter:description" content="前言好久没有写博客了，一方面是工作了比较忙，一方面是觉得之前的博客都是一个小点写成一篇文章，没有比较大的点，最近刚好在看 Koa 源码，就把这个写成了文章。 整体概况Koa 很精简，总共有四个文件：application.js、context.js、request.js、response.js，其他一些工具函数都写成一个包了，方便其他人使用。 application.jsapplication.j">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/5834506-60e3ad75f9755895.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Recall HYX</h5>
+          <a href="mailto:quce.hu@qq.com" title="quce.hu@qq.com" class="mail">quce.hu@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                文章
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/recallhyx" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Koa从零开始源码解析</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Koa从零开始源码解析</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-08-17T09:37:38.000Z" itemprop="datePublished" class="page-time">
+  2019-08-17
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#前言"><span class="post-toc-number">1.</span> <span class="post-toc-text">前言</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#整体概况"><span class="post-toc-number">2.</span> <span class="post-toc-text">整体概况</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#application-js"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">application.js</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#context-js"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">context.js</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#request-js"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">request.js</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#response-js"><span class="post-toc-number">2.4.</span> <span class="post-toc-text">response.js</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#compose"><span class="post-toc-number">3.</span> <span class="post-toc-text">compose</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#总结"><span class="post-toc-number">4.</span> <span class="post-toc-text">总结</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-Koa从零开始源码解析"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Koa从零开始源码解析</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-08-17 17:37:38" datetime="2019-08-17T09:37:38.000Z"  itemprop="datePublished">2019-08-17</time>
+
+            
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>好久没有写博客了，一方面是工作了比较忙，一方面是觉得之前的博客都是一个小点写成一篇文章，没有比较大的点，最近刚好在看 Koa 源码，就把这个写成了文章。</p>
+<h1 id="整体概况"><a href="#整体概况" class="headerlink" title="整体概况"></a>整体概况</h1><p>Koa 很精简，总共有四个文件：<code>application.js</code>、<code>context.js</code>、<code>request.js</code>、<code>response.js</code>，其他一些工具函数都写成一个包了，方便其他人使用。</p>
+<h2 id="application-js"><a href="#application-js" class="headerlink" title="application.js"></a>application.js</h2><p><code>application.js</code> 是整个 Koa 的入口文件，我们从这个文件开始，解析 Koa 源码。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">'use strict'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Module dependencies.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> isGeneratorFunction = <span class="built_in">require</span>(<span class="string">'is-generator-function'</span>); <span class="comment">// 用来判断一个函数是否 generator</span></span><br><span class="line"><span class="keyword">const</span> debug = <span class="built_in">require</span>(<span class="string">'debug'</span>)(<span class="string">'koa:application'</span>); <span class="comment">// 引入 debug 包，并且为 debug 设置输出的命名空间</span></span><br><span class="line"><span class="keyword">const</span> onFinished = <span class="built_in">require</span>(<span class="string">'on-finished'</span>); <span class="comment">// 当一个 http 请求 closes, finishes, 或者 errors 时，调用回调函数</span></span><br><span class="line"><span class="keyword">const</span> response = <span class="built_in">require</span>(<span class="string">'./response'</span>); <span class="comment">// 引入 response 文件</span></span><br><span class="line"><span class="keyword">const</span> compose = <span class="built_in">require</span>(<span class="string">'koa-compose'</span>); <span class="comment">// compose 主要是将中间件组合起来，形成 ‘洋葱模型’</span></span><br><span class="line"><span class="keyword">const</span> isJSON = <span class="built_in">require</span>(<span class="string">'koa-is-json'</span>); <span class="comment">// 判断一个 response 的 body 是否是 json</span></span><br><span class="line"><span class="keyword">const</span> context = <span class="built_in">require</span>(<span class="string">'./context'</span>); <span class="comment">// 引入 context 文件</span></span><br><span class="line"><span class="keyword">const</span> request = <span class="built_in">require</span>(<span class="string">'./request'</span>); <span class="comment">// 引入 request 文件</span></span><br><span class="line"><span class="keyword">const</span> statuses = <span class="built_in">require</span>(<span class="string">'statuses'</span>); <span class="comment">// 判断 http 的状态码</span></span><br><span class="line"><span class="keyword">const</span> Emitter = <span class="built_in">require</span>(<span class="string">'events'</span>); <span class="comment">// node 的 events 提供了一个订阅发布模式</span></span><br><span class="line"><span class="keyword">const</span> util = <span class="built_in">require</span>(<span class="string">'util'</span>); <span class="comment">// node 的 util 包</span></span><br><span class="line"><span class="keyword">const</span> Stream = <span class="built_in">require</span>(<span class="string">'stream'</span>); <span class="comment">// node 的 stream 处理流数据的抽象接口</span></span><br><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>); <span class="comment">// node 的 http 包</span></span><br><span class="line"><span class="keyword">const</span> only = <span class="built_in">require</span>(<span class="string">'only'</span>); <span class="comment">// only 函数返回对象的指定键值</span></span><br><span class="line"><span class="keyword">const</span> convert = <span class="built_in">require</span>(<span class="string">'koa-convert'</span>); <span class="comment">// 将 generator 函数转成 promise 函数</span></span><br><span class="line"><span class="keyword">const</span> deprecate = <span class="built_in">require</span>(<span class="string">'depd'</span>)(<span class="string">'koa'</span>); <span class="comment">// 给出标记为废弃的信息</span></span><br></pre></td></tr></table></figure></p>
+<p>一开始用了 <code>use strict</code>，开启严格模式，具体的作用可以看<a href="[https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Strict_mode](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Strict_mode">这篇文章</a><br>)<br>然后就是一堆引入，这里打了注释，告诉你这个包是用来干嘛的。</p>
+<p>接下来我们来看大概：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = <span class="class"><span class="keyword">class</span> <span class="title">Application</span> <span class="keyword">extends</span> <span class="title">Emitter</span> </span>&#123;</span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * Initialize a new `Application`.</span></span><br><span class="line"><span class="comment">   *</span></span><br><span class="line"><span class="comment">   * @api public</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">constructor</span>() &#123;...&#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * Shorthand for:</span></span><br><span class="line"><span class="comment">   *</span></span><br><span class="line"><span class="comment">   *    http.createServer(app.callback()).listen(...)</span></span><br><span class="line"><span class="comment">   *</span></span><br><span class="line"><span class="comment">   * @param &#123;Mixed&#125; ...</span></span><br><span class="line"><span class="comment">   * @return &#123;Server&#125;</span></span><br><span class="line"><span class="comment">   * @api public</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line"></span><br><span class="line">  listen(...args) &#123;...&#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * Return JSON representation.</span></span><br><span class="line"><span class="comment">   * We only bother showing settings.</span></span><br><span class="line"><span class="comment">   *</span></span><br><span class="line"><span class="comment">   * @return &#123;Object&#125;</span></span><br><span class="line"><span class="comment">   * @api public</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line"></span><br><span class="line">  toJSON() &#123;...&#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * Inspect implementation.</span></span><br><span class="line"><span class="comment">   *</span></span><br><span class="line"><span class="comment">   * @return &#123;Object&#125;</span></span><br><span class="line"><span class="comment">   * @api public</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line"></span><br><span class="line">  inspect() &#123;...&#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * Use the given middleware `fn`.</span></span><br><span class="line"><span class="comment">   *</span></span><br><span class="line"><span class="comment">   * Old-style middleware will be converted.</span></span><br><span class="line"><span class="comment">   *</span></span><br><span class="line"><span class="comment">   * @param &#123;Function&#125; fn</span></span><br><span class="line"><span class="comment">   * @return &#123;Application&#125; self</span></span><br><span class="line"><span class="comment">   * @api public</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line"></span><br><span class="line">  use(fn) &#123;...&#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * Return a request handler callback</span></span><br><span class="line"><span class="comment">   * for node's native http server.</span></span><br><span class="line"><span class="comment">   *</span></span><br><span class="line"><span class="comment">   * @return &#123;Function&#125;</span></span><br><span class="line"><span class="comment">   * @api public</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line"></span><br><span class="line">  callback() &#123;...&#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * Handle request in callback.</span></span><br><span class="line"><span class="comment">   *</span></span><br><span class="line"><span class="comment">   * @api private</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line"></span><br><span class="line">  handleRequest(ctx, fnMiddleware) &#123;...&#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * Initialize a new context.</span></span><br><span class="line"><span class="comment">   *</span></span><br><span class="line"><span class="comment">   * @api private</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line"></span><br><span class="line">  createContext(req, res) &#123;...&#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * Default error handler.</span></span><br><span class="line"><span class="comment">   *</span></span><br><span class="line"><span class="comment">   * @param &#123;Error&#125; err</span></span><br><span class="line"><span class="comment">   * @api private</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line"></span><br><span class="line">  onerror(err) &#123;...&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Response helper.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">respond</span>(<span class="params">ctx</span>) </span>&#123;...&#125;</span><br></pre></td></tr></table></figure></p>
+<p>可以看到第一行<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = <span class="class"><span class="keyword">class</span> <span class="title">Application</span> <span class="keyword">extends</span> <span class="title">Emitter</span></span></span><br></pre></td></tr></table></figure></p>
+<p>继承了 <code>Emitter</code> 这个包，就是用了 <code>node</code> 的发布订阅模式，一般用于监听 <code>error</code> 事件。<br>现在我们通过官网一个最简单的例子来解析源码：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Koa = <span class="built_in">require</span>(<span class="string">'koa'</span>);</span><br><span class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> Koa();</span><br><span class="line"></span><br><span class="line">app.use(<span class="keyword">async</span> ctx =&gt; &#123;</span><br><span class="line">  ctx.body = <span class="string">'Hello World'</span>;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.listen(<span class="number">3000</span>);</span><br></pre></td></tr></table></figure></p>
+<p>首先第一步引入 Koa，然后就是 <code>const app = new Koa()</code>，这一步会创建一个 Koa 实例，执行  <code>constructor</code> 方法。<br>让我们看看 <code>constructor</code>：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Initialize a new `Application`.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * @api public</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">constructor</span>() &#123;</span><br><span class="line">    <span class="keyword">super</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">this</span>.proxy = <span class="literal">false</span>; <span class="comment">// 这个是给 request.js 用的</span></span><br><span class="line">    <span class="keyword">this</span>.middleware = []; <span class="comment">// 中间件数组</span></span><br><span class="line">    <span class="keyword">this</span>.subdomainOffset = <span class="number">2</span>; <span class="comment">// 这个是给 request.js 用的</span></span><br><span class="line">    <span class="keyword">this</span>.env = process.env.NODE_ENV || <span class="string">'development'</span>; <span class="comment">// 环境</span></span><br><span class="line">    <span class="keyword">this</span>.context = <span class="built_in">Object</span>.create(context); <span class="comment">// 创建 context 对象</span></span><br><span class="line">    <span class="keyword">this</span>.request = <span class="built_in">Object</span>.create(request); <span class="comment">// 创建 request 对象</span></span><br><span class="line">    <span class="keyword">this</span>.response = <span class="built_in">Object</span>.create(response); <span class="comment">// 创建 response 对象</span></span><br><span class="line">    <span class="keyword">if</span> (util.inspect.custom) &#123;</span><br><span class="line">      <span class="comment">// 这里自定义 util 包的 inspect 方法</span></span><br><span class="line">      <span class="keyword">this</span>[util.inspect.custom] = <span class="keyword">this</span>.inspect;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure></p>
+<p>既然看到 <code>inspect</code> 方法了，那我们就看看具体：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Inspect implementation.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * @return &#123;Object&#125;</span></span><br><span class="line"><span class="comment"> * @api public</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line">inspect() &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">this</span>.toJSON();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><code>inspect</code> 就是调用了 <code>toJson</code> 方法，看一下：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Return JSON representation.</span></span><br><span class="line"><span class="comment"> * We only bother showing settings.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * @return &#123;Object&#125;</span></span><br><span class="line"><span class="comment"> * @api public</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line">toJSON() &#123;</span><br><span class="line">  <span class="keyword">return</span> only(<span class="keyword">this</span>, [</span><br><span class="line">    <span class="string">'subdomainOffset'</span>,</span><br><span class="line">    <span class="string">'proxy'</span>,</span><br><span class="line">    <span class="string">'env'</span></span><br><span class="line">  ]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>就是用到了一开始引用的 <code>only</code> 包，返回对象的 <code>subdomainOffset</code>，<code>proxy</code>，<code>env</code> 三个值。其中 <code>proxy</code> 表示是否开启代理,默认为 <code>false</code> 如果开启代理，对于获取 <code>request</code> 请求中的 <code>host</code> ，<code>protocol</code>，<code>ip</code> 分别优先从 <code>Header</code> 字段中的 <code>X-Forwarded-Host</code>，<code>X-Forwarded-Proto</code>，<code>X-Forwarded-For</code> 获取。<code>subdomainOffset</code>的意思是子域名的偏移。假设域名是”<a href="http://tobi.ferrets.example.com&quot;。如果" target="_blank" rel="noopener">http://tobi.ferrets.example.com&quot;。如果</a> <code>app.subdomainOffset</code> 没有设置，也就是说默认要忽略的偏移量是2，那么 <code>ctx.subdomains</code> 是<code>[&quot;ferrets&quot;, &quot;tobi&quot;]</code>，如果设置为3，那么结果是 <code>[&quot;tobi&quot;]</code>。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Koa = <span class="built_in">require</span>(<span class="string">'koa'</span>);</span><br><span class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> Koa();</span><br><span class="line"></span><br><span class="line">app.use(<span class="keyword">async</span> ctx =&gt; &#123;</span><br><span class="line">  ctx.body = <span class="string">'Hello World'</span>;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.listen(<span class="number">3000</span>);</span><br></pre></td></tr></table></figure>
+<p>接下来，第三行<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">app.use(<span class="keyword">async</span> ctx =&gt; &#123;</span><br><span class="line">  ctx.body = <span class="string">'Hello World'</span>;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>调用了 <code>use</code> 方法，那我们看看 <code>use</code>：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">use(fn) &#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> fn !== <span class="string">'function'</span>) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">TypeError</span>(<span class="string">'middleware must be a function!'</span>);</span><br><span class="line">  <span class="keyword">if</span> (isGeneratorFunction(fn)) &#123;</span><br><span class="line">    deprecate(<span class="string">'Support for generators will be removed in v3. '</span> +</span><br><span class="line">              <span class="string">'See the documentation for examples of how to convert old middleware '</span> +</span><br><span class="line">              <span class="string">'https://github.com/koajs/koa/blob/master/docs/migration.md'</span>);</span><br><span class="line">    fn = convert(fn);</span><br><span class="line">  &#125;</span><br><span class="line">  debug(<span class="string">'use %s'</span>, fn._name || fn.name || <span class="string">'-'</span>);</span><br><span class="line">  <span class="keyword">this</span>.middleware.push(fn);</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>首先判断参数 <code>fn</code> 是否为函数，不是就报错。然后判断 <code>fn</code> 是否为 <code>generator</code> 函数，是的话就输出即将要废弃的提示，接着把 <code>fn</code>，用引入的 <code>convert</code> 包，将 <code>generator</code> 转成 <code>promise</code>。然后输出 <code>debug</code> 信息，最后 <code>push</code> 到中间件数组 <code>middleware</code>，返回 <code>this</code>。</p>
+<p>最后的一句话<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app.listen(<span class="number">3000</span>);</span><br></pre></td></tr></table></figure></p>
+<p>用到了 <code>listen</code> 方法，看看：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">listen(...args) &#123;</span><br><span class="line">    debug(<span class="string">'listen'</span>);</span><br><span class="line">    <span class="keyword">const</span> server = http.createServer(<span class="keyword">this</span>.callback());</span><br><span class="line">    <span class="keyword">return</span> server.listen(...args);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure></p>
+<p>输出 <code>debug</code> 信息，然后调用 <code>http</code> 包的 <code>createServer</code> 方法，传入 <code>callback</code> 函数，最后调用 <code>server.listen</code>，传入 <code>args</code> 参数，启动 HTTP 服务器监听连接。其中调用了 <code>callback</code>，这个 <code>callback</code> 方法是 <code>application.js</code> 的核心：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">callback() &#123;</span><br><span class="line">  <span class="keyword">const</span> fn = compose(<span class="keyword">this</span>.middleware);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (!<span class="keyword">this</span>.listenerCount(<span class="string">'error'</span>)) <span class="keyword">this</span>.on(<span class="string">'error'</span>, <span class="keyword">this</span>.onerror);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> handleRequest = <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> ctx = <span class="keyword">this</span>.createContext(req, res);</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.handleRequest(ctx, fn);</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> handleRequest;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这个函数也很简单，就是调用 <code>compose</code> 方法，把 <code>middleware</code> 组合起来，<code>compose</code> 这个方法还是很重要的，下面会讲到，先跳过。然后判断一下有没有监听 <code>error</code> 这个事件，没有就监听，用了 <code>onerror</code> 方法 ，接下来返回一个函数：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> ctx = <span class="keyword">this</span>.createContext(req, res);</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">this</span>.handleRequest(ctx, fn);</span><br><span class="line"> &#125;;</span><br><span class="line"><span class="string">``</span><span class="string">` </span></span><br><span class="line"><span class="string">这个函数首先调用 `</span>createContext<span class="string">` 方法，把参数 `</span>req<span class="string">`、`</span>res<span class="string">`传进去：</span></span><br><span class="line"><span class="string">`</span><span class="string">``</span>js</span><br><span class="line">  createContext(req, res) &#123;</span><br><span class="line">    <span class="keyword">const</span> context = <span class="built_in">Object</span>.create(<span class="keyword">this</span>.context);</span><br><span class="line">    <span class="keyword">const</span> request = context.request = <span class="built_in">Object</span>.create(<span class="keyword">this</span>.request);</span><br><span class="line">    <span class="keyword">const</span> response = context.response = <span class="built_in">Object</span>.create(<span class="keyword">this</span>.response);</span><br><span class="line">    context.app = request.app = response.app = <span class="keyword">this</span>;</span><br><span class="line">    context.req = request.req = response.req = req;</span><br><span class="line">    context.res = request.res = response.res = res;</span><br><span class="line">    request.ctx = response.ctx = context;</span><br><span class="line">    request.response = response;</span><br><span class="line">    response.request = request;</span><br><span class="line">    context.originalUrl = request.originalUrl = req.url;</span><br><span class="line">    context.state = &#123;&#125;;</span><br><span class="line">    <span class="keyword">return</span> context;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure></p>
+<p>就是每次请求都会创建一个 <code>context</code>，然后将 <code>Node</code> 的 <code>request</code> 对象和 <code>response</code> 对象赋值给对应的属性，然后返回 <code>context</code> 给 <code>handleRequest</code> 使用。<br><code>handleRequest</code> ：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">handleRequest(ctx, fnMiddleware) &#123;</span><br><span class="line">  <span class="keyword">const</span> res = ctx.res;</span><br><span class="line">  res.statusCode = <span class="number">404</span>;</span><br><span class="line">  <span class="keyword">const</span> onerror = <span class="function"><span class="params">err</span> =&gt;</span> ctx.onerror(err);</span><br><span class="line">  <span class="keyword">const</span> handleResponse = <span class="function"><span class="params">()</span> =&gt;</span> respond(ctx);</span><br><span class="line">  onFinished(res, onerror);</span><br><span class="line">  <span class="keyword">return</span> fnMiddleware(ctx).then(handleResponse).catch(onerror);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这个函数的作用就是执行中间件，执行完之后调用 <code>respond</code> 方法。首先接收上面的 <code>context</code> 和 已经转成中间件的 <code>fnMiddleware</code>，<code>fnMiddleware</code> 经过 <code>compose</code> 处理之后其实是长这样：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fnMiddleware = <span class="function"><span class="keyword">function</span> (<span class="params">context, next</span>) </span>&#123;...&#125;</span><br></pre></td></tr></table></figure></p>
+<p>然后设置默认的 <code>statusCode</code> 为 404，然后调用 <code>onFinished</code>，监听 <code>res</code> 结束，执行完所有中间件的时候，调用 <code>respond</code>，这个 <code>respond</code> 方法并没有在 <code>Application</code> 类里面，而是外面的方法：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">respond</span>(<span class="params">ctx</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// allow bypassing koa</span></span><br><span class="line">  <span class="keyword">if</span> (<span class="literal">false</span> === ctx.respond) <span class="keyword">return</span>;</span><br><span class="line">  <span class="comment">// 检查是否可写</span></span><br><span class="line">  <span class="keyword">if</span> (!ctx.writable) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> res = ctx.res;</span><br><span class="line">  <span class="keyword">let</span> body = ctx.body;</span><br><span class="line">  <span class="keyword">const</span> code = ctx.status;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// ignore body</span></span><br><span class="line">  <span class="comment">// 用 statuses 包判断 code 是否为 body 为空的类型，如 204，205 等</span></span><br><span class="line">  <span class="keyword">if</span> (statuses.empty[code]) &#123;</span><br><span class="line">    <span class="comment">// strip headers</span></span><br><span class="line">    <span class="comment">// 将 body 置空</span></span><br><span class="line">    ctx.body = <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">return</span> res.end();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 如果 method 是 HEAD 类型</span></span><br><span class="line">  <span class="keyword">if</span> (<span class="string">'HEAD'</span> == ctx.method) &#123;</span><br><span class="line">    <span class="comment">// headersSent 表示响应头是否被发送出去了</span></span><br><span class="line">    <span class="comment">// 如果头部没有被发送，就设置 length</span></span><br><span class="line">    <span class="keyword">if</span> (!res.headersSent &amp;&amp; isJSON(body)) &#123;</span><br><span class="line">      ctx.length = Buffer.byteLength(<span class="built_in">JSON</span>.stringify(body));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> res.end();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// status body</span></span><br><span class="line">  <span class="keyword">if</span> (<span class="literal">null</span> == body) &#123;</span><br><span class="line">    <span class="comment">// 判断 Http 协议的版本</span></span><br><span class="line">    <span class="keyword">if</span> (ctx.req.httpVersionMajor &gt;= <span class="number">2</span>) &#123;</span><br><span class="line">      body = <span class="built_in">String</span>(code);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="comment">// ctx.message 在这里其实是 ctx.req.message，Http 的 req，res 都有 message 字端</span></span><br><span class="line">      body = ctx.message || <span class="built_in">String</span>(code);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (!res.headersSent) &#123;</span><br><span class="line">      ctx.type = <span class="string">'text'</span>;</span><br><span class="line">      ctx.length = Buffer.byteLength(body);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> res.end(body);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// responses</span></span><br><span class="line">  <span class="comment">// 根据 body 不同的类型做不同的处理</span></span><br><span class="line">  <span class="keyword">if</span> (Buffer.isBuffer(body)) <span class="keyword">return</span> res.end(body);</span><br><span class="line">  <span class="keyword">if</span> (<span class="string">'string'</span> == <span class="keyword">typeof</span> body) <span class="keyword">return</span> res.end(body);</span><br><span class="line">  <span class="keyword">if</span> (body <span class="keyword">instanceof</span> Stream) <span class="keyword">return</span> body.pipe(res);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// body: json</span></span><br><span class="line">  body = <span class="built_in">JSON</span>.stringify(body);</span><br><span class="line">  <span class="keyword">if</span> (!res.headersSent) &#123;</span><br><span class="line">    ctx.length = Buffer.byteLength(body);</span><br><span class="line">  &#125;</span><br><span class="line">  res.end(body);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="context-js"><a href="#context-js" class="headerlink" title="context.js"></a>context.js</h2><p>这个文件主要是用 <code>delegates</code> 这个包，将 <code>response</code> 和 <code>request</code> 上面的属性、方法代理到 <code>context</code> 上，比如：<code>this.response. headerSent</code> 就等于 <code>this.ctx.headerSent</code><br>举个例子：<code>delegate(proto, &#39;response&#39;).getter(&#39;headerSent&#39;)</code><br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Delegator</span>(<span class="params">proto, target</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (!(<span class="keyword">this</span> <span class="keyword">instanceof</span> Delegator)) <span class="keyword">return</span> <span class="keyword">new</span> Delegator(proto, target);</span><br><span class="line">  <span class="keyword">this</span>.proto = proto;</span><br><span class="line">  <span class="keyword">this</span>.target = target;</span><br><span class="line">  <span class="keyword">this</span>.methods = [];</span><br><span class="line">  <span class="keyword">this</span>.getters = [];</span><br><span class="line">  <span class="keyword">this</span>.setters = [];</span><br><span class="line">  <span class="keyword">this</span>.fluents = [];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Delegator.prototype.getter = <span class="function"><span class="keyword">function</span>(<span class="params">name</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> proto = <span class="keyword">this</span>.proto;</span><br><span class="line">  <span class="keyword">var</span> target = <span class="keyword">this</span>.target;</span><br><span class="line">  <span class="keyword">this</span>.getters.push(name);</span><br><span class="line"></span><br><span class="line">  proto.__defineGetter__(name, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>[target][name];</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">&#125;;</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
+<p>源码很简单，用了 <code>proto.__defineGetter__</code> 这个被废弃的方法，现在一般都用 <code>Object. defineProperty</code> 或者定义  <code>getter</code>，<code>setter</code></p>
+<h2 id="request-js"><a href="#request-js" class="headerlink" title="request.js"></a>request.js</h2><p>这里引用网上一张图<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://upload-images.jianshu.io/upload_images/5834506-60e3ad75f9755895.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure></p>
+<h2 id="response-js"><a href="#response-js" class="headerlink" title="response.js"></a>response.js</h2><p>这里也引用网上一张图<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://upload-images.jianshu.io/upload_images/5834506-cf4e780e48379e2e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure></p>
+<h1 id="compose"><a href="#compose" class="headerlink" title="compose"></a>compose</h1><p>这个方法可以算是核心了，把中间件组合起来形成洋葱模型：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">'use strict'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Expose compositor.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = compose</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Compose `middleware` returning</span></span><br><span class="line"><span class="comment"> * a fully valid middleware comprised</span></span><br><span class="line"><span class="comment"> * of all those which are passed.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * @param &#123;Array&#125; middleware</span></span><br><span class="line"><span class="comment"> * @return &#123;Function&#125;</span></span><br><span class="line"><span class="comment"> * @api public</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">compose</span> (<span class="params">middleware</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 判断是否为数组</span></span><br><span class="line">  <span class="keyword">if</span> (!<span class="built_in">Array</span>.isArray(middleware)) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">TypeError</span>(<span class="string">'Middleware stack must be an array!'</span>)</span><br><span class="line">  <span class="comment">// 判断数组元素是否为函数</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">const</span> fn <span class="keyword">of</span> middleware) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> fn !== <span class="string">'function'</span>) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">TypeError</span>(<span class="string">'Middleware must be composed of functions!'</span>)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * @param &#123;Object&#125; context</span></span><br><span class="line"><span class="comment">   * @return &#123;Promise&#125;</span></span><br><span class="line"><span class="comment">   * @api public</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params">context, next</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// last called middleware #</span></span><br><span class="line">    <span class="comment">// 这里 index 是正在执行的中间件的下标</span></span><br><span class="line">    <span class="keyword">let</span> index = <span class="number">-1</span></span><br><span class="line">    <span class="keyword">return</span> dispatch(<span class="number">0</span>)</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">dispatch</span> (<span class="params">i</span>) </span>&#123;</span><br><span class="line">      <span class="comment">// 判断中间件的 next 函数调用多次</span></span><br><span class="line">      <span class="keyword">if</span> (i &lt;= index) <span class="keyword">return</span> <span class="built_in">Promise</span>.reject(<span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'next() called multiple times'</span>))</span><br><span class="line">      index = i</span><br><span class="line">      <span class="comment">// 获取中间件</span></span><br><span class="line">      <span class="keyword">let</span> fn = middleware[i]</span><br><span class="line">      <span class="comment">// 如果已经到最后一个中间件，那么最后执行就是传入的 next 函数</span></span><br><span class="line">      <span class="keyword">if</span> (i === middleware.length) fn = next</span><br><span class="line">      <span class="comment">// 如果函数没有定义，那么直接 resolve</span></span><br><span class="line">      <span class="keyword">if</span> (!fn) <span class="keyword">return</span> <span class="built_in">Promise</span>.resolve()</span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="comment">// 执行中间件</span></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">Promise</span>.resolve(fn(context, dispatch.bind(<span class="literal">null</span>, i + <span class="number">1</span>)));</span><br><span class="line">      &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">Promise</span>.reject(err)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>源码很简单，先是判断传入的参数是否为函数数组，然后返回一个函数，接收<code>context</code>，<code>next</code> 两个参数，然后返回<code>dispatch</code> 函数，这个函数才是真正的执行传入的函数。对于一个中间件多次调用 <code>next()</code> 会报错，举个例子看看：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">first</span>(<span class="params">ctx, next</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'1'</span>);</span><br><span class="line">  <span class="keyword">await</span> next();</span><br><span class="line">  <span class="keyword">await</span> next(); <span class="comment">// 两次调用 next</span></span><br><span class="line">  <span class="built_in">console</span>.log(ctx);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">second</span>(<span class="params">ctx, next</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'2'</span>);</span><br><span class="line">  <span class="keyword">await</span> next();</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> middleware = [first, second];</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> com = compose(middleware);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> hello = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'hello'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">com(<span class="string">'ctx'</span>, hello);</span><br></pre></td></tr></table></figure></p>
+<p><code>compose</code> 把中间件串起来，结合上面的源码可知，<code>com</code> 就是一个函数，接收 <code>context</code> 和 <code>next</code> 两个参数，然后开始执行。<br>第一次执行，<code>index = -1</code>， <code>i = 0</code>， <code>index &lt; i</code> 不会报错，继续执行，<code>index = i = 0</code>，<code>fn = middleware[i] = middleware[0] = first</code>，<code>i !== middleware.length</code>，<code>fn</code> 有定义，执行 <code>try</code> 的东西，<code>Promise.resolve(fn(context, dispatch.bind(null, i + 1)));</code> <code>fn = first</code>即 <code>Promise.resolve(first(context, dispatch.bind(null, i + 1)));</code> 执行 <code>first</code>，函数输出 <code>1</code>，并调用第一个 <code>next</code>，这里的 <code>next</code> 就是 <code>dispatch.bind(null, 0 + 1)</code>，再次调用 <code>dispatch</code>。此时 <code>first</code> 未执行完，只是中途跳出去执行下一个函数了，这就是洋葱模型。</p>
+<p>第二次执行，<code>index = 0</code>， <code>i = 1</code>， <code>index &lt; i</code> 不会报错，继续执行，<code>index = i = 1</code>，<code>fn = middleware[i] = middleware[1] = second</code>，<code>i !== middleware.length</code>，<code>fn</code> 有定义，执行 <code>try</code> 的东西，<code>Promise.resolve(fn(context, dispatch.bind(null, i + 1)));</code> <code>fn = second</code>即 <code>Promise.resolve(second(context, dispatch.bind(null, i + 1)));</code> 执行 <code>second</code>，函数输出 <code>2</code>，并调用 <code>next</code>，这里的 <code>next</code> 就是 <code>dispatch.bind(null, 1 + 1)</code>，再次调用 <code>dispatch</code>。</p>
+<p>第三次执行，<code>index = 1</code>， <code>i = 2</code>， <code>index &lt; i</code> 不会报错，继续执行，<code>index = i = 2</code>，<code>fn = middleware[i] = middleware[2]</code>，<code>i === middleware.length</code>，<code>fn === next</code>，这个 <code>next</code> 就是一开始 <code>com</code> 传入的 <code>hello</code>，<code>Promise.resolve(fn(context, dispatch.bind(null, i + 1)));</code> <code>fn = hello</code>即 <code>Promise.resolve(hello(context, dispatch.bind(null, 2 + 1)));</code>执行 <code>hello</code>，函数输出 <code>hello</code>，这个相当于洋葱模型的最中心，<code>hello</code> 函数没有调用 <code>next</code>，执行完之后就开始返回上一个函数。</p>
+<p>返回 <code>second</code>，<code>second</code> 执行完毕。</p>
+<p>返回 <code>first</code>，接下来还有第二个 <code>next()</code>，那就开始执行 <code>next</code>。</p>
+<p>第四次执行，由于在第一次执行的时候，<code>next</code> 就是 <code>dispatch.bind(null, 0 + 1)</code>，再次调用 <code>dispatch</code> 时，<code>index = 2</code>，<code>i = 1</code>，此时 <code>i &lt;= index</code>，报错。这样就可以判断 <code>next</code> 函数调用多次。</p>
+<p>借着这个例子，把 <code>compose</code> 整个流程都过了一遍，对大家理解中间件的执行有更好的帮助。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>Koa 短小精悍，短短几百行的核心代码，就提供了一套优雅的扩展性强的方法，值得学习学习。<br>上面内容如有错误，欢迎大家指出。</p>
+<p>参考：</p>
+<p><a href="https://github.com/koajs/koa" target="_blank" rel="noopener">koa</a></p>
+<p><a href="http://zhangxiang958.github.io/2018/04/03/koa%20%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/" target="_blank" rel="noopener">koa 解析</a></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <footer>
+        <a href="https://recallhyx.github.io">
+            <img src="/img/avatar.jpg" alt="Recall HYX">
+            Recall HYX
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://recallhyx.github.io/2019/08/17/Koa从零开始源码解析/&title=《Koa从零开始源码解析》 — Recall Hyx&pic=https://recallhyx.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://recallhyx.github.io/2019/08/17/Koa从零开始源码解析/&title=《Koa从零开始源码解析》 — Recall Hyx&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://recallhyx.github.io/2019/08/17/Koa从零开始源码解析/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Koa从零开始源码解析》 — Recall Hyx&url=https://recallhyx.github.io/2019/08/17/Koa从零开始源码解析/&via=https://recallhyx.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://recallhyx.github.io/2019/08/17/Koa从零开始源码解析/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/12/31/2018年终总结/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">2018年终总结</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "gnMQ4bW3FRMELqY7UJSFCG2L-gzGzoHsz",
+            appKey: "8kUBso0hYLBcTE8e9h89D1Hc",
+            avatar: "mm",
+            placeholder: "Just go go",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Recall HYX &copy; 2017 - 2019</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://recallhyx.github.io/2019/08/17/Koa从零开始源码解析/&title=《Koa从零开始源码解析》 — Recall Hyx&pic=https://recallhyx.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://recallhyx.github.io/2019/08/17/Koa从零开始源码解析/&title=《Koa从零开始源码解析》 — Recall Hyx&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://recallhyx.github.io/2019/08/17/Koa从零开始源码解析/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Koa从零开始源码解析》 — Recall Hyx&url=https://recallhyx.github.io/2019/08/17/Koa从零开始源码解析/&via=https://recallhyx.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://recallhyx.github.io/2019/08/17/Koa从零开始源码解析/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACwklEQVR42u3aS27DMAwFwNz/0u22QBLnPUpysxivgnxsjQqILMnHI75+nq7n9/++03769/13nz5/Z9uFh4eHt7z0a0ay6He8a3b7lGgL8PDw8I7x3p2o+evrkzn5tN246Fl4eHh4X8NLrhV2vh48PDy87+flpYQ8gd4VkPDw8PDu5K2UG2YHelv8PV5rwcPDw5vnutuWeO71kf4eHh4e3nJXPQkSSVKbt8GSpLxYLR4eHt4BXpsWt8MEs5LuemkYDw8P7zQvP76TIHF90OeLTkoSxRrw8PDwtvKSW7Rtp3Y72sBQFG3x8PDwtvJmx+71strm1mzUINo+PDw8vMO85EDPl5Un6ElavGEgAA8PD+/A0MCsYT8r3SZhY2X0Cg8PD+80L7/RsPk0KhOvPP1FYo2Hh4e3iZenv7PUfIacZcsvtgMPDw/vRt7KsFRelk0S8aXGGB4eHt4xXj4glfPa4ux6gfjFb/Hw8PAO8NrGVV5sXRntWilhPGZ/Kzw8PLxl3t6SxAzT/vbt5uLh4eFt5bW3m41h1eXXODB8CBJ4eHh4B3htep0PB7TDUnnxN/8tHh4e3glenka335w1yXaNfOHh4eHdw8tb+3mjq73ysa2o5IGHh4d3mDe7Ud6gyssTs+BUdM/w8PDwFnh5YXSlxdUGhvw7xR8MDw8PbyuvbdXnGzGsJe8da8DDw8M7xpsdyjNqfqzPRhNeBAY8PDy8G3ntYMHKsNRjdH0A4+Hh4W3lzRpULak90NvScDE6gIeHh7fMaw/flaJAknDnm5Kn3Xh4eHgneLNg0I4dJKn2SgoezUfg4eHhbeXNkuD26M8DQx67iloLHh4e3r/y2pGsZNGzMPAhUOHh4eF9Aa8d0loZMsiT/ujBeHh4eFt5eeLblhLaskXbHotSajw8PLytvPYf/l0ljOSgnzXb8PDw8I7xfgHncGnO7XkahwAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
